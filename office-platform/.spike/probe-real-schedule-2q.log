@@ -1,0 +1,4 @@
+scheduleFile=C:/Users/EDY/.dsh/storages/schedule.json
+tables.tasks 共 39 行，kind 分布＝at=39
+没有一行 `kind=daily` ⇒ 蒸馏进程从没武装过这条任务（第 5 枪前就该是这样）。判据 `nightly-job-single` 对同一份文档报 pending 才算口径一致。
+结论 exit=3（0=认得出且形状相符 / 1=零归属或列集合不符 / 3=文档里没有 daily 形＝还没武装 / 2=读不到或信封不是 tables.tasks）

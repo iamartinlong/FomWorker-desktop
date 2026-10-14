@@ -1,0 +1,89 @@
+# GitHub Actions 桌面打包（首次尝试；无签名）。
+#
+# 桌面端 = 内核 `apps/desktop`（electron-builder）+ 我们的 bundle/profile。
+# 内核不入库 → 从**公开仓** `deepseek-ai/deepseek-harness` 克隆（master，当前 0.2.1-alpha.2）。
+# ⚠️ 首次尝试：可能需迭代（内核构建/env/产物路径/运行时下载）。签名留后（需证书）。
+# 参考：docs/02-设计/客户端打包与分发v0.1.md、构建与CI基线v0.1.md。
+name: package
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 打包目标（对应内核 package:desktop:<target>:unsigned；**unsigned 仅 Windows**）
+        type: choice
+        default: win:x64
+        options: [win:x64]
+  # 也可推 tag 触发（无需 PAT）：git push <desktop-repo> refs/tags/pkg-<n>
+  push:
+    tags: ['pkg-*']
+
+jobs:
+  desktop:
+    runs-on: ${{ startsWith(inputs.target || 'win:x64', 'win') && 'windows-latest' || 'macos-latest' }}
+    env:
+      DSH_DESKTOP_UNSIGNED: '1'
+      PKG_TARGET: ${{ inputs.target || 'win:x64' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 获取内核（公开仓 master）
+        run: git clone --depth 1 https://github.com/deepseek-ai/deepseek-harness.git deepseek-harness
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.7.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: deepseek-harness/pnpm-lock.yaml
+
+      - name: 安装内核依赖
+        run: pnpm install
+        working-directory: deepseek-harness
+
+      - name: 写 .env.windows（无签名占位；打包必填项）
+        if: startsWith(env.PKG_TARGET, 'win')
+        shell: pwsh
+        working-directory: deepseek-harness
+        run: |
+          @"
+          DSH_DESKTOP_APP_ID=com.fominfo.fomworker
+          DSH_DESKTOP_AUTO_UPDATE_ENV=test
+          DOWNLOAD_TEST_ORIGIN=https://download.example.com
+          DOWNLOAD_TEST_RELEASE_ID=00000000000000000000000000000000
+          DSH_DESKTOP_MANDATORY_UPDATE_TEST_ORIGIN=https://update.example.com
+          DSH_DESKTOP_MANDATORY_UPDATE_PROD_ORIGIN=https://update.example.com
+          DSH_DESKTOP_MANDATORY_UPDATE_CONFIG='{"allowedAuthOrigins":["https://login.example.com"]}'
+          "@ | Set-Content -Encoding utf8 apps/desktop/.env.windows
+
+      - name: 写 .env.macos（无签名占位）
+        if: ${{ !startsWith(env.PKG_TARGET, 'win') }}
+        shell: bash
+        working-directory: deepseek-harness
+        run: |
+          cat > apps/desktop/.env.macos <<'EOF'
+          DSH_DESKTOP_APP_ID=com.fominfo.fomworker
+          DSH_DESKTOP_AUTO_UPDATE_ENV=test
+          DOWNLOAD_TEST_ORIGIN=https://download.example.com
+          DOWNLOAD_TEST_RELEASE_ID=00000000000000000000000000000000
+          DSH_DESKTOP_MANDATORY_UPDATE_TEST_ORIGIN=https://update.example.com
+          DSH_DESKTOP_MANDATORY_UPDATE_PROD_ORIGIN=https://update.example.com
+          DSH_DESKTOP_MANDATORY_UPDATE_CONFIG='{"allowedAuthOrigins":["https://login.example.com"]}'
+          EOF
+
+      - name: 桌面打包（无签名；Windows 用 `:unsigned` 脚本跳过证书校验）
+        run: pnpm --filter @deepseek-ai/dsh-desktop run package:${{ env.PKG_TARGET }}:unsigned
+        working-directory: deepseek-harness
+
+      - name: 上传制品
+        uses: actions/upload-artifact@v4
+        with:
+          name: fomworker-${{ inputs.target }}
+          path: |
+            deepseek-harness/apps/desktop/.desktop-build/targets/**/*.exe
+            deepseek-harness/apps/desktop/.desktop-build/targets/**/*.dmg
+            deepseek-harness/apps/desktop/.desktop-build/targets/**/*.zip
+          if-no-files-found: warn

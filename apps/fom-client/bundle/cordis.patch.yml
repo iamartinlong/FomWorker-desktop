@@ -1,0 +1,31 @@
+# FomWorker bundle patch —— 作为一层挂进 dsh profile（在 web-app 层之后、profile 自身 patch 之前）。
+#
+# 行 id 与原先手工写在 `~/.dsh/profiles/web/cordis.patch.yml` 的一致。
+# `name` 说明：
+#   - 品牌 occupant 与登录走**包名**（junction 进 profile node_modules 的 @fominfo/*）；
+#   - 办公插件走**包名** `@office/*`（junction 进 profile node_modules 的 @office/*，指向 apps/fom-client/plugins/office-*）。
+
+- insert:
+    - id: ui-brand-fomworker
+      name: '@fominfo/dsh-client-ui-brand-fomworker'
+    - id: ui-login
+      name: '@fominfo/dsh-client-ui-login'
+      config:
+        providerId: fom-platform
+        provider:
+          api: openai-completions
+          baseURL: 'http://127.0.0.1:5199/v1'
+          apiKeyEnv: FOM_PLATFORM_TOKEN
+          models:
+            - id: deepseek-v4.1-flash
+              name: DeepSeek V4.1 Flash
+              contextWindow: 128000
+              maxTokens: 8192
+              input: [text]
+              reasoningEfforts: false
+    - id: office-catalog
+      name: '@office/catalog'
+    - id: office-authz
+      name: '@office/authz'
+    - id: office-console
+      name: '@office/console'

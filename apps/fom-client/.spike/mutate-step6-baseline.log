@@ -1,0 +1,50 @@
+baseline: green（0 红）
+a-drop-request-file-names: 抓住（断言式） —— 3 条红 —— 基线不记 `requests/` 的文件名清单 —— ③ 那两枪必须红：消费端退回计数差，「别的实例删一条＋夜间多两条」会被算成只多 1 张，ME8 的归属判定（靠集合差、还要点名是哪两条）就废了
+    · ③ 生产者把 requests 文件名清单写进基线
+    · ③ 集合差归属：夜间新增 2 张 == 声明 2 张 ⇒ ME8 判绿 — 实得 fail
+    · ③ 同现场声明 0 张 ⇒ 判红，且点名多出的是哪两条 — requests 新增 1 张，声明的成员臂应为 0 张（基线没记 requests 文件名 ⇒ 只能按计数差，别把同时段其他实例的卡算进来）（成员那一臂出卡是**正确**的，蒸馏那一臂出卡才是 ME8 破产）
+b-drop-run-file-names: 抓住（断言式） —— 2 条红 —— 基线不记 `office_memory_run` 的文件名清单 —— ④ 必须红：起手态里已有的那行对账账目会被当成夜间新增，「有对账行」变成假绿，DM8 跟着错判
+    · ④ 生产者把 runs 文件名清单写进基线
+    · ④ 基线里那行账不算夜间新增 ⇒ run-rows 停 pending — 实得 pass
+c-daily-keeps-md-suffix: 抓住（断言式） —— 6 条红 —— 日级清单留着 `.md` 后缀 —— ① 的 DM7 那枪必须红：消费端 `listDailyDays()` 给的是 `YYYY-MM-DD`，集合差会把整份清单读成夜间新增，成员一枪还没打就已经绿
+    · ① 起手态：一条 fail 都没有 — daily-readers-agree
+    · ① 起手态：汇总退出码 = 3（待观测，不是通过也不是违反） — 实得 1
+    · ② CLI 端到端：接受生产者的基线文件并以 3（待观测）退出 — 实得 exit=1，输出尾行 pass=3 fail=1 pending=10 info=0 ⇒ exit=1
+    · ② CLI 端到端：输出里没有一个 ×（把「还没发生」读成违反就是这条） — × [daily-readers-agree] 基线读法与产品读法看到同一份日级清单（②r） — 只有基线读法看到：20
+    · ⑧b CLI 接受 --schedule-file：该文档里的残留 nightly 行被判红、点名给它、退出码 1 — 实得 exit=1，红行=× [daily-readers-agree] 基线读法与产品读法看到同一份日级清单（②r） — 只有基线读法看到：2026-10-07.md,2026-10-09.md,2026-10-10.md；只有产品 store 看到：2026-10-07,2026-10-09,2026-10-10 —— 前者按名字算、后者还
+    · ⑨ store.appendDaily 落的那天在生产端的日级清单里（daily 目录名与 YYYY-MM-DD 文件名两端同形） — store 返回 daily/2026-10-10.md，生产端清单=2026-10-10.md
+d-hash-trims-the-file: 抓住（断言式） —— 2 条红 —— 算 sha 前先 `trim()`（归一化口径漂移的典型形态）—— ①b 那条绝对锚必须红：`MEMORY.md` 与手改靶都以换行收尾，于是那一夜起手态就被判成「索引已整段重建」＋「手改正文被动过」，开局两个假红。⚠️ ②r 之后两端共用 `sha256File`，接缝那两条关系断言（① ②）随两端一起漂、不再报红，能抓住它的只剩「用不共用那个函数的表达式算」的锚
+    · ①b 生产端的 sha 基准钉在原始字节（用不共用 sha256File 的表达式算） — 实得 e68c877912bf…，应为 602f3e3e2b48…
+    · ⑨ 生产端哈希的正是 store.writeIndex 落的那个文件（字节基准，用 ①b 那把不共用的尺算） — 实得 «64c708ed8b20…»，应为 «8a4e5778abe6…»
+e-hand-edited-path-hardcoded: 抓住（断言式） —— 1 条红 —— 手改靶路径写死回 `reference/hand-edited-guard.md`（＝抽出生产者之前启动器的真实形态）—— ⑤ 必须红：种子换靶后基线哈希的是另一个文件，V2 那条「手改正文一字节没动」比的根本不是同一个东西
+    · ⑤ 换靶后 hand-edited-untouched 仍绿（两边指同一个文件） — 实得 fail：比的不是同一个文件：基线记的是 reference/hand-edited-guard.md，现在解析出来的是 user/role.md —— 去核 `.seed-expect.json` 在两时点之间有没有被改过
+f-watermark-shape-unvalidated: 抓住（断言式） —— 2 条红 —— 水位线不做形状校验、原样透出 —— ⑥ 必须红：坏形状（缺 `lastDistilledAt`）会进基线，消费端把「读不出水位线」当成「有水位线」，DM8 的倒退判定失去依据
+    · ⑥ 水位线形状不对（缺 lastDistilledAt）⇒ 同样返回 null — 实得 {"lastDay":"2026-10-07"}
+    · ⑥ 基线里 watermark=null ⇒ 判定停 pending，不报倒退 — watermark={"lastDay":"2026-10-07"} 判定=pending
+g-watermark-throws-when-absent: 抓住（断言式） —— 1 条红 —— 水位线文件缺失时直接抛（＝抽出生产者之前 `checkSeed` 的真实形态）—— ⑥ 必须红：启动器会在两个各约 100s 的冷启动**之后**崩在 ENOENT 上，白等的正是这一夜
+    · ⑥ 水位线文件缺失 ⇒ readWatermark 返回 null 且不抛 — 抛了：ENOENT: no such file or directory, open 'C:\Users\EDY\AppData\Local\Temp\step6-seam-TM49S6\memories\daily\.watermark'
+h-armed-marker-always-true: 抓住（断言式） —— 2 条红 —— `armedMarkerAtStart` 写死 true —— ① 的武装那枪必须红：判据机会把「标记还没写出来」当成「起手态就有标记、这次看不到武装事件」，第 6 步要观测的那个事件凭空消失
+    · ① 起手态：armed-marker 停 pending（生产端的 existsSync 口径对得上标记缺席的种子） — 实得 info
+    · ⑨ 空目录：生产端报「没武装、没水位线、没索引」而不抛（armedMarkerAtStart=false ↔ store 也读不到 jobId） — armed=true/undefined，watermark=null，indexSha=«»
+i-ledger-bodies-copied-into-baseline: 抓住（断言式） —— 1 条红 —— 把台账正文一起抄进基线（「方便早上对账」的写法）—— ⑦ 必须红：真观测时那两个目录在 `.dsh` 下、装的是别人的 `argsSnapshot`，正文进基线就违反「只记名字与哈希」这条铁律
+    · ⑦ 基线序列化后不含台账正文（探针字面与 argsSnapshot 都没被抄进来） — 多出键：ledgerRequestBodies；含探针字面=true
+j-watermark-file-renamed: 抓住（断言式） —— 1 条红 —— 生产端把水位线文件名改成 `daily/.distill-watermark`（＝产品 `WATERMARK_PATH` 改名的等价物）—— ⑨ 必须红：读不回 `{lastDistilledAt,lastDay}` 那一对，DM8 的倒退判定失去依据。⚠️ 这一支在 ②s 之前是**静默**的（起手态本来就 pending，缺的只是「产品写的那份生产端读不读得到」这件事没人核）
+    · ⑨ store.writeWatermark 落的那份，生产端按同一路径＋同一形状读得回来（改名＝把水位线读成 null，DM8 失去依据） — 生产端=null，store={"lastDistilledAt":1760000000000,"lastDay":"2026-10-07"}
+k-armed-marker-file-renamed: 抓住（断言式） —— 1 条红 —— 生产端把武装标记文件名改成 `daily/.armed`（＝产品 `ARMED_PATH` 改名的等价物）—— ⑨ 必须红：`armedMarkerAtStart` 永远 false，于是「起手态已有标记 ⇒ 本次看不到武装事件」那一支永不触发，第 6 步要观测的武装事件会在标记其实早就在场的夜里被报成新增。⚠️ 同样在 ②s 之前是**静默**的（种子里标记本来就缺席）
+    · ⑨ store.writeArmedJob 落的标记被生产端的 existsSync 看到（改名＝「起手态已有标记」那一支永不触发，凭空多出一夜武装） — armed=false/job-from-store
+l-index-file-renamed: 抓住（断言式） —— 7 条红 —— 生产端把索引文件名改成 `MEMORY.markdown`（＝产品内联的 `MEMORY.md` 字面改名的等价物）—— ⑨ 必须红：哈希的根本不是 `store.writeIndex` 落的那个文件。与 j/k 不同，这一支在 ②s 之前会被 ① 那组**间接**抓住（空串 sha ⇒ `index-rebuilt` 判成「已重建」而种子那颗悬空行让 fail 现形），但红例点名的是「有一条 fail」而不是「文件名错了」，归因得靠 ⑨
+    · ① 起手态：index-rebuilt 停在 pending（字节 sha == readIndex sha） — 实得 fail
+    · ① 起手态：一条 fail 都没有 — index-rebuilt,planted-ghost-gone,must-survive-in-index,no-secret-in-memory
+    · ① 起手态：汇总退出码 = 3（待观测，不是通过也不是违反） — 实得 1
+    · ② CLI 端到端：接受生产者的基线文件并以 3（待观测）退出 — 实得 exit=1，输出尾行 pass=4 fail=4 pending=6 info=0 ⇒ exit=1
+    · ② CLI 端到端：输出里没有一个 ×（把「还没发生」读成违反就是这条） — × [index-rebuilt] 索引整段重建且无悬空行（ME10） — 重建后仍指向不在场的文件：project/g / × [planted-ghost-gone] 已知悬空行消失（project/ghost-entry.md） — 重建之 / × [must-survive-in-index] 幸存条目仍在索引（user/role.md, reference/h / × [no-secret-in-memory] 凭据没被提炼进记忆（V4／ME7） — MEMORY.md 命中：MEM
+    · ⑧b CLI 接受 --schedule-file：该文档里的残留 nightly 行被判红、点名给它、退出码 1 — 实得 exit=1，红行=× [index-rebuilt] 索引整段重建且无悬空行（ME10） — 重建后仍指向不在场的文件：project/ghost-entry.md, project/internal-note.md
+    · ⑨ 生产端哈希的正是 store.writeIndex 落的那个文件（字节基准，用 ①b 那把不共用的尺算） — 实得 «…»，应为 «8a4e5778abe6…»
+m-daily-dir-renamed: 抓住（断言式） —— 6 条红 —— 生产端把日级目录名改成 `dailies` —— ① 的「member-appended-daily 停 pending」与 ⑨ 的清单对账都必须红：基线里的日级永远是空清单，DM7 那一枪在起手态就被判成「成员已追加了一整天」
+    · ① 起手态：一条 fail 都没有 — daily-readers-agree
+    · ① 起手态：汇总退出码 = 3（待观测，不是通过也不是违反） — 实得 1
+    · ② CLI 端到端：接受生产者的基线文件并以 3（待观测）退出 — 实得 exit=1，输出尾行 pass=3 fail=1 pending=10 info=0 ⇒ exit=1
+    · ② CLI 端到端：输出里没有一个 ×（把「还没发生」读成违反就是这条） — × [daily-readers-agree] 基线读法与产品读法看到同一份日级清单（②r） — 只有基线读法看到：(无
+    · ⑧b CLI 接受 --schedule-file：该文档里的残留 nightly 行被判红、点名给它、退出码 1 — 实得 exit=1，红行=× [daily-readers-agree] 基线读法与产品读法看到同一份日级清单（②r） — 只有基线读法看到：(无)；只有产品 store 看到：2026-10-07,2026-10-09,2026-10-10 —— 前者按名字算、后者还要求是普通文件，去核 `daily/` 里这些日子是不是目录或链接
+    · ⑨ store.appendDaily 落的那天在生产端的日级清单里（daily 目录名与 YYYY-MM-DD 文件名两端同形） — store 返回 daily/2026-10-10.md，生产端清单=(空)
+结论：13/13 个变异被抓住

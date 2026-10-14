@@ -1,0 +1,303 @@
+[info]: [ 'event-dispatch is ready' ]
+appId=cli_aa431ed31eb8dcce
+events -> F:\deepseek\deepseek harness\office-platform\.spike\feishu-ws\events.jsonl
+waiting for events ... Ctrl-C to stop
+[info]: [
+  '[ws]',
+  'receive events or callbacks through persistent connection only available in self-build & Feishu app, Configured in:\n' +
+    '        Developer Console(开发者后台)\n' +
+    '          ->\n' +
+    '        Events and Callbacks(事件与回调)\n' +
+    '          ->\n' +
+    '        Mode of event/callback subscription(订阅方式)\n' +
+    '          ->\n' +
+    '        Receive events/callbacks through persistent connection(使用 长连接 接收事件/回调)'
+]
+[ws] connected
+[info]: [ '[ws]', 'ws client ready' ]
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+
+=== im.message.receive_v1 ===
+  open_id    : ou_e66ad5f9e6604d4184d17215b1c2adc7
+  sender_type: user
+  chat_id    : oc_142ae4ce755456435773df2f0790fb7a
+  chat_type  : p2p
+  msg_type   : text
+  content    : {"text":"哈哈"}
+
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+
+=== card.action.trigger ===
+{
+  "schema": "2.0",
+  "event_id": "caed896b428f2d17c7101924aef6e1c0",
+  "token": "c-44c78191b7e26858bb709ae57f467fca5b888fc2",
+  "create_time": "1791605059477169",
+  "event_type": "card.action.trigger",
+  "tenant_key": "19ac295821479c89",
+  "app_id": "cli_aa431ed31eb8dcce",
+  "operator": {
+    "tenant_key": "19ac295821479c89",
+    "open_id": "ou_e66ad5f9e6604d4184d17215b1c2adc7",
+    "union_id": "on_75ee5ca933b083751b7176cb74b0fc0f"
+  },
+  "action": {
+    "value": {
+      "decision": "approve",
+      "requestId": "smoke-B-040355"
+    },
+    "tag": "button"
+  },
+  "host": "im_message",
+  "context": {
+    "open_message_id": "om_x100b63afdc236880c370bda9adc73ec",
+    "open_chat_id": "oc_142ae4ce755456435773df2f0790fb7a"
+  }
+}
+
+
+=== card.action.trigger ===
+{
+  "schema": "2.0",
+  "event_id": "2ac0ffc123e7f4b2057d2855d60b25fe",
+  "token": "c-7d66fe23af70a4dfbe0f8c12a571a5297ecf480d",
+  "create_time": "1791605073160828",
+  "event_type": "card.action.trigger",
+  "tenant_key": "19ac295821479c89",
+  "app_id": "cli_aa431ed31eb8dcce",
+  "operator": {
+    "tenant_key": "19ac295821479c89",
+    "open_id": "ou_e66ad5f9e6604d4184d17215b1c2adc7",
+    "union_id": "on_75ee5ca933b083751b7176cb74b0fc0f"
+  },
+  "action": {
+    "value": {
+      "decision": "approve",
+      "requestId": "smoke-B-040355"
+    },
+    "tag": "button"
+  },
+  "host": "im_message",
+  "context": {
+    "open_message_id": "om_x100b63afdc236880c370bda9adc73ec",
+    "open_chat_id": "oc_142ae4ce755456435773df2f0790fb7a"
+  }
+}
+
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+
+=== card.action.trigger ===
+{
+  "schema": "2.0",
+  "event_id": "540a08ce97e7d0d2f9354cad0c67287b",
+  "token": "c-287bd24c26d6288e5f4eb5f7ca994fc5189050fe",
+  "create_time": "1791605086984789",
+  "event_type": "card.action.trigger",
+  "tenant_key": "19ac295821479c89",
+  "app_id": "cli_aa431ed31eb8dcce",
+  "operator": {
+    "tenant_key": "19ac295821479c89",
+    "open_id": "ou_e66ad5f9e6604d4184d17215b1c2adc7",
+    "union_id": "on_75ee5ca933b083751b7176cb74b0fc0f"
+  },
+  "action": {
+    "value": {
+      "decision": "approve",
+      "requestId": "smoke-B-040355"
+    },
+    "tag": "button"
+  },
+  "host": "im_message",
+  "context": {
+    "open_message_id": "om_x100b63afdc236880c370bda9adc73ec",
+    "open_chat_id": "oc_142ae4ce755456435773df2f0790fb7a"
+  }
+}
+
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+
+=== card.action.trigger ===
+{
+  "schema": "2.0",
+  "event_id": "17eb29d0bf782d97e5f9bc2387843170",
+  "token": "c-dee5801c59094ed5c9b71f212c459db389cfe2d1",
+  "create_time": "1791605203945231",
+  "event_type": "card.action.trigger",
+  "tenant_key": "19ac295821479c89",
+  "app_id": "cli_aa431ed31eb8dcce",
+  "operator": {
+    "tenant_key": "19ac295821479c89",
+    "open_id": "ou_e66ad5f9e6604d4184d17215b1c2adc7",
+    "union_id": "on_75ee5ca933b083751b7176cb74b0fc0f"
+  },
+  "action": {
+    "value": {
+      "decision": "reject",
+      "requestId": "smoke-B-040355"
+    },
+    "tag": "button"
+  },
+  "host": "im_message",
+  "context": {
+    "open_message_id": "om_x100b63afdc236880c370bda9adc73ec",
+    "open_chat_id": "oc_142ae4ce755456435773df2f0790fb7a"
+  }
+}
+
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791600222697,"reconnectAttempts":0}
+
+--- bridge 重启（加入回调转发，§8 第 8 步 d）---
+[info]: [ 'event-dispatch is ready' ]
+appId=cli_aa431ed31eb8dcce
+events -> F:\deepseek\deepseek harness\office-platform\.spike\feishu-ws\events.jsonl
+callback -> http://127.0.0.1:3081/office/approval/callback
+waiting for events ... Ctrl-C to stop
+[info]: [
+  '[ws]',
+  'receive events or callbacks through persistent connection only available in self-build & Feishu app, Configured in:\n' +
+    '        Developer Console(开发者后台)\n' +
+    '          ->\n' +
+    '        Events and Callbacks(事件与回调)\n' +
+    '          ->\n' +
+    '        Mode of event/callback subscription(订阅方式)\n' +
+    '          ->\n' +
+    '        Receive events/callbacks through persistent connection(使用 长连接 接收事件/回调)'
+]
+[ws] connected
+[info]: [ '[ws]', 'ws client ready' ]
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[card] operator=(no operator) action.value=undefined
+[forward] 200 {"toast":{"type":"error","content":"这个按钮的数据不完整，请重新发起一次动作。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[card] operator=(no operator) action.value=undefined
+[forward] 200 {"toast":{"type":"error","content":"这个按钮的数据不完整，请重新发起一次动作。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791605609244,"reconnectAttempts":0}

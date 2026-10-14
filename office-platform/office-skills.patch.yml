@@ -1,0 +1,16 @@
+# M1 收尾剩余 · 技能层挂载（设计：把 SKILL.md 以 SkillProvider 挂进 ctx.skills）
+#
+# 形状抄内核 `skill-office`：一个 provider（inject:['skills']），技能正文是随包的
+# `plugins/office-skills/assets/<name>/SKILL.md`。技能只是给模型的指令，不引入新工具、不放宽任何闸。
+#
+# 用法（在 `deepseek-harness/` 仓库根；`--patch` 必须排在 `--port`/`--no-open` 之前）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "F:/deepseek/deepseek harness/office-platform/office-skills.patch.yml" \
+#     --patch ./office.patch.yml --no-open --port 3089
+# 静态核：`--dump-config` 里出现 `id: office-skills`。
+
+- insert:
+    - id: office-skills
+      name: ./plugins/office-skills/index.ts
+      config:
+        assetRoot: 'F:/deepseek/deepseek harness/office-platform/plugins/office-skills/assets'

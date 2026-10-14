@@ -1,0 +1,13 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.8 [39m[90mF:/deepseek/deepseek harness/office-platform[39m
+
+ [32m✓[39m plugins/office-approval/sweeper.spec.ts [2m([22m[2m25 tests[22m[2m)[22m[33m 4535[2mms[22m[39m
+     [33m[2m✓[22m[39m 武装的 job 由内核生成 id，到期后靠 catalog() 的回执被认领一次 [33m 466[2mms[22m[39m
+     [33m[2m✓[22m[39m 对账只认投递回执：还在武装而未投递的 job 不动，别人家的 job 更不认领 [33m 474[2mms[22m[39m
+     [33m[2m✓[22m[39m installApprovalSweeper：同步窗口超期转后台不动告警，催办到点真的投递进会话（F-A） [33m 443[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m25 passed[39m[22m[90m (25)[39m
+[2m   Start at [22m 11:16:26
+[2m   Duration [22m 8.79s[2m (transform 2.28s, setup 0ms, import 3.38s, tests 4.54s, environment 1ms)[22m
+

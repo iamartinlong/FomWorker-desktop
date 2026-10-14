@@ -1,0 +1,36 @@
+{
+  "overBudget": false,
+  "entryCount": 5,
+  "watermark": {
+    "lastDistilledAt": 1791430200000,
+    "lastDay": "2026-10-07"
+  },
+  "newDays": [
+    "2026-10-09",
+    "2026-10-10"
+  ],
+  "ignoredDays": [
+    "2026-10-07"
+  ],
+  "handEditedEntries": [
+    "reference/hand-edited-guard.md"
+  ],
+  "expected": {
+    "outcome": "distilled",
+    "guardedSkips": 0,
+    "archivedAtLeast": 0,
+    "mustSurviveInIndex": [
+      "user/role.md",
+      "reference/hand-edited-guard.md"
+    ],
+    "mustVanishFromIndex": [
+      "project/ghost-entry.md"
+    ],
+    "secretTargets": [
+      "MEMORY.md:](project/internal-note.md)",
+      "daily/2026-10-10.md:ops_password:"
+    ],
+    "secretScanScope": "{user,feedback,project,reference}/*.md + MEMORY.md",
+    "armedMarkerAtSeed": "absent"
+  }
+}

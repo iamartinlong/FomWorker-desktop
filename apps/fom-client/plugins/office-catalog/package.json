@@ -1,0 +1,15 @@
+{
+  "name": "@office/catalog",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "office-catalog：平台默认能力目录（技能/专家/连接器）只读服务 officeCatalog。",
+  "exports": {
+    ".": "./index.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.ts",
+    "catalog.ts"
+  ]
+}

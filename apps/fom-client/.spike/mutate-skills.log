@@ -1,0 +1,5 @@
+baseline: green
+a-relative-assetroot-accepted: 抓住 —— 1 例红（exit=1）— 去掉「assetRoot 必须绝对路径」这道守卫 ⇒ 相对路径的用例必须红
+b-missing-skill-md-accepted: 抓住 —— 1 例红（exit=1）— 去掉挂载时「SKILL.md 在场」校验 ⇒ 缺文件不抛、静默装半个技能，缺文件用例必须红
+c-frontmatter-not-stripped: 抓住 —— 2 例红（exit=1）— skillBody 不剥 frontmatter（正文带上 `---`）⇒ 剥壳用例必须红
+结论：3/3 个变异被抓住

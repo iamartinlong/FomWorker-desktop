@@ -1,0 +1,34 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.8 [39m[90mF:/deepseek/deepseek harness/office-platform[39m
+
+ [32m✓[39m plugins/office-approval/sweeper.spec.ts [2m([22m[2m27 tests[22m[2m)[22m[33m 5137[2mms[22m[39m
+     [33m[2m✓[22m[39m 武装的 job 由内核生成 id，到期后靠 catalog() 的回执被认领一次 [33m 411[2mms[22m[39m
+     [33m[2m✓[22m[39m 对账只认投递回执：还在武装而未投递的 job 不动，别人家的 job 更不认领 [33m 442[2mms[22m[39m
+     [33m[2m✓[22m[39m installApprovalSweeper：台账走到哪一步，告警就武装或撤销到哪一步 [33m 438[2mms[22m[39m
+     [33m[2m✓[22m[39m #38 挂载：窗口内批准（无批件）当场撤掉作废，侧栏不留幽灵自动化 [33m 485[2mms[22m[39m
+     [33m[2m✓[22m[39m installApprovalSweeper：同步窗口超期转后台不动告警，催办到点真的投递进会话（F-A） [33m 723[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/recovery.spec.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 3638[2mms[22m[39m
+     [33m[2m✓[22m[39m E10：批件在等待重放期间过期 ⇒ 不消费，回落到标准询问 [33m 2151[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/feishu-channel.spec.ts [2m([22m[2m46 tests[22m[2m)[22m[33m 1356[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/responder.spec.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 1247[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/callback-route.spec.ts [2m([22m[2m30 tests[22m[2m)[22m[33m 1264[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/risk-gate.spec.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 451[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/risk-gate.spec.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 603[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/index.spec.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 676[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/ledger.spec.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 395[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/store.spec.ts [2m([22m[2m20 tests[22m[2m)[22m[32m 294[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/distill.spec.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 564[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/arm.spec.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 542[2mms[22m[39m
+     [33m[2m✓[22m[39m 子代理/带父会话不武装；顶层武装一次；标记令第二个顶层会话幂等；release 后监听器消失 [33m 435[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/tools.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 162[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/feishu-transport-http.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 134[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/inject.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 98[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/index.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/archive-order.spec.ts [2m([22m[2m1 test[22m[2m)[22m[32m 41[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/recall.spec.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m18 passed[39m[22m[90m (18)[39m
+[2m      Tests [22m [1m[32m277 passed[39m[22m[90m (277)[39m
+[2m   Start at [22m 15:01:15
+[2m   Duration [22m 32.63s[2m (transform 2.63s, setup 0ms, import 8.38s, tests 16.65s, environment 4ms)[22m
+

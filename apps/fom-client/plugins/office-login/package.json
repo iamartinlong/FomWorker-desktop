@@ -1,0 +1,31 @@
+{
+  "name": "@fominfo/dsh-client-ui-login",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "office-login（K1 骨架）：登录面板 + 会话（对着 PLATFORM API /auth/login）。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ]
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown"
+  },
+  "devDependencies": {
+    "tsdown": "^0.22.2",
+    "react": "^18.3.1",
+    "@types/react": "~18.3.1"
+  }
+}

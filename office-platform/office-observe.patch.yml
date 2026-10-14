@@ -1,0 +1,19 @@
+# E 阶段 · E-P2 观测挂载件（M2/E-P2 · 平台层 §4.3 观测）
+#
+# 把 `office-observe` 挂进 web profile：它依赖 `officeMeter`（token 趋势）与 `officeAudit`（审批/失败）
+# 两个只读服务，组合出逐租户观测快照（审批等待时长 / 失败率 / token 趋势），并在 `webServer` 上自建
+# `GET /health`（内核无内置，P8）。故本挂载件**必须**把 `office-meter` 与 `office-audit` 一起挂
+# （服务不齐则本层不装）。依据：`docs/02-设计/平台层设计v0.1.md` §4.3、§8-P2。
+#
+# 静态核（`--dump-config` 是 launcher flag，须用 `--profile web`）：
+#   node --import tsx/esm apps/cli/src/bin.ts --profile web --dump-config \
+#     --patch "F:/deepseek/deepseek harness/office-platform/office-observe.patch.yml"
+#   ⇒ EXIT=0，表里出现 `id: office-meter`、`id: office-audit`、`id: office-observe`。
+
+- insert:
+    - id: office-meter
+      name: ./plugins/office-meter/index.ts
+    - id: office-audit
+      name: ./plugins/office-audit/index.ts
+    - id: office-observe
+      name: ./plugins/office-observe/index.ts

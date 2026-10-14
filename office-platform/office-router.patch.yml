@@ -1,0 +1,15 @@
+# C 阶段 · R0 路由盖章挂载件（M2/C）
+#
+# 把 `office-router` 挂进 web profile：路由/身份纯逻辑（open_id → 租户/角色 → 会话章）以只读服务
+# `officeRouter` 暴露。入站适配器在会话创建窗口调它（R0 布线）。
+# 依据：`docs/02-设计/路由与权限模型设计v0.1.md` §3/§4。
+#
+# 用法（在 `deepseek-harness/` 仓库根）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "F:/deepseek/deepseek harness/office-platform/office-router.patch.yml" \
+#     --no-open --port 3096
+# 静态核：`--dump-config` 里出现 `id: office-router`。
+
+- insert:
+    - id: office-router
+      name: ./plugins/office-router/index.ts

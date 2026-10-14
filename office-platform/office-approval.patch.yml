@@ -1,0 +1,42 @@
+# M1 审批层 · 真实组合挂载（§8 第 7 步）
+#
+# 用法（在 `deepseek-harness/` 仓库根目录执行，与 `office.patch.yml` 叠挂）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch ../office-platform/office-approval.patch.yml \
+#     --patch ./office.patch.yml \
+#     --patch apps/web/tests/pin-browse-picker.overlay.yml
+#
+# 复核挂载：
+#   node --import tsx/esm apps/cli/src/bin.ts web --dump-config --patch ../office-platform/office-approval.patch.yml
+#   # 期望：`id: office-approval` 出现，config 全解析；`--dump-config-schema` 里也有它的字段表。
+#
+# 两条实测语法（都会静默或响亮地失败，踩过）：
+#   1. **新增**插件行必须用 `- insert:` 包裹；裸列表项被当成「对已有 id 的 patch」，
+#      报 `patch: id is required for non-insert patches`。
+#   2. `name` 允许写**相对/绝对文件路径**：启动器把 insert 行里的路径锚定到 patch 文件同目录
+#      并转成 `file:` URL（`packages/boot/app-boot/src/index.ts:346-357`），
+#      所以自研代码不需要装进任何 `node_modules`。
+#      代价：这条只在 tsx 下成立（`pnpm dsh web` = `node --import tsx/esm apps/cli/src/bin.ts`），
+#      发行版 CLI 跑的是构建产物，届时这一行要指向打包后的 JS。
+#
+# 密钥不进 config：`verificationTokenEnv` 给的是**环境变量名**，值在运行时读
+# （`--dump-config` 因此可以放心贴进评审材料）。环境变量缺失 → token 为空 → 每次回调验签失败，
+# 也就是**不配 token 就不可能批任何东西**，这是 fail-closed 的一侧。
+
+- insert:
+    - id: office-approval
+      name: ./plugins/office-approval/index.ts
+      config:
+        tenantId: tenant-local
+        # 同步窗口 D3。spike 用 20 秒，好让「超窗 → cancelled」那条分支在同一轮里跑到。
+        windowMs: 20000
+        # 催办间隔：spike 用 60 秒（下限即 60_000），真部署按 §3.5 的 30 分钟。
+        remindAfterMs: 60000
+        callbackPath: /office/approval/callback
+        verificationTokenEnv: OFFICE_APPROVAL_VERIFICATION_TOKEN
+        # 名单为空 = 谁都批不了（§4）。spike 用这个假 open_id，第 8 步换真飞书 open_id。
+        approvers:
+          - ou_spike_approver
+        # 卡片落盘；空字符串 = 只写日志。绝对路径是刻意的：启动器的 cwd 在内核仓库里，
+        # 相对路径会把 spike 产物写进内核工作树，违反「内核零改动」。
+        cardSink: 'F:/deepseek/deepseek harness/office-platform/.spike/cards.jsonl'

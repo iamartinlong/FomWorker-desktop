@@ -1,0 +1,33 @@
+# 记忆层 §7 第 2 步 · 真进程观察挂载（临时观察件，不是部署件）
+#
+# 用法（在 `deepseek-harness/` 仓库根目录执行，与审批层那份叠挂；--patch 必须排在 --port 之前）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "F:/deepseek/deepseek harness/office-platform/office-approval.patch.yml" \
+#     --patch "F:/deepseek/deepseek harness/office-platform/office-memory.spike.patch.yml" \
+#     --patch ./office.patch.yml --no-open --port 3083
+#
+# 复核：
+#   node --import tsx/esm apps/cli/src/bin.ts web --dump-config \
+#     --patch "…/office-approval.patch.yml" --patch "…/office-memory.spike.patch.yml"
+#   # 期望出现 `id: office-memory` 与 `config: memoryRoot: <绝对路径>`
+#
+# 两个刻意的形状：
+#   1. **只挂这一行，不动 agent 名录**。`memory_write` / `memory_archive` 是插件在自己上下文里
+#      `ctx.tools.register` 的，落在 tools 注册表的**全局层**，任何 agent 作用域默认继承
+#      （内核先例：`mcp-resources` 挂在进程级、不在任何名录里，三把工具照样模型可见 ——
+#      `packages/bundle/base/cordis.patch.yml:492-493`、`packages/mcp/mcp-resources/src/tools.ts:33`）。
+#      第 1 步 spike 之所以要复制 `standard` 名录，是因为内核把 `tool-session-query` 那五把**按名录**挂载，
+#      不是因为根注册表不可见 —— 这两件事别混。
+#   2. `memoryRoot` 是**绝对路径且指向自研目录的 .spike 下**：启动器的 cwd 在内核仓库里，
+#      相对路径会把记忆写进内核工作树（违反「内核零改动」），而写进 `.dsh` 又把观察产物
+#      混进凭据目录。
+#
+# ⚠️ 这一步**不挂** session-query 那份（`session-query.spike.patch.yml`）：观察判据是
+#    「记忆目录内零审批卡 + 文件真落盘」与「工作区外提权写照旧出卡」，与全文检索无关；
+#    少一个变量，台账计数差才只反映这一件事。
+
+- insert:
+    - id: office-memory
+      name: ./plugins/office-memory/index.ts
+      config:
+        memoryRoot: 'F:/deepseek/deepseek harness/office-platform/.spike/memory-spike'

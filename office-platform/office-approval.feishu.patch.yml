@@ -1,0 +1,44 @@
+# M1 审批层 · 真飞书渠道挂载（§8 第 8 步）
+#
+# **与 `office-approval.patch.yml` 二选一**，不是叠挂：那条是 cardSink 测试臂（第 7 步），
+# 这条把渠道换成真飞书。叠挂会踩第 7 步记下的坑 —— 后面的非 insert 覆盖行是**整段替换 config**，
+# 只写 `feishuAppId` 会把 `windowMs`/`approvers` 全打回默认值。这里直接重抄整段，读表不用猜是哪条臂。
+#
+# 用法（在 `deepseek-harness/` 仓库根目录；`--port` 换成没被占用的端口，见下）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "F:/deepseek/deepseek harness/office-platform/office-approval.feishu.patch.yml" \
+#     --patch ./office.patch.yml \
+#     --port 3081 --no-open
+#   ⚠️ `--patch` 必须排在 `--port` 这类应用旗标**之前**：启动器在第一个它不认的旗标处就把 argv
+#   整段交给应用（`apps/cli/src/args.ts:161-166`），晚给的 `--patch` 会被应用拒成
+#   `unknown option '--patch'`（第 8 步实测）。
+# 环境变量（`FEISHU_APP_SECRET`、`OFFICE_APPROVAL_VERIFICATION_TOKEN`）由
+# `../office-platform/.spike/run-feishu-loop.mjs` 从 `.secrets/feishu-dev.env` 注入，命令行里不出现。
+#
+# 三条这一臂特有的事实：
+# 1. **App ID 进 config，App Secret 绝不进**：ID 是标识符（它出现在每一次请求的 URL 与启动日志里），
+#    Secret 是凭据 —— 只给环境变量名，运行时读。缺 Secret 时插件直接抛，不静默退回 cardSink。
+# 2. **审批人是真 open_id**：从长连接收到的 `im.message.receive_v1` 里读出来的那个（`.spike/feishu-ws/events.jsonl`
+#    seq=1）。open_id 是**按应用**的，换一个 App 就得换一个，不能抄别人的。
+# 3. **窗口/催办给人留出从容**：10 分钟窗口、5 分钟催办（10 分钟是我们自己的 config 上限：`windowMs` 超过 600000 会让整层装配失败 —— 第一次把它调到 15 分钟就撞在这，插件直接不装，而不是悄悄用默认值跑）。第 7 步的 20 秒是给机器跑的，
+#    让人在手机上读卡再点，20 秒只会测到「超期」这一条分支。
+#
+# 就绪判据沿用第 7 步：`GET /office/approval/callback` → **405**（挂着且只收 POST）。
+
+- insert:
+    - id: office-approval
+      name: ./plugins/office-approval/index.ts
+      config:
+        tenantId: tenant-local
+        windowMs: 600000
+        remindAfterMs: 300000
+        callbackPath: /office/approval/callback
+        verificationTokenEnv: OFFICE_APPROVAL_VERIFICATION_TOKEN
+        approvers:
+          - ou_e66ad5f9e6604d4184d17215b1c2adc7
+        feishuAppId: cli_aa431ed31eb8dcce
+        feishuAppSecretEnv: FEISHU_APP_SECRET
+        feishuTimeoutMs: 10000
+        # 真渠道下不再落盘卡片：要看的形状在飞书客户端里，卡片的每一次发送与撤回在 `.spike/feishu-ws/bridge.log`
+        # 与产品日志里各留一行。
+        cardSink: ''

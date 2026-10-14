@@ -1,0 +1,15 @@
+m1_recall_anything: 抓住 —— 3 例红
+    · 窗口到期 → cancelled（不是 rejected）、记录迁 expired、卡片就地转后台且**不撤回**
+    · 门已经关上（`expiresAt` 早于窗口结束）时才真的撤卡
+    · E7 调用方取消（session.cancel 的等价信号）→ recalled + 卡片转后台 + cancelled
+m2_always_defer: 抓住 —— 1 例红
+    · 门已经关上（`expiresAt` 早于窗口结束）时才真的撤卡
+m3_deferred_is_settled: 抓住 —— 2 例红
+    · 终态：按钮置灰、确认框消失、页脚写明发生了什么
+    · F-E：`defer` 是就地 PATCH，绝不 DELETE —— 转后台那张卡还得能点
+m4_defer_deletes: 抓住 —— 2 例红
+    · 终态：按钮置灰、确认框消失、页脚写明发生了什么
+    · F-E：`defer` 是就地 PATCH，绝不 DELETE —— 转后台那张卡还得能点
+m5_defer_wrong_state: 抓住 —— 2 例红
+    · 终态：按钮置灰、确认框消失、页脚写明发生了什么
+    · F-E：`defer` 是就地 PATCH，绝不 DELETE —— 转后台那张卡还得能点

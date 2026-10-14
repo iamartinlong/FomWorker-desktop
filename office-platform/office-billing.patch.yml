@@ -1,0 +1,15 @@
+# E 阶段 · E-P3 计费挂载件（M2/E-P3 · 平台层 §4.2 配额/计费）
+#
+# 把 `office-billing` 挂进 web profile：自建价格表（每百万 token 单价，逐模型）折算用量金额 + 限额裁决。
+# 价格表**自建**（内核不读 cost，P2）——按需在 config 里填 `prices`；未登记的模型**未定价**（不静默按 0）。
+# 超额动作 `overageAction` 默认 `warn`（U3 未定，取最保守「只告警」）。
+# 依据：`docs/02-设计/平台层设计v0.1.md` §4.2、§8-P3。
+#
+# 静态核（`--dump-config` 是 launcher flag，须用 `--profile web`）：
+#   node --import tsx/esm apps/cli/src/bin.ts --profile web --dump-config \
+#     --patch "F:/deepseek/deepseek harness/office-platform/office-billing.patch.yml"
+#   ⇒ EXIT=0，表里出现 `id: office-billing`。
+
+- insert:
+    - id: office-billing
+      name: ./plugins/office-billing/index.ts

@@ -1,0 +1,15 @@
+# B 阶段 · O-P0 运维辅助挂载件（M2/B）
+#
+# 把 `office-ops` 挂进 web profile：备份清单与冷备（O4 清单）以只读/文件级服务 `officeOps` 暴露。
+# 冷备前须**先停写**（一 home 一活实例，O6）。
+# 依据：`docs/02-设计/部署与运维形态设计v0.1.md` §O4。
+#
+# 用法（在 `deepseek-harness/` 仓库根）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "F:/deepseek/deepseek harness/office-platform/office-ops.patch.yml" \
+#     --no-open --port 3095
+# 静态核：`--dump-config` 里出现 `id: office-ops`。
+
+- insert:
+    - id: office-ops
+      name: ./plugins/office-ops/index.ts

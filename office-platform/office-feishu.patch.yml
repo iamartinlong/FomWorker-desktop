@@ -1,0 +1,23 @@
+# M1 收尾剩余 · 飞书工具层挂载（设计小样 §4）
+#
+# **只读先行**：`feishu_doc_read`（L0）。App ID 进 config、App Secret **只给环境变量名**（运行时读值，
+# 绝不落 config）；缺 Secret 时插件直接抛（同审批层取向），不静默退回一个「永远读不了」的工具。
+#
+# 工具名是**自研定名**（不是 MCP 的 `mcp__<server>__<tool>`）：定名才能静态登记进 §5 风险字典（读 L0），
+# 否则落「未登记 → L4」⇒ 每次读飞书文档都要 owner 批一张卡（F-6B 同病）。
+#
+# 用法（在 `deepseek-harness/` 仓库根；`--patch` 必须排在 `--port`/`--no-open` 之前）：
+#   FEISHU_APP_SECRET=<值> node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "F:/deepseek/deepseek harness/office-platform/office-feishu.patch.yml" \
+#     --patch ./office.patch.yml --no-open --port 3087
+# 环境变量由 `.spike` 的启动器从 `.secrets/feishu-dev.env` 注入，命令行里不出现。
+#
+# 就绪/静态核：`--dump-config` 里出现 `id: office-feishu`（name 指 index.ts、config 无 Secret 值）。
+
+- insert:
+    - id: office-feishu
+      name: ./plugins/office-feishu/index.ts
+      config:
+        feishuAppId: cli_aa431ed31eb8dcce
+        feishuAppSecretEnv: FEISHU_APP_SECRET
+        baseUrl: https://open.feishu.cn

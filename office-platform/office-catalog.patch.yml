@@ -1,0 +1,15 @@
+# P0 · L0 平台默认能力目录挂载件
+#
+# 把 `office-catalog` 插件挂进 web profile：它只做一件事——`ctx.reflect.provide('officeCatalog',
+# createCatalogService())`，把平台预置的技能/专家/连接器目录以只读服务暴露出去。不挂 UI、不做动作。
+# 设计：`docs/02-设计/M2前置调研与设计草案v0.1.md` §2.5（L0）。
+#
+# 用法（在 `deepseek-harness/` 仓库根；`--patch` 必须排在 `--port`/`--no-open` 之前）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "F:/deepseek/deepseek harness/office-platform/office-catalog.patch.yml" \
+#     --patch ./office.patch.yml --no-open --port 3091
+# 静态核：`--dump-config` 里出现 `id: office-catalog`。
+
+- insert:
+    - id: office-catalog
+      name: ./plugins/office-catalog/index.ts

@@ -1,0 +1,21 @@
+# 记忆层 §7 第 3 步 · 真进程观察挂载（临时观察件，不是部署件）
+#
+# 与第 2 步那份同形，只差一件事：`memoryRoot` 指向上一步 `.spike/seed-memory.mjs`
+# 已经种好索引 + 条目 + 一行越界凭据的目录。之所以能直接复用插件的 `index.ts`，是因为
+# 第 3 步的注入段（`systemPrompt.section`）就挂在同一个 apply 里 —— 起进程即装段，
+# 不需要额外的挂段动作，这正是「常驻索引会进模型提示词」这条判据要落的现场。
+#
+# 用法（在 `deepseek-harness/` 仓库根目录执行，与审批层那份叠挂；--patch 必须排在 --port 之前）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "…/office-approval.patch.yml" \
+#     --patch "…/office-memory.spike3.patch.yml" \
+#     --patch ./office.patch.yml --no-open --port 3084
+#
+# 判据对准的是注入那一半，不是蒸馏：此刻 MEMORY.md 里的索引行代表「蒸馏已把索引写好」
+# 这个第 3 步之后的稳态（手工种它 = 只观察注入，不越步假装蒸馏跑过）。
+
+- insert:
+    - id: office-memory
+      name: ./plugins/office-memory/index.ts
+      config:
+        memoryRoot: 'F:/deepseek/deepseek harness/office-platform/.spike/memory-step3'

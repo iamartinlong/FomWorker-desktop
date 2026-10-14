@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fominfo.example/contracts/ws/client-platform.schema.json",
+  "title": "FomWorker client↔platform WS protocol",
+  "version": "0.2.0",
+  "description": "客户端 agent 与运营平台之间的 WebSocket 消息（单条连接多路复用；按 `type` 分流）。方向：client→platform = usage.report/audit.report/heartbeat；platform→client = ack/config.downlink/subscription.downlink/quota.downlink/catalog.downlink/im.relay。字段与 `openapi/platform.yaml` 的 HTTP 上报保持一致。",
+  "oneOf": [
+    { "$ref": "#/$defs/UsageReport" },
+    { "$ref": "#/$defs/AuditReport" },
+    { "$ref": "#/$defs/Heartbeat" },
+    { "$ref": "#/$defs/Ack" },
+    { "$ref": "#/$defs/ConfigDownlink" },
+    { "$ref": "#/$defs/SubscriptionDownlink" },
+    { "$ref": "#/$defs/QuotaDownlink" },
+    { "$ref": "#/$defs/CatalogDownlink" },
+    { "$ref": "#/$defs/ImRelay" }
+  ],
+  "$defs": {
+    "UsageReport": {
+      "$comment": "client → platform；幂等键 {tenant,user,session,turn,step,attempt}。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "usage.report" },
+        "tenantId": { "type": "string" },
+        "userId": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "turn": { "type": "integer" },
+        "step": { "type": "integer" },
+        "attempt": { "type": "integer" },
+        "model": { "type": "string" },
+        "source": { "enum": ["platform", "byo"] },
+        "inputTokens": { "type": "integer" },
+        "outputTokens": { "type": "integer" },
+        "cacheReadTokens": { "type": "integer" },
+        "cacheWriteTokens": { "type": "integer" },
+        "at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "tenantId", "userId", "sessionId", "model", "source"],
+      "additionalProperties": false
+    },
+    "AuditReport": {
+      "$comment": "client → platform；幂等键 {tenant,user,session,seq}；路径/参数已脱敏。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "audit.report" },
+        "tenantId": { "type": "string" },
+        "userId": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "seq": { "type": "integer" },
+        "time": { "type": "integer" },
+        "eventType": { "type": "string" },
+        "detail": { "type": "object", "additionalProperties": true }
+      },
+      "required": ["type", "tenantId", "userId", "sessionId", "seq", "eventType"],
+      "additionalProperties": false
+    },
+    "Heartbeat": {
+      "$comment": "client → platform。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "heartbeat" },
+        "deviceId": { "type": "string" },
+        "clientVersion": { "type": "string" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "Ack": {
+      "$comment": "platform → client；确认收到某类上报（可选，用于可靠投递）。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "ack" },
+        "ref": { "enum": ["usage.report", "audit.report", "heartbeat"] },
+        "count": { "type": "integer" }
+      },
+      "required": ["type", "ref"],
+      "additionalProperties": false
+    },
+    "ConfigDownlink": {
+      "$comment": "platform → client；模型清单下发（plan 准入）。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "config.downlink" },
+        "models": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "SubscriptionDownlink": {
+      "$comment": "platform → client；订阅下发。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "subscription.downlink" },
+        "planId": { "type": "string" },
+        "status": { "enum": ["active", "past_due", "canceled"] },
+        "periodStart": { "type": "string", "format": "date-time" },
+        "periodEnd": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "QuotaDownlink": {
+      "$comment": "platform → client；配额下发（本周期限额 + 已用），供本地执行。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "quota.downlink" },
+        "maxTokens": { "type": "integer" },
+        "maxCost": { "type": "number" },
+        "maxCalls": { "type": "integer" },
+        "usedTokens": { "type": "integer" },
+        "usedCost": { "type": "number" },
+        "usedCalls": { "type": "integer" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "CatalogDownlink": {
+      "$comment": "platform → client；平台目录（技能/专家/连接器）下发。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "catalog.downlink" },
+        "entries": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "ImRelay": {
+      "$comment": "platform → client；企业 IM 消息中继（渠道 → 员工桌面 agent）。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "im.relay" },
+        "channel": { "enum": ["feishu", "dingtalk", "wecom"] },
+        "openId": { "type": "string" },
+        "payload": { "type": "object", "additionalProperties": true }
+      },
+      "required": ["type", "channel", "openId"],
+      "additionalProperties": false
+    }
+  }
+}

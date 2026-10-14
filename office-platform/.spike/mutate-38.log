@@ -1,0 +1,14 @@
+baseline: green
+a-fire-drops-grant-gate: 抓住 —— 1 例红（exit=1）— 到期动作退回「approved 一律作废」（不看批件）—— 「已批且批件已消失 → skipped」那条必须红（会被误作废）
+    · #38 已批且批件已消失（窗口内批准 / 重放已消费）：到点不作废、就地撤销告警
+b-fire-inverts-grant-gate: 抓住 —— 3 例红（exit=1）— 到期动作把批件判定反过来（有批件反而不作废）—— 「批了但批件还在 → expired」那条必须红
+    · 过期作废：落账 + 通知发起人，pending 与「批了但批件还在」的 approved 都作废
+    · #38 已批且批件已消失（窗口内批准 / 重放已消费）：到点不作废、就地撤销告警
+    · 作废同时收回没被重放消费掉的批件（§3.5「过期 ⇒ grants 不再受理」）
+c-scanopen-arms-approved-unconditionally: 抓住 —— 1 例红（exit=1）— 重启补登记回到「approved 无条件补作废」—— scanOpen 那条「窗口内批准不该再挂出幽灵 job」必须红
+    · scanOpen 补登记：pending 补两个，超窗转后台的 expired 也补两个，approved 只在还挂着批件时补作废
+d-observer-always-keeps-expire: 抓住 —— 1 例红（exit=1）— 挂载观察者退回「批准永远留着作废」—— install 那条「窗口内批准当场撤干净、catalog 归零」必须红
+    · #38 挂载：窗口内批准（无批件）当场撤掉作废，侧栏不留幽灵自动化
+e-approve-notifies-before-grant: 抓住 —— 1 例红（exit=1）— approve 的通知排回批件落账之前（旧竞态）—— 迟到批准在观察者眼里没有批件 ⇒ 作废被撤，那条「批准只撤催办、留作废」必须红
+    · installApprovalSweeper：台账走到哪一步，告警就武装或撤销到哪一步
+结论：5/5 个变异被抓住

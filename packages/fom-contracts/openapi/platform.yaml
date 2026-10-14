@@ -1,0 +1,985 @@
+openapi: 3.1.0
+info:
+  title: FomWorker PLATFORM API
+  version: 0.2.0
+  description: |
+    运营平台对外 API：**登录/令牌**、客户端**上报**（用量/审计）、**拉配置**（订阅/配额/平台目录/模型）、
+    心跳，以及**运营后台管理**。契约唯一真相源（`packages/fom-contracts`）。
+    实现：`apps/fom-platform/api`；客户端消费：`apps/fom-client`。
+    说明：平台模型用量由**网关**计量并上报（`source: platform`）；客户端只上报 BYO/观测（`source: byo`）。
+servers:
+  - url: https://platform.example.com/api
+security:
+  - bearerAuth: []
+tags:
+  - { name: auth, description: 登录 / 令牌 / 当前用户 }
+  - { name: report, description: 客户端上报（用量 / 审计） }
+  - { name: config, description: 拉配置（订阅 / 配额 / 目录 / 模型） }
+  - { name: admin, description: 运营后台管理 }
+
+paths:
+  /auth/login:
+    post:
+      summary: 登录（OIDC / 邮箱）
+      description: |
+        email 方式：邮箱不存在与密码错误返回同一个 401（防枚举）。
+        oidc 方式：带 IdP 的 id_token；未配置 OIDC 时返回 503，不做假通过。
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [method]
+              properties:
+                method: { type: string, enum: [oidc, email] }
+                email: { type: string, description: method=email 必填 }
+                password: { type: string, description: method=email 必填 }
+                idToken: { type: string, description: method=oidc 必填 }
+      responses:
+        '200':
+          description: 令牌
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TokenPair' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '503': { description: OIDC 未配置 }
+  /auth/token:
+    post:
+      summary: 刷新令牌
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refreshToken]
+              properties:
+                refreshToken:
+                  type: string
+                  description: 登录时下发的刷新令牌；访问令牌拿来刷新会被拒绝
+      responses:
+        '200':
+          description: 新一轮令牌（按库内当前角色/状态重签）
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TokenPair' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /report/usage:
+    post:
+      summary: 上报用量（网关报平台模型 · 客户端报 BYO/观测）
+      description: |
+        **双通道鉴权**：客户端带用户 Bearer 令牌 ⇒ 载荷的 `tenantId`/`userId` 必须与令牌一致（不符 403）；
+        网关带服务间共享密钥头 `X-Gateway-Key` ⇒ 载荷里的租户/用户可信（密钥值只经环境变量
+        `FOM_GATEWAY_REPORT_KEY` 注入，不进仓库；未配置即关闭该通道）。两者都没有 → 401。
+        成本由**平台按 `model` 单价表折算**，上报体不带成本；折算**只认模型名、不看 `source`**，
+        目录里查不到才记 0（BYO 的模型名通常不在平台目录里 ⇒ 记 0，不是因为它是 BYO 就免单）。
+        幂等键 `{tenant,user,session,turn,step,attempt}` 已收过时不重复落库、**配额也不重复累加**，答复 `duplicate=true`。
+      parameters:
+        - { $ref: '#/components/parameters/gatewayKey' }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UsageReport' }
+      responses:
+        '202':
+          description: 已接收（重复上报同样是 202，看 `duplicate`）
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ReportAck' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /report/audit:
+    post:
+      summary: 上报审计条目（归一化 + 脱敏）
+      description: |
+        鉴权同 `/report/usage`（用户令牌只能报自己，网关走 `X-Gateway-Key`）。
+        幂等键 `{tenant,user,session,seq}`；`detail` 为已脱敏的 JSON 对象，原样存 jsonb，上限 64 KB。
+      parameters:
+        - { $ref: '#/components/parameters/gatewayKey' }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AuditReport' }
+      responses:
+        '202':
+          description: 已接收
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ReportAck' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /config/subscription:
+    get:
+      summary: 拉订阅（当前租户）
+      description: |
+        租户取自访问令牌的 `tenant_id`，不接受入参。生效订阅＝状态 `active` 且周期最晚的那条；
+        还没有订阅记录时是 **404**（不是空对象），P3 写入订阅前该租户确实没有订阅。
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Subscription' }
+        '401': { description: 未认证，或令牌不带租户声明 }
+        '404': { description: 该租户还没有订阅记录 }
+  /config/quota:
+    get:
+      summary: 拉配额（本周期限额 + 已用）
+      description: |
+        限额 `0` ＝ 未设限（P3 从套餐写入）。配额行还属于上个周期时，已用按 `0` 报——
+        读侧只做投影，清零留给下一条上报。
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Quota' }
+        '401': { description: 未认证，或令牌不带租户声明 }
+  /config/catalog:
+    get:
+      summary: 拉平台目录（技能/专家/连接器）
+      description: |
+        全局表，各租户同一份；按 `kind` + `version` 稳定排序，已下架（软删）的条目不在这份清单里。
+        **目录的去向是客户端**（G7：技能→skill 目录、专家→agent preset、连接器→MCP 配置，本地物化），
+        **不进 `POST /api/admin/gateway/config` 的网关快照**——网关只吃模型 / 价格 / 配额 / API key 哈希 / 余额。
+        这条是设计文档的口径（`实施计划-运营平台v0.1.md` P2 行：「平台目录 → 客户端」），别顺手往快照里加。
+        `name` 由平台一并提出，客户端物化落点用它命名。
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/CatalogEntry' }
+        '401': { description: 未认证 }
+  /models:
+    get:
+      summary: 拉模型清单（plan 准入）
+      description: |
+        准入套餐以生效订阅为准，没有订阅记录时退回 `tenant.plan_id`；两者都没有 → 空清单。
+        只回 `status=active` 的模型，`name` 是调用名（下单给网关用）。
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/ModelInfo' }
+        '401': { description: 未认证，或令牌不带租户声明 }
+  /heartbeat:
+    post:
+      summary: 心跳 / 版本上报
+      description: |
+        设备首见即登记（归属取令牌的租户/用户），再见只刷新 `lastSeenAt` 与随请求带来的字段；
+        省略的 `name`/`clientVersion` 保留原值，不会被擦掉。
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Heartbeat' }
+      responses:
+        '200':
+          description: 回执
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/HeartbeatAck' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { description: 未认证，或令牌不带租户/用户声明 }
+  /admin/tenants:
+    get:
+      summary: 租户列表
+      description: 令牌带租户声明时只回自己那条；仅平台运营侧（无租户声明）列全部。
+      parameters:
+        - { $ref: '#/components/parameters/page' }
+        - { $ref: '#/components/parameters/pageSize' }
+      responses:
+        '200':
+          description: 租户视图（令牌带租户时最多一条）
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Tenant' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+    post:
+      summary: 建租户（含 owner）
+      description: |
+        需 owner/admin 令牌；例外：库内还没有任何租户且部署方开了首轮引导开关
+        `Platform:AllowFirstTenantBootstrap` 时允许匿名建第一个租户，建完即失效。
+        会一次性写入 tenant + owner 用户 + email 身份，只落一次提交。
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, ownerEmail, ownerPassword]
+              properties:
+                name: { type: string, maxLength: 100 }
+                planId: { type: string, description: 可空（未挂套餐） }
+                ownerEmail: { type: string, format: email }
+                ownerPassword: { type: string, minLength: 8, maxLength: 128 }
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Tenant' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /admin/users:
+    get:
+      summary: 用户列表（当前租户）
+      parameters:
+        - { $ref: '#/components/parameters/page' }
+        - { $ref: '#/components/parameters/pageSize' }
+      responses:
+        '200':
+          description: 当前租户用户
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/User' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+    post:
+      summary: 建用户
+      description: tenantId 省略时取当前登录者所属租户；password 省略则不建 email 口令身份（留给 OIDC 或后续邀请）。
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, role]
+              properties:
+                tenantId: { type: string }
+                email: { type: string, format: email }
+                role: { type: string, enum: [owner, admin, member] }
+                password: { type: string, minLength: 8, maxLength: 128 }
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { description: 租户不存在 }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /admin/gateway/config:
+    post:
+      summary: 触发平台 → 网关配置下发
+      description: |
+        需 owner/admin 令牌。取**全量快照**（活跃租户 + api key 哈希 + 准入模型 + 配额 + 余额净额，加全局
+        active 模型单价）POST 到网关 `/internal/config`，网关侧覆盖式接收。
+        `tenants[].balance` 是每次下发现算的 `SUM(delta)`（见 `GET /admin/tenants/{tenantId}/balance` 的账本口径），
+        平台不存余额列、也不因欠费拦上报——拦截是网关的执行决定。
+        地址未配置（`Gateway:BaseUrl`）或密钥缺失（环境变量 `FOM_GATEWAY_REPORT_KEY`）→ **503**，
+        不静默成功；网关不可达或应答异常 → **502**。
+      responses:
+        '200':
+          description: 已下发
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/GatewayPushAck' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '502': { description: 网关不可达 / 拒绝下发 }
+        '503': { description: 网关地址或服务间密钥未配置 }
+  /admin/plans:
+    get:
+      summary: 套餐列表（全局目录，各租户看到同一份）
+      description: |
+        需 owner/admin 令牌。`modelIds` ＝ 该套餐的准入模型，顺序稳定（按 model id 排）但不等于录入顺序。
+      parameters:
+        - { $ref: '#/components/parameters/page' }
+        - { $ref: '#/components/parameters/pageSize' }
+      responses:
+        '200':
+          description: 当前页套餐
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Plan' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+    post:
+      summary: 建套餐
+      description: |
+        需 owner/admin 令牌。`plan` 表没有名称唯一索引，查重名在应用侧做，同名 → 409。
+        `limits` 省略＝三项都不设限（落库 0）；写进 `plan.limits` 的 jsonb 键名是 camelCase。
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PlanInput' }
+      responses:
+        '201':
+          description: created
+          headers:
+            Location: { description: 新套餐的资源路径, schema: { type: string } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Plan' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /admin/plans/{planId}:
+    patch:
+      summary: 改套餐（省略的字段一律不动）
+      description: |
+        需 owner/admin 令牌。`status` 只认 `active` / `retired`；改名撞别人 → 409。
+        套餐被引用后下架不影响已有订阅，只影响后续准入与下发。
+      parameters:
+        - { name: planId, in: path, required: true, schema: { type: string } }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PlanPatch' }
+      responses:
+        '200':
+          description: 改后的套餐
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Plan' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { description: 套餐不存在 }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /admin/plans/{planId}/models:
+    put:
+      summary: 覆盖式设置套餐准入模型
+      description: |
+        需 owner/admin 令牌。整集合替换，空数组＝清空。有未知或已下架（`status != active`）的模型
+        → 404 且原准入不动；id 重复 → 400。
+      parameters:
+        - { name: planId, in: path, required: true, schema: { type: string } }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [modelIds]
+              properties:
+                modelIds:
+                  type: array
+                  items: { type: string }
+      responses:
+        '200':
+          description: 改后的套餐
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Plan' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { description: 套餐或模型不存在 / 模型已下架 }
+  /admin/tenants/{tenantId}/subscription:
+    put:
+      summary: 覆盖式设置租户订阅（并按套餐落本周期限额）
+      description: |
+        需 owner/admin 令牌。`subscription` 表没有唯一索引，tenant 1─1 subscription 由应用侧收口：
+        该租户已有订阅就改那一条，没有才建一条——重复 PUT 不会产生第二行。
+        同一次写入把 `plan.limits` 落到当前自然月的配额限额：**只覆盖三项 `max*`，
+        `used*` 与周期归属都不动**（已用是账，翻转归 `/report/usage` 那侧）。
+        路径上的租户 id 也在应用侧收口：令牌带租户只能写自己那条（否则 403，
+        连「那家租户存不存在」都探不到）；平台运营侧令牌没有租户声明则不限，但目标租户必须存在。
+        `periodStart` 省略＝此刻；`periodEnd` 必填（不替运营猜账期终点）且必须晚于起点。
+      parameters:
+        - { name: tenantId, in: path, required: true, schema: { type: string } }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SubscriptionInput' }
+      responses:
+        '200':
+          description: 订阅本体 + 落下来的本周期限额
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SubscriptionSetup' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { description: 未认证之外的越权：写别的租户，或套餐已下架（retired） }
+        '404': { description: 租户或套餐不存在 }
+  /admin/tenants/{tenantId}/quota:
+    put:
+      summary: 覆盖式设置本周期的三项限额
+      description: |
+        需 owner/admin 令牌。整份覆盖：省略的项按 `0`＝未设限。
+        只写 `max*` 三列——`used*` 与自然月翻转归上报侧管，限额写入不碰；配额行缺失时按限额建行。
+        跨租户口径同 `PUT /admin/tenants/{tenantId}/subscription`。
+      parameters:
+        - { name: tenantId, in: path, required: true, schema: { type: string } }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/QuotaLimits' }
+      responses:
+        '200':
+          description: 覆盖后的本周期配额（已用按当前周期投影）
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Quota' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { description: 租户不存在 }
+  /admin/tenants/{tenantId}/balance:
+    get:
+      summary: 租户余额与流水（余额＝流水 `delta` 之和）
+      description: |
+        需 owner/admin 令牌。`balance_transaction` 是 append-only 账本，**平台侧不存余额列**（16 张表里没有任何
+        存余额的地方），余额按 `SUM(delta)` 现算 ⇒ 与流水永远自洽，不存在对不上账的第二份真相。
+        `transactions` 按 `at` 倒序分页（`page ≥ 1`、`pageSize 1..100`）。
+        跨租户口径同 `PUT /admin/tenants/{tenantId}/subscription`（令牌带租户只能看自己那条）。
+      parameters:
+        - { name: tenantId, in: path, required: true, schema: { type: string } }
+        - { $ref: '#/components/parameters/page' }
+        - { $ref: '#/components/parameters/pageSize' }
+      responses:
+        '200':
+          description: 余额 + 当前页流水
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Balance' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { description: 租户不存在 }
+    post:
+      summary: 记一笔充值或调整（人工操作，`consume` 不走这里）
+      description: |
+        需 owner/admin 令牌。`reason` 只接 `recharge` / `adjust`：
+        **`consume` 由用量上报侧在同一事务里随 `usage` 落账**（只看折算出的成本是否 > 0，`source`
+        本身不免单 ⇒ BYO 点名了平台已定价的模型照样扣余额），所以重放上报不会重复记流水——
+        幂等靠 `usage` 那条唯一索引，冲突时整批回滚。让这两个词各自只有一个主人。
+        `delta` 正数入、负数出（`adjust` 两种都行），`0` 拒。`at` 省略＝此刻（UTC）。
+        **弱去重**：`balance_transaction` 没有幂等键列，所以同一 `{reason, at, delta}` 记过就回 409。
+        要硬幂等得给该表加 `idempotency_key` 列（＝新迁移，尚未做）。
+      parameters:
+        - { name: tenantId, in: path, required: true, schema: { type: string } }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/BalanceTxInput' }
+      responses:
+        '200':
+          description: 记账后的余额与当前页流水
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Balance' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { description: 租户不存在 }
+        '409': { description: 同一 `reason`+`at`+`delta` 已记过（弱去重，无幂等键列） }
+  /admin/tenants/{tenantId}/billing:
+    get:
+      summary: 周期账单（`usage` 的读侧投影，按自然月 × 模型 × 来源聚合）
+      description: |
+        需 owner/admin 令牌。**账单不是一张表，也不新记账**：它是 `usage` 在某个自然月上的聚合投影，
+        零新表、无写入。金额口径的唯一主人是 `usage.cost`（上报时由平台按模型单价折算并已落列），
+        这里只做 `SUM(cost)`——**再折算一遍就是第二份真相**，禁止。
+        `period` 形如 `yyyy-MM`，省略＝当前自然月（读侧的安全默认，不像订阅 `periodEnd` 那样必填）；
+        格式非法 400，不做「猜一个」。`lines` 按 `cost` 倒序；`source` 只有 `platform`/`byo` 两值，
+        但 `cost` 只由模型名在平台目录里有无单价决定 ⇒ BYO 点名了已定价的模型照样计费、照样出现在这里。
+        跨租户口径同 `GET /admin/tenants/{tenantId}/balance`（走 `WriteTarget`，403 排在 404 之前）。
+      parameters:
+        - { name: tenantId, in: path, required: true, schema: { type: string } }
+        - { name: period, in: query, required: false, schema: { type: string, pattern: '^\d{4}-\d{2}$' }, description: 自然月 yyyy-MM；省略＝当前月 }
+      responses:
+        '200':
+          description: 该周期账单（无数据也是 200 + 空行，不回 404）
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/BillingStatement' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { description: 租户不存在 }
+  /admin/audit:
+    get:
+      summary: 审计查询（`audit_event` 的读侧，按事件时间窗 + 维度过滤，分页）
+      description: |
+        需 owner/admin 令牌。**只读、不新记账**：读的就是 `POST /report/audit` 落下的原样行，
+        `detail` 是 jsonb 原文 ⇒ 应答里仍是 **JSON 对象**，不是被引号包起来的字符串。
+        `tenantId` 走 `WriteTarget` 口径（同 `GET /admin/tenants/{tenantId}/balance`）：租户令牌省略＝自己那条、
+        点名别人＝**403**；平台运营侧令牌（无租户声明）**必须指明 `tenantId`**，省略＝400——不限租户的全局审计读不给。
+        目标租户不存在＝404（**403 排在 404 之前**，连租户存不存在都不向外透露）。
+        时间窗 `since`/`until` 打在 **`time`（客户端事件时刻，应答里原样回显 epoch 毫秒）** 上，半开区间 `[since, until)`：
+        按「发生了什么」筛，不按「我们什么时候收到」筛——离线补报的行事件时刻在过去、入库时刻是现在，审计要的是前者。
+        省略即不限；两个都给则须 `since < until`。
+        `userId`/`sessionId`/`eventType` 是等值过滤，可任意组合。
+        排序 `time` 倒序、同刻按 `id` 兜底稳定（**不承诺等于录入顺序**）。分页同 `parameters.page/pageSize`，
+        **不回 `total`**：append-only 大表上全表 `COUNT` 不该是每次查询都要交的税。
+        「导出」尚未实现，且**导出的形态是产品决定**（服务端流式 CSV 还是前端导当前页/筛选结果），别默认做成全量流式。
+      parameters:
+        - { name: tenantId, in: query, required: false, schema: { type: string }, description: 租户令牌可省略（＝本租户）；平台侧令牌必填 }
+        - { name: since, in: query, required: false, schema: { type: string, format: date-time }, description: 事件时间窗下界（含） }
+        - { name: until, in: query, required: false, schema: { type: string, format: date-time }, description: 事件时间窗上界（不含） }
+        - { name: userId, in: query, required: false, schema: { type: string } }
+        - { name: sessionId, in: query, required: false, schema: { type: string } }
+        - { name: eventType, in: query, required: false, schema: { type: string } }
+        - { $ref: '#/components/parameters/page' }
+        - { $ref: '#/components/parameters/pageSize' }
+      responses:
+        '200':
+          description: 该页审计（无数据也是 200 + 空 items，不回 404）
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AuditPage' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { description: 租户不存在 }
+  /admin/catalog:
+    get:
+      summary: 配置目录列表（技能 / 专家 / 连接器，全局表）
+      description: |
+        需 owner/admin 令牌。读的就是 `catalog_entry`（全局，各租户看到同一份）。
+        **`spec.name` 是平台唯一依赖的 spec 键**——列表展示与同 `kind` 内拒重用的都是它，其余键原样存、原样回，平台不解释。
+        表上没有名字列也没有唯一索引 ⇒ 按名字排序在**内存里**做（`kind` 升 → `name` 升），
+        同 kind 重名由应用侧拒（409）；想在 SQL 里按名字筛/排得先加列＝新迁移。
+        与 `GET /admin/audit` 不同，这里**给 `total`**：全局目录是几十到几百行的小表，排序键又在 jsonb 里
+        （整批取回本来就是既定事实），所以 `total` 就是筛完后的行数，不是额外一次全表 `COUNT`；
+        那条不回 total 的理由是 append-only 大表，不适用于这张。
+        `kind` 省略＝三类都回。已软删的条目看不见。
+      parameters:
+        - { name: kind, in: query, required: false, schema: { type: string, enum: [skill, expert, connector] } }
+        - { $ref: '#/components/parameters/page' }
+        - { $ref: '#/components/parameters/pageSize' }
+      responses:
+        '200':
+          description: 该页目录条目（没有数据也是 200 + 空 items，不回 404）
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CatalogPage' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+    post:
+      summary: 新建目录条目
+      description: |
+        需 owner/admin 令牌。`spec` 必须是 JSON 对象且带非空 `name`（平台只读这一个键）。
+        `version` 必填——它是**标签**，平台不做序比较、也没有版本历史表，改就是覆盖。
+        `source` 不接受写入，落库恒 `platform`。同 kind 下重名 → **409**（应用侧拒，数据库不兜）。
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CatalogEntryInput' }
+      responses:
+        '201':
+          description: created
+          headers:
+            Location: { description: 新条目的资源路径, schema: { type: string } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CatalogEntry' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /admin/catalog/{entryId}:
+    get:
+      summary: 单条目录条目（含 `spec` 原文）
+      description: |
+        需 owner/admin 令牌。`spec` 是 jsonb 原文 ⇒ 应答里是 **JSON 对象**，不是被引号包起来的字符串。
+      parameters:
+        - { name: entryId, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: 该条目
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CatalogEntry' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { description: 条目不存在（含已软删） }
+    patch:
+      summary: 改目录条目（省略的字段一律不动）
+      description: |
+        需 owner/admin 令牌。`spec` 给出即**整份替换**，不做深合并——合并规则会变成第二份真相。
+        替换后的 `spec` 仍须带非空 `name`。改名撞同 kind 下别人 → 409。
+      parameters:
+        - { name: entryId, in: path, required: true, schema: { type: string } }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CatalogEntryPatch' }
+      responses:
+        '200':
+          description: 改后的条目
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CatalogEntry' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { description: 条目不存在 }
+        '409': { $ref: '#/components/responses/Conflict' }
+    delete:
+      summary: 下架目录条目（软删）
+      description: |
+        需 owner/admin 令牌。**是软删不是物理抹除**：`is_deleted` 置位后列表与详情都看不见它，
+        再访问 404，`spec` 内容仍留在表上（幂等：重复删第二次就是 404）。
+        下架会同时从客户端那条拉取通道（`GET /api/config/catalog`）消失——**目录的去向是客户端，不是网关快照**，
+        所以这里不动 `POST /api/admin/gateway/config`，也不引入「变更自动推」：客户端下次拉取即按缺失卸载。
+      parameters:
+        - { name: entryId, in: path, required: true, schema: { type: string } }
+      responses:
+        '204': { description: 已下架 }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { description: 条目不存在（含已软删） }
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT }
+  parameters:
+    page: { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+    pageSize: { name: pageSize, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 20 } }
+    gatewayKey:
+      name: X-Gateway-Key
+      in: header
+      required: false
+      description: |
+        服务间上报密钥（网关 → 平台）。值只经环境变量 `FOM_GATEWAY_REPORT_KEY` 注入；
+        未配置的部署该通道关闭，带任何值都是 401。带此头时载荷的 `tenantId`/`userId` 按可信处理。
+      schema: { type: string }
+  responses:
+    BadRequest:
+      description: |
+        请求校验失败（`errors` 按字段列出）。请求体不是合法 JSON 时同样是 400
+        （`title=请求无法解析`），不是 500。
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problem' }
+    Unauthorized:
+      description: 未认证 / 令牌无效、过期或用途不符（鉴权中间件直接拦下时可能空响应体）
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problem' }
+    Forbidden:
+      description: 已认证但无权（角色不符需 owner/admin，或上报载荷不属于本租户/本用户）；未登录是 401，不要混用
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problem' }
+    Conflict:
+      description: 唯一键冲突（租户名 / 邮箱 / 套餐名已存在）
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problem' }
+  schemas:
+    Problem:
+      type: object
+      description: RFC 9457 ProblemDetails。**类别在 `title`、给人看的那句中文在 `detail`**；前端提示优先取 `detail`。
+      properties:
+        type: { type: string }
+        title: { type: string, description: 错误类别（未授权 / 与已有数据冲突 / 请求校验失败…），不是异常类名 }
+        detail: { type: string, description: 面向人的具体消息 }
+        status: { type: integer }
+        errors:
+          type: object
+          description: 仅 400 出现：字段名 → 消息列表
+          additionalProperties:
+            type: array
+            items: { type: string }
+    TokenPair:
+      type: object
+      description: |
+        刷新令牌是无状态 JWT（`typ=refresh`），不落库、不做单令牌撤销——只能调 `/auth/token`，
+        拿来当访问凭证调接口会被拒；停用账号即断掉后续刷新。
+      properties:
+        accessToken: { type: string, description: JWT，`typ=access`，带 sub/tenant_id/email/role/amr }
+        refreshToken: { type: string }
+        expiresIn: { type: integer, description: 访问令牌秒数 }
+    ReportAck:
+      type: object
+      description: 上报回执（202）
+      properties:
+        duplicate:
+          type: boolean
+          description: true ＝ 幂等键已存在，本次未重复落库、也未重复累加配额
+    UsageReport:
+      type: object
+      description: 幂等键 {tenant,user,session,turn,step,attempt}
+      properties:
+        tenantId: { type: string }
+        userId: { type: string }
+        sessionId: { type: string }
+        turn: { type: integer }
+        step: { type: integer }
+        attempt: { type: integer }
+        model: { type: string }
+        source: { type: string, enum: [platform, byo] }
+        inputTokens: { type: integer }
+        outputTokens: { type: integer }
+        cacheReadTokens: { type: integer }
+        cacheWriteTokens: { type: integer }
+        at: { type: string, format: date-time }
+    AuditReport:
+      type: object
+      description: 幂等键 {tenant,user,session,seq}；路径/参数已脱敏
+      properties:
+        tenantId: { type: string }
+        userId: { type: string }
+        sessionId: { type: string }
+        seq: { type: integer }
+        time: { type: integer }
+        type: { type: string }
+        detail: { type: object, additionalProperties: true }
+    AuditEvent:
+      type: object
+      description: |
+        一条审计（`audit_event` 的读侧，append-only 原文）。字段与 `AuditReport` 一一对应，
+        只有 `type` 落库后叫 `event_type`。
+      properties:
+        id: { type: string }
+        userId: { type: string }
+        sessionId: { type: string }
+        seq: { type: integer }
+        time: { type: integer, description: 客户端事件时刻（epoch 毫秒，原样回显）；时间窗筛的就是它 }
+        eventType: { type: string }
+        detail: { type: object, additionalProperties: true, description: jsonb 原文 ⇒ 是对象，不是被引号包起来的字符串 }
+        createdAt: { type: string, format: date-time, description: 入库时刻（UTC）；离线补报时它可以远晚于 `time` }
+    AuditPage:
+      type: object
+      description: 审计的一页。**不回 `total`**：append-only 大表上的全表 `COUNT` 不该是每次查询都要交的税。
+      properties:
+        page: { type: integer }
+        pageSize: { type: integer }
+        items:
+          type: array
+          description: 按 `time` 倒序，同刻按 `id` 兜底（不承诺等于录入顺序）
+          items: { $ref: '#/components/schemas/AuditEvent' }
+    Subscription:
+      type: object
+      properties:
+        id: { type: string }
+        planId: { type: string }
+        status: { type: string, enum: [active, past_due, canceled] }
+        periodStart: { type: string, format: date-time }
+        periodEnd: { type: string, format: date-time }
+    Quota:
+      type: object
+      description: 限额 0 ＝ 未设限；`period` 是自然月标识（如 `2026-10`）
+      properties:
+        period: { type: string }
+        maxTokens: { type: integer }
+        maxCost: { type: number }
+        maxCalls: { type: integer }
+        usedTokens: { type: integer }
+        usedCost: { type: number }
+        usedCalls: { type: integer }
+    QuotaLimits:
+      type: object
+      description: 三项限额，`0` ＝ 未设限
+      properties:
+        maxTokens: { type: integer }
+        maxCost: { type: number }
+        maxCalls: { type: integer }
+    Plan:
+      type: object
+      description: 全局套餐目录行；`limits` 来自 `plan.limits` jsonb，`modelIds` 是准入模型
+      properties:
+        id: { type: string }
+        name: { type: string }
+        price: { type: number, description: 月费，单位元 }
+        status: { type: string, enum: [active, retired] }
+        limits: { $ref: '#/components/schemas/QuotaLimits' }
+        modelIds:
+          type: array
+          items: { type: string }
+    PlanInput:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string, maxLength: 80 }
+        price: { type: number, minimum: 0, description: 省略＝0（免费） }
+        limits: { $ref: '#/components/schemas/QuotaLimits' }
+    PlanPatch:
+      type: object
+      description: 省略的字段不动
+      properties:
+        name: { type: string, maxLength: 80 }
+        price: { type: number, minimum: 0 }
+        status: { type: string, enum: [active, retired] }
+        limits: { $ref: '#/components/schemas/QuotaLimits' }
+    SubscriptionInput:
+      type: object
+      required: [planId, periodEnd]
+      description: 覆盖式建/改订阅；限额按所选套餐的 `limits` 一并落到当前自然月
+      properties:
+        planId: { type: string, description: 必须是 active 套餐；retired → 400 }
+        periodStart: { type: string, format: date-time, description: 省略＝此刻（UTC） }
+        periodEnd: { type: string, format: date-time, description: 必须晚于起点 }
+        status: { type: string, enum: [active, past_due, canceled], description: 省略＝active }
+    SubscriptionSetup:
+      type: object
+      description: 订阅写入的回执：订阅本体 + 按套餐落下来的本周期配额
+      properties:
+        subscription: { $ref: '#/components/schemas/Subscription' }
+        quota: { $ref: '#/components/schemas/Quota' }
+    BalanceTx:
+      type: object
+      description: 一条余额流水（append-only，不软删）
+      properties:
+        id: { type: string }
+        delta: { type: number, description: 正数入、负数出 }
+        reason: { type: string, enum: [recharge, consume, adjust] }
+        at: { type: string, format: date-time }
+    Balance:
+      type: object
+      description: 余额（`SUM(delta)` 现算，平台侧没有余额列）+ 当前页流水
+      properties:
+        balance: { type: number }
+        page: { type: integer }
+        pageSize: { type: integer }
+        transactions:
+          type: array
+          items: { $ref: '#/components/schemas/BalanceTx' }
+    BalanceTxInput:
+      type: object
+      required: [delta, reason]
+      description: 人工记账（`consume` 由上报侧随 `usage` 同事务落账，不接受从这里写）
+      properties:
+        delta: { type: number, description: 非 0；正数充值、负数扣减 }
+        reason: { type: string, enum: [recharge, adjust] }
+        at: { type: string, format: date-time, description: 省略＝此刻（UTC） }
+    BillingLine:
+      type: object
+      description: 账单的一行＝一个 (模型, 来源) 在该周期的合计；`cost` 直接来自 `usage.cost` 求和
+      properties:
+        model: { type: string }
+        source: { type: string, enum: [platform, byo] }
+        inputTokens: { type: integer }
+        outputTokens: { type: integer }
+        cacheReadTokens: { type: integer }
+        cacheWriteTokens: { type: integer }
+        cost: { type: number }
+        calls: { type: integer }
+    BillingStatement:
+      type: object
+      description: 周期账单（`usage` 的聚合投影，不落表）
+      properties:
+        period: { type: string, description: 自然月 yyyy-MM，与 quota.period 同口径 }
+        totalCost: { type: number, description: 各行 cost 之和（不是重新折算的） }
+        totalTokens: { type: integer, description: 输入+输出+缓存读+缓存写 }
+        calls: { type: integer }
+        lines:
+          type: array
+          description: 按 cost 倒序
+          items: { $ref: '#/components/schemas/BillingLine' }
+    CatalogEntry:
+      type: object
+      description: |
+        一条目录条目。`name` 是平台从 `spec.name` 提出来的（**平台唯一依赖的 spec 键**），
+        管理侧列表与客户端拉取都回它——客户端按 `kind` 物化（技能→skill 目录、专家→agent preset、
+        连接器→MCP 配置）时用它当落点标识，不必再自己解析一遍 `spec`。
+      properties:
+        id: { type: string }
+        kind: { type: string, enum: [skill, expert, connector] }
+        name: { type: string, description: '`spec.name`；缺失时是空串（校验保证写入端不会没有它）' }
+        version: { type: string }
+        source: { type: string, description: 'platform ＝ 平台目录（当前只有这一类）' }
+        spec: { type: object, description: 按 kind 各自的 schema（jsonb 原样给出）, additionalProperties: true }
+    CatalogSummary:
+      type: object
+      description: |
+        列表行（`CatalogEntry` 的瘦身版）：`name` 从 `spec.name` 提出来供展示与排序，
+        不带 `spec` 原文——列表页不需要，几十条各自几 KB 的载荷是白付的流量。
+      properties:
+        id: { type: string }
+        kind: { type: string, enum: [skill, expert, connector] }
+        name:
+          type: string
+          description: "`spec.name`；平台唯一依赖的 spec 键"
+        version: { type: string }
+        source: { type: string }
+        updatedAt:
+          type: [string, "null"]
+          format: date-time
+          description: 最后修改时刻（UTC）；从未改过是 null
+    CatalogPage:
+      type: object
+      description: 目录的一页。**这里给 `total`**（小全局表、整批取回，运营页要「共 N 条」）。
+      properties:
+        page: { type: integer }
+        pageSize: { type: integer }
+        total:
+          type: integer
+          description: 符合筛选的总条数（`kind` 筛时只数那一类），分页器拿它算页数
+        items:
+          type: array
+          description: 按 `kind` 升序、同 kind 按 `name` 升序（名字在 jsonb 里 ⇒ 内存排序）
+          items: { $ref: '#/components/schemas/CatalogSummary' }
+    CatalogEntryInput:
+      type: object
+      required: [kind, version, spec]
+      description: |
+        新建条目。`spec` 必须是 JSON **对象**且带非空 `name`；其余键按 kind 自定，平台原样存、原样回，不解释。
+        `source` 不在这里给——落库恒 `platform`。
+      properties:
+        kind: { type: string, enum: [skill, expert, connector] }
+        version: { type: string, maxLength: 40, description: 标签，平台不做序比较、无版本历史表；两侧空白落库前抹掉 }
+        spec: { type: object, additionalProperties: true }
+    CatalogEntryPatch:
+      type: object
+      description: 改条目（省略的字段一律不动）。`spec` 给出即**整份替换**，不做深合并。
+      properties:
+        kind: { type: string, enum: [skill, expert, connector] }
+        version: { type: string, maxLength: 40 }
+        spec: { type: object, additionalProperties: true }
+    ModelInfo:
+      type: object
+      description: '`name` 是调用名（下单给网关用），`displayName` 是展示名'
+      properties:
+        id: { type: string }
+        name: { type: string }
+        provider: { type: string }
+        apiType: { type: string }
+        displayName: { type: string }
+        contextWindow: { type: integer }
+        maxTokens: { type: integer }
+    Heartbeat:
+      type: object
+      required: [deviceId]
+      properties:
+        deviceId: { type: string, maxLength: 100 }
+        name: { type: string, maxLength: 100, description: 省略或空则保留原值 }
+        clientVersion: { type: string, maxLength: 50, description: 省略或空则保留原值 }
+    HeartbeatAck:
+      type: object
+      properties:
+        id: { type: string, description: 设备行 id，同一设备两次心跳应同值 }
+        deviceId: { type: string }
+        created: { type: boolean, description: 'true ＝ 本次首见并登记' }
+        lastSeenAt: { type: string, format: date-time }
+    GatewayPushAck:
+      type: object
+      description: 一次配置下发的回执（计数即快照规模）
+      properties:
+        tenantCount: { type: integer }
+        modelCount: { type: integer }
+        pushedAt: { type: string, format: date-time }
+    Tenant:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        planId: { type: string }
+        status: { type: string }
+    User:
+      type: object
+      properties:
+        id: { type: string }
+        tenantId: { type: string }
+        email: { type: string }
+        role: { type: string, enum: [owner, admin, member] }
+        status: { type: string }

@@ -24,6 +24,7 @@ $paths = @(
   'branding',
   '.github/workflows/package.yml',
   'scripts/check-contracts.mjs',
+  'scripts/check-packaging.mjs',
   'scripts/sync-desktop-repo.ps1'
 )
 

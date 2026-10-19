@@ -44,6 +44,9 @@ jobs:
         run: pnpm install
         working-directory: deepseek-harness
 
+      - name: 校验打包输入一致性（bundle patch ⊆ overlay STAGE + 入口产物在场）
+        run: node scripts/check-packaging.mjs
+
       - name: 应用 FomWorker 品牌（产品名 + 图标）
         run: node branding/apply-branding.mjs deepseek-harness
 

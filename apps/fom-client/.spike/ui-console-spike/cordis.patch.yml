@@ -1,0 +1,3 @@
+- insert:
+    - id: office-console-spike
+      name: '@office/console-spike'

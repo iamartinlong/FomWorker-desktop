@@ -1,0 +1,19 @@
+{
+  "name": "@office/billing",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "office-billing：自建价格表折算 + 限额裁决 + 本地配额执行（拉 /config/quota，预检/展示，不硬拦）。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.ts",
+    "pricing.ts",
+    "quota.ts",
+    "platform.ts",
+    "lib/index.js"
+  ]
+}

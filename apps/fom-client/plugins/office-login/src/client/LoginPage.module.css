@@ -1,0 +1,65 @@
+.page {
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  padding: 18px 20px;
+  line-height: 1.6;
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.muted {
+  font-size: 11.5px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.userLine {
+  font-size: 13px;
+}
+
+.error {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  color: var(--dsw-alias-state-error-primary);
+}
+
+.bindings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.bindingList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bindingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12.5px;
+  word-break: break-all;
+}
+
+.errorText {
+  font-size: 12.5px;
+  color: var(--dsw-alias-state-error-primary);
+}

@@ -1,0 +1,43 @@
+baseline: green
+a-unregistered-distill-tool: 抓住 —— 4 例红（exit=1）— 把 memory_distill 从产品风险字典删掉 —— 落回默认 L4，夜里发卡、蒸馏停摆，零卡断言必须红
+    · 只改本会话状态的工具也不打扰（L1），包括退出计划模式那次确认
+    · 字典判 L1，卡片正文是动作句不是裸工具名（§4）
+    · 真闸上执行 memory_distill：不打扰、不落审批台账，蒸馏真跑过（对账行 no-op）
+    · 双侧的另一半：蒸馏角色装好三把工具后，工作区外的提权写照旧出一张 L3 卡
+b-distill-downgraded-to-l0: 抓住 —— 2 例红（exit=1）— 把 memory_distill 悄悄降成 L0（§3.6④ 禁止的另一面：L0 连闸上留痕都没有）
+    · 只改本会话状态的工具也不打扰（L1），包括退出计划模式那次确认
+    · 字典判 L1，卡片正文是动作句不是裸工具名（§4）
+c-distill-escalated-to-l2: 抓住 —— 4 例红（exit=1）— 把 memory_distill 升成 L2 —— 蒸馏进程夜里没人点卡，ME8 的零卡断言必须红
+    · 只改本会话状态的工具也不打扰（L1），包括退出计划模式那次确认
+    · 字典判 L1，卡片正文是动作句不是裸工具名（§4）
+    · 真闸上执行 memory_distill：不打扰、不落审批台账，蒸馏真跑过（对账行 no-op）
+    · 双侧的另一半：蒸馏角色装好三把工具后，工作区外的提权写照旧出一张 L3 卡
+d-top-level-filter-off: 抓住 —— 4 例红（exit=1）— 中和 isTopLevelSession（恒 true）—— 子代理会话也被拿去武装，MF5 过滤断言必须红
+    · parentSession 在场 = 非顶层（fork 血脉）
+    · origin=subagent = 非顶层（委派子会话）
+    · 两形齐全 = 非顶层
+    · 子代理/带父会话不武装；顶层武装一次；标记令第二个顶层会话幂等；release 后监听器消失
+e-role-gate-off: 抓住 —— 2 例红（exit=1）— 拆掉 index.ts 的角色门（成员也接蒸馏半边线）—— 成员注册 memory_distill / 要求蒸馏服务的断言必须红
+    · 没有 schedule 的组合里照样装上：只两把工具，memory_distill 不存在
+    · 成员侧顶层会话出生不武装：监听器压根没装
+f-marker-write-skipped: 抓住 —— 4 例红（exit=1）— ensureDistillArmed 装成功后不写标记 —— 幂等失效、重启堆叠 recurring 任务，arm/index 的幂等断言必须红
+    · 三把工具注册齐全，顶层会话出生经真 schedule 装出每日蒸馏任务
+    · 首次武装调 port.arm 并写标记；再次调用命中 ⇒ 不再 arm
+    · 用 daily 时刻与时区默认值（错峰 03:30 / Asia/Shanghai）
+    · 子代理/带父会话不武装；顶层武装一次；标记令第二个顶层会话幂等；release 后监听器消失
+g-empty-memory-root-accepted: 抓住 —— 2 例红（exit=1）— 去掉 `memoryRoot === ''` 的空值守卫 —— `Config` 的默认值就是空串，于是记忆目录按进程 cwd 解析成相对路径（启动器的 cwd 在内核仓库根 ⇒ 直接写进内核工作树），index.spec 的两条空值守卫断言必须红
+    · 空串 memoryRoot ⇒ 拒绝挂载，一把工具都不注册
+    · 蒸馏角色同样先过这道守卫（空 memoryRoot 连台账域都不该开）
+h-distiller-entry-member-descriptor: 抓住 —— 1 例红（exit=1）— 把 `distiller.ts` 的默认导出换成成员描述符 —— `--patch` 取的就是默认导出，蒸馏进程会因 `distiller:true` 配成员拓扑而压根不装，入口用例必红
+    · 经入口挂载 ⇒ 装出蒸馏角色；它必需的那三个服务是角色拆分的全部依据
+i-secret-guard-disabled: 抓住 —— 1 例红（exit=1）— 让「配了 App ID 却没 Secret」这道守卫永不触发（带空 Secret 继续装真渠道）—— 台账会看起来「卡发出去了」而没人收到过，approval/index.spec 的第一条必红
+    · 环境变量是空的 ⇒ 抛的就是这条守卫，报的是变量名
+j-secret-guard-inverted: 抓住 —— 2 例红（exit=1）— 反转那道守卫（有 Secret 反而抛、没 Secret 放行）—— 两条用例分别拦「拦错方向」与「把装配拦死」，必红
+    · 环境变量是空的 ⇒ 抛的就是这条守卫，报的是变量名
+    · 环境变量有值 ⇒ 拦住的只有这道守卫：装配走到底并交回 disposer
+k-session-query-unregistered: 抓住 —— 1 例红（exit=1）— 把五把 session-query 只读工具从产品风险字典删掉 —— 落回默认 L4，模型一调 session_search 就发卡、工具跑不动（F-6B 现场），L0 断言必须红
+    · 会话历史检索五把只读工具是 L0 —— 不登记就落 L4（F-6B）
+l-session-search-escalated: 抓住 —— 2 例红（exit=1）— 把 session_search 升成 L2 —— 只读本地检索却要一张审批卡，F-6B 的 L0 断言必须红
+    · 会话历史检索五把只读工具是 L0 —— 不登记就落 L4（F-6B）
+    · 每一条可能问人的登记项都必须自带动作描述 —— 漏写就红，不许靠兜底文案上线
+结论：12/12 个变异被抓住

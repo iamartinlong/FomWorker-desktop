@@ -1,0 +1,19 @@
+{
+  "name": "@office/reporter",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "office-reporter（K3 骨架）：把 meter/audit 折叠成契约消息，经传输上报平台；离线队列 + seq 水位线。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.ts",
+    "lib/index.js"
+  ],
+  "scripts": {
+    "test": "node ./node_modules/vitest/vitest.mjs run"
+  }
+}

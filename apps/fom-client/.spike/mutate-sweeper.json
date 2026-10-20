@@ -1,0 +1,12 @@
+[
+  {
+    "name": "m1 把 F-A 的守卫删掉（超窗转后台照样撤销两个告警）",
+    "from": "        if (isDecidable(record, at())) return\n",
+    "to": ""
+  },
+  {
+    "name": "m2 批准时连作废一起撤（keepExpire 丢掉）",
+    "from": "return void sweeper.settle(record.requestId, true)",
+    "to": "return void sweeper.settle(record.requestId)"
+  }
+]

@@ -1,0 +1,14 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border: 0.5px solid var(--dsw-alias-settings-card-stroke);
+  border-radius: 12px;
+  background: var(--dsw-alias-settings-card-fill);
+}
+
+.form {
+  border-color: var(--dsw-alias-border-l);
+  background: var(--dsw-alias-bg-overlay);
+}

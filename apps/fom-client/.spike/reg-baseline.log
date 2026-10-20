@@ -1,0 +1,26 @@
+✓ ① 起手态：index-rebuilt 停在 pending（字节 sha == readIndex sha）
+✓ ① 起手态：hand-edited-untouched 绿（字节 sha == utf8 读回 sha）
+✓ ① 起手态：member-appended-daily 停 pending（dailyDays 口径同为无 .md 后缀）
+✓ ① 起手态：armed-marker 停 pending（生产端的 existsSync 口径对得上标记缺席的种子）
+✓ ① 起手态：一条 fail 都没有
+✓ ① 起手态：汇总退出码 = 3（待观测，不是通过也不是违反）
+✓ ①b 生产端的 sha 基准钉在原始字节（用不共用 sha256File 的表达式算）
+✓ ①b 语料确实能分开「trim 后算」与「原始字节」
+✓ ①b 文件读不到时返回空串而不是抛（让对应判定自己变红，而不是整台仪器崩在冷启动之后）
+✓ ② CLI 端到端：接受生产者的基线文件并以 3（待观测）退出
+✓ ② CLI 端到端：输出里没有一个 ×（把「还没发生」读成违反就是这条）
+✓ ③ 生产者把 requests 文件名清单写进基线
+✓ ③ 集合差归属：夜间新增 2 张 == 声明 2 张 ⇒ ME8 判绿
+✓ ③ 同现场声明 0 张 ⇒ 判红，且点名多出的是哪两条
+✓ ④ 生产者把 runs 文件名清单写进基线
+✓ ④ 基线里那行账不算夜间新增 ⇒ run-rows 停 pending
+✓ ⑤ 生产端从种子旁证解析靶（不是写死路径）
+✓ ⑤ 换靶后 hand-edited-untouched 仍绿（两边指同一个文件）
+✓ ⑥ 水位线文件缺失 ⇒ readWatermark 返回 null 且不抛
+✓ ⑥ 水位线形状不对（缺 lastDistilledAt）⇒ 同样返回 null
+✓ ⑥ 基线里 watermark=null ⇒ 判定停 pending，不报倒退
+✓ ⑦ 基线序列化后不含台账正文（探针字面与 argsSnapshot 都没被抄进来）
+✓ ⑧ seam 把 scheduleFile 递进判定层：调度层有残留行而标记不在场 ⇒ 判红并点名该行
+✓ ⑧b CLI 接受 --schedule-file：该文档里的残留 nightly 行被判红、点名给它、退出码 1
+
+PASS 第 6 步基线契约（24 ✓ / 0 ✗：生产者 → 文件 → 判据机这条接缝，加生产端哈希基准的绝对锚 ①b；真临时目录，未起产品进程、未读 .dsh）

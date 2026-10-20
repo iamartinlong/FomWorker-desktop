@@ -1,0 +1,19 @@
+{
+  "name": "@fominfo/dsh-bundle-fomworker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "FomWorker profile bundle：把 FomWorker 品牌 occupant + 办公平台插件（catalog/authz/console）作为一层 patch 挂进 dsh profile（替代手工 profile 行）。",
+  "exports": {
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "cordis.patch.yml"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

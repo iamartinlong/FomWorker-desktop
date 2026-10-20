@@ -1,0 +1,18 @@
+{
+  "name": "@office/authz",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "office-authz：角色×动作授权矩阵只读服务 officeAuthz（fail-closed）。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.ts",
+    "roles.ts",
+    "actions.ts",
+    "lib/index.js"
+  ]
+}

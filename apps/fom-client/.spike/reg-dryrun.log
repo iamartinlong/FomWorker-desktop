@@ -1,0 +1,12 @@
+  · 种子旁证在场（.seed-expect.json）
+  · newDays=2026-10-09,2026-10-10（蒸馏有事可做）
+  · daily/.distill-armed 缺席（武装是待观测事件，正确起手态）
+  · DSH_PERMISSION_MODE 未设 ⇒ 成员侧走默认 workspace-write（内核若从它自己的 env 文件另设过，这一层预检看不见，第 3 枪前在会话权限里确认一次）
+
+[member] cwd=F:\deepseek\deepseek harness\deepseek-harness
+  "C:\nvm4w\nodejs\node.exe" --import tsx/esm apps/cli/src/bin.ts web --patch "F:\deepseek\deepseek harness\office-platform\office-approval.patch.yml" --patch "F:\deepseek\deepseek harness\office-platform\session-query.spike.patch.yml" --patch "F:\deepseek\deepseek harness\office-platform\office-distill.member.patch.yml" --patch ./office.patch.yml --patch apps/web/tests/pin-browse-picker.overlay.yml --no-open --port 3085
+
+[distill] cwd=F:\deepseek\deepseek harness\deepseek-harness
+  "C:\nvm4w\nodejs\node.exe" --import tsx/esm apps/cli/src/bin.ts web --patch "F:\deepseek\deepseek harness\office-platform\office-distill.workspace.patch.yml" --patch ./office.patch.yml --patch apps/web/tests/pin-browse-picker.overlay.yml --no-open --port 3086
+
+--dry-run：预检通过、命令已打印，**没有起任何进程**。

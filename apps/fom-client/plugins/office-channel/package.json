@@ -1,0 +1,17 @@
+{
+  "name": "@office/channel",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "office-channel：IM 中继的客户端接收（常连平台 /api/ws，收 im.relay ⇒ 建/续本地会话并投正文）。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.ts",
+    "relay.ts",
+    "lib/index.js"
+  ]
+}

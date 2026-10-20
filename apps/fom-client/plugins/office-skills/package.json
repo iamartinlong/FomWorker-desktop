@@ -1,0 +1,18 @@
+{
+  "name": "@office/skills",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "office-skills：办公技能 provider（随包 assets + 受管根），可按 `skills` 过滤；可作 agent preset 行挂载（专家只带选中技能）。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.ts",
+    "managed.ts",
+    "assets",
+    "lib/index.js"
+  ]
+}

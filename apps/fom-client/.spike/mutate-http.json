@@ -1,0 +1,77 @@
+[
+  {
+    "name": "m01 Bearer 头不发出",
+    "from": "if (call.token !== undefined) headers.Authorization = `Bearer ${call.token}`",
+    "to": "if (false) headers.Authorization = `Bearer ${call.token}`"
+  },
+  {
+    "name": "m02 定时器永不 abort（超时形同虚设）",
+    "from": "const timer = setTimeout(() => controller.abort(), timeoutMs)",
+    "to": "const timer = setTimeout(() => {}, timeoutMs)"
+  },
+  {
+    "name": "m03 对渠道给的 path 二次编码",
+    "from": "const url = new URL(base + call.path)",
+    "to": "const url = new URL(base + encodeURIComponent(call.path))"
+  },
+  {
+    "name": "m04 query 全部丢弃",
+    "from": "for (const [key, value] of Object.entries(call.query ?? {})) url.searchParams.set(key, value)",
+    "to": "void url"
+  },
+  {
+    "name": "m05 HTTP 失败退化成 code=0",
+    "from": "const code = asNumber(body?.code, response.ok ? 0 : response.status)",
+    "to": "const code = asNumber(body?.code, 0)"
+  },
+  {
+    "name": "m06 按 HTTP 状态判成败（不看业务码）",
+    "from": "const code = asNumber(body?.code, response.ok ? 0 : response.status)",
+    "to": "if (!response.ok) throw new Error('http ' + response.status)\n    const code = asNumber(body?.code, response.ok ? 0 : response.status)"
+  },
+  {
+    "name": "m07 响应体里的业务码被忽略",
+    "from": "const code = asNumber(body?.code, response.ok ? 0 : response.status)",
+    "to": "const code = response.ok ? 0 : response.status"
+  },
+  {
+    "name": "m08 无 body 的调用写出 \"null\"",
+    "from": "...(call.body === undefined ? {} : { body: JSON.stringify(call.body) }),",
+    "to": "body: JSON.stringify(call.body ?? null),"
+  },
+  {
+    "name": "m09 method 硬编码成 POST",
+    "from": "method: call.method,",
+    "to": "method: 'POST',"
+  },
+  {
+    "name": "m10 不发 Content-Type",
+    "from": "const headers: Record<string, string> = { 'Content-Type': 'application/json; charset=utf-8' }",
+    "to": "const headers: Record<string, string> = {}"
+  },
+  {
+    "name": "m11 tenant_access_token 不透传",
+    "from": "if (typeof body?.tenant_access_token === 'string') reply.tenant_access_token = body.tenant_access_token",
+    "to": "void reply"
+  },
+  {
+    "name": "m12 expire 不透传",
+    "from": "if (typeof body?.expire === 'number') reply.expire = body.expire",
+    "to": "void reply"
+  },
+  {
+    "name": "m13 非对象 JSON 被读成成功",
+    "from": "throw new FeishuTransportError(`response JSON is not an object (http ${response.status})`, call.path)",
+    "to": "body = {}"
+  },
+  {
+    "name": "m14 一次调用偷偷多发一次请求",
+    "from": "const controller = new AbortController()",
+    "to": "await doFetch(url.toString(), { method: 'GET' })\n    const controller = new AbortController()"
+  },
+  {
+    "name": "m15 超时不再说明「可能已送达」",
+    "from": "controller.signal.aborted ?",
+    "to": "false ?"
+  }
+]

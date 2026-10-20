@@ -1,0 +1,233 @@
+/* 登录门禁（全屏）。颜色只用 --dsw-alias-* 语义令牌，零颜色字面量。
+   令牌名以 ui-theme/src/styles 为准（bg-base / border-l2 / label-primary / brand-primary 等）。 */
+
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background: var(--dsw-alias-bg-base);
+  overflow: auto;
+  /* `shell.overlay` 渲染在 `.frame`（display:grid + overflow:hidden）内部 ⇒ 作为网格项会被
+     分配进某一列，且被 frame 的层叠上下文困住。这里主动脱离网格流并抬到最高层。 */
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  isolation: isolate;
+}
+
+.shell {
+  width: 100%;
+  max-width: 880px;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--dsw-alias-bg-layer-1);
+  box-shadow: 0 24px 64px var(--dsw-alias-bg-mask-2);
+}
+
+/* ── 左：品牌区 ─────────────────────────────────────────── */
+.brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px;
+  color: var(--dsw-alias-label-primary-inverted);
+  background: var(--dsw-alias-brand-primary);
+}
+
+.brandTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mark {
+  width: 28px;
+  height: 28px;
+  color: currentColor;
+  flex: none;
+}
+
+.brandName {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.brandBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.slogan {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.sub {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.86;
+}
+
+.points {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12.5px;
+  opacity: 0.92;
+}
+
+.brandFoot {
+  margin: 0;
+  font-size: 11.5px;
+  opacity: 0.72;
+}
+
+/* ── 右：表单区 ─────────────────────────────────────────── */
+.formPane {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 36px 32px;
+  box-sizing: border-box;
+}
+
+.formTitle {
+  margin: 0;
+  font-size: 20px;
+}
+
+.formHint {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.error {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--dsw-alias-state-error-primary);
+  word-break: break-word;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--dsw-alias-border-l2);
+}
+
+.localRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.localHint {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* ── 账号 overlay 内嵌的 IM 绑定（ImBindings 复用这些类）────────── */
+.muted {
+  font-size: 11.5px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.userLine {
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-primary);
+}
+
+.bindings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bindingList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bindingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12.5px;
+  word-break: break-all;
+}
+
+.errorText {
+  font-size: 12.5px;
+  color: var(--dsw-alias-state-error-primary);
+}
+
+/* ── 窄视口：堆叠（品牌区压扁，表单优先）──────────────────── */
+@media (max-width: 720px) {
+  .shell {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
+
+  .brand {
+    gap: 12px;
+    padding: 22px 24px;
+  }
+
+  .slogan {
+    font-size: 19px;
+  }
+
+  .points {
+    display: none;
+  }
+
+  .formPane {
+    padding: 26px 24px;
+  }
+}

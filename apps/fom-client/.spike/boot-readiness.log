@@ -1,0 +1,26 @@
+dsh: startup failed: 2 required plugins did not activate
+
+Failed plugins (1):
+  webserver (required)
+    Package: @deepseek-ai/dsh-host-webserver
+    Error: listen EADDRINUSE: address already in use 127.0.0.1:3080
+        at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+        at listenInCluster (node:net:1997:12)
+        at node:net:2206:7
+        at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+
+Plugins waiting for services (11):
+  Plugin                 Missing services
+  connection (required)  webRuntime
+  session-log-download   connection
+  open-in-app            webServer, connection
+  directory-picker       webServer
+  session-controller     fileUploads
+  schedule               sessionController
+  web-runtime            webServer
+  client-hmr             webServer
+  file-upload            connection
+  ui-deliverables        connection, sessionController
+  office-approval        schedule, sessionController
+
+Full diagnostics: C:\Users\EDY\.dsh\logs\startup-2026-10-10T02-00-38.599Z-6bc52fc7-35a6-455c-abe8-21b82e9385dc.log

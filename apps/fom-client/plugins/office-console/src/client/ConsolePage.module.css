@@ -1,0 +1,239 @@
+.page {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 18px 20px;
+  line-height: 1.6;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.tabs {
+  margin: 14px 0;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 14px 0 12px;
+}
+
+.categories {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.summary {
+  margin-left: auto;
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* 工具栏最右的操作按钮组（新建 / 导入） */
+.toolbarActions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 对话框（Modal）宽度覆盖：默认 380px 偏窄，表单要宽些 */
+.dialog {
+  width: min(560px, 100%);
+  max-height: min(760px, 100%);
+}
+
+/* 对话框内表单（纵向字段） */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 标签式字段（label 在上、错误在下） */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 12.5px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+/* 占位文字提一档：内核 Input 的 `::placeholder` 用 label-dimmed（偏淡），本处用 tertiary 便于看清 */
+.field input::placeholder {
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.fieldError {
+  font-size: 11.5px;
+  line-height: 16px;
+  color: var(--dsw-alias-state-error-primary);
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.fileName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actionsBlock {
+  margin-bottom: 12px;
+}
+
+.notice {
+  margin: 0 0 12px;
+  font-size: 13px;
+}
+
+.noticeOk {
+  color: var(--dsw-alias-state-success-primary);
+}
+
+.noticeErr {
+  color: var(--dsw-alias-state-error-primary);
+}
+
+.empty {
+  padding: 28px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 12px;
+}
+
+.hint {
+  font-size: 11.5px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.muted {
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  background: var(--dsw-alias-brand-primary);
+  color: var(--dsw-alias-label-primary-foreground);
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 38px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.ref {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 本周期配额条（K4 本地配额执行 · 只展示，不阻断——权威在网关） */
+.quota {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border: 0.5px solid var(--dsw-alias-border-l2);
+  border-radius: 10px;
+  background: var(--dsw-alias-bg-layer-1);
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.quotaTitle {
+  font-weight: 600;
+  color: var(--dsw-alias-label-primary);
+}
+
+.quotaItem {
+  white-space: nowrap;
+}
+
+.quotaExceeded {
+  white-space: nowrap;
+  color: var(--dsw-alias-state-error-primary);
+}
+
+.quotaActions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

@@ -1,0 +1,149 @@
+# GitHub Actions 桌面打包（首次尝试；无签名）。
+#
+# 桌面端 = 内核 `apps/desktop`（electron-builder）+ 我们的 bundle/profile。
+# 内核不入库 → 从**公开仓** `deepseek-ai/deepseek-harness` 克隆（master，当前 0.2.1-alpha.2）。
+# ⚠️ 首次尝试：可能需迭代（内核构建/env/产物路径/运行时下载）。签名留后（需证书）。
+# 参考：docs/02-设计/客户端打包与分发v0.1.md、构建与CI基线v0.1.md。
+name: package
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 打包目标（对应内核 package:desktop:<target>:unsigned；**unsigned 仅 Windows**）
+        type: choice
+        default: win:x64
+        options: [win:x64]
+  # 也可推 tag 触发（无需 PAT）：git push <desktop-repo> refs/tags/pkg-<n>
+  push:
+    tags: ['pkg-*']
+
+jobs:
+  desktop:
+    runs-on: ${{ startsWith(inputs.target || 'win:x64', 'win') && 'windows-latest' || 'macos-latest' }}
+    env:
+      DSH_DESKTOP_UNSIGNED: '1'
+      PKG_TARGET: ${{ inputs.target || 'win:x64' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 获取内核（公开仓 master）
+        run: git clone --depth 1 https://github.com/deepseek-ai/deepseek-harness.git deepseek-harness
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.7.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: deepseek-harness/pnpm-lock.yaml
+
+      - name: 安装内核依赖
+        run: pnpm install
+        working-directory: deepseek-harness
+
+      - name: 校验打包输入一致性（bundle patch ⊆ overlay STAGE + 入口产物在场）
+        run: node scripts/check-packaging.mjs
+
+      # 白名单式的导出清单最容易漏：新增一个被 workflow 调用的脚本、忘了加进
+      # sync-desktop-repo.ps1，CI 就会在那一步 MODULE_NOT_FOUND（2026-10-21 `pkg-15` 实测）。
+      # 放在最前面，30 秒内给出明确原因，而不是等到跑到那一步才发现文件不存在。
+      - name: 校验桌面仓导出清单（workflow 调用的脚本 ⊆ sync 白名单）
+        run: node scripts/check-sync-list.mjs
+
+      - name: 应用 FomWorker 品牌（产品名 + 图标）
+        run: node branding/apply-branding.mjs deepseek-harness
+
+      - name: 应用 FomWorker 数据目录隔离（独立 DSH_HOME，避免与官方版共用 profile）
+        run: node branding/apply-data-isolation.mjs deepseek-harness
+
+      # welcome 首屏与产品门禁的衔接（D-1~D-4 + R-1）：首次启动只走一次品牌页，
+      # 登录/本地都由主窗口的 office-login 门禁统一收口。
+      # 必须排在 apply-branding **之后**：品牌 overlay 会重写 locale.ts 的产品名，
+      # welcome overlay 再往同一份字典里加 welcomeUseLocal，顺序反了锚点会失配。
+      - name: 应用 welcome 首屏衔接（首次体验一次、平台令牌判据、门禁收口）
+        run: node branding/apply-welcome-entry.mjs deepseek-harness
+
+      # 关键：数据隔离改的是 `apps/desktop/src/paths.ts`，而桌面主进程产物是三层
+      # （src → lib/types（tsc -b）→ lib/main.js（tsdown bundle）），且 `build:official`
+      # 的 run-gates 是并发的（Desktop bundle 可能早于 lib/types 生成）。
+      # 所以在 package-target.ts 里插一步：build:official 之后、release:pack 之前强制重建 + 断言。
+      - name: 插入数据隔离的产物重建钩子（release:pack 之前）
+        run: node branding/apply-data-isolation-build.mjs deepseek-harness
+
+      # 让 16 个运行时包落到 asar 之外：host 是纯 Node 子进程，对 asar 内路径 existsSync 恒为 false，
+      # 包留在 asar 里就解析不到 ⇒ 整个 bundle 被跳过 ⇒ 界面纯官方（2026-10-20 实装事故）。
+      - name: 让运行时插件落到 asar 外（asarUnpack 加 @fominfo / @office）
+        run: node branding/apply-asar-unpack.mjs deepseek-harness
+
+      - name: 应用 FomWorker 打包 overlay（品牌插件进运行时）
+        run: node branding/apply-packaging-overlay.mjs deepseek-harness
+
+      # 所有 overlay 打完之后、打包开始之前，先跑内核自己的 host 门禁（含 apps/desktop/tests）。
+      #
+      # 为什么必须独立这一步：内核的 `apps/desktop/tsconfig.host.json` 只 include `src`，
+      # 测试目录不在它的类型检查范围内；真正的门禁是**根** `tsconfig.host.json`。2026-10-21
+      # `pkg-14` 就在这里挂的——`welcome-flow.e2e.ts` 还在调已删的 `backend.save()`，本地跑
+      # 错的那个配置报 0 错，CI 直到 `build:official` 的 host aggregate check 才失败（25 分钟处）。
+      # 提前到打包前来，同一个错误 6 分钟内就能看见，也让失败原因直接指向测试代码。
+      - name: 内核 host 门禁（根 tsconfig.host.json，含 apps/desktop/tests）
+        run: node scripts/check-kernel-host.mjs deepseek-harness
+
+      - name: 写 .env.windows（无签名占位；打包必填项）
+        if: startsWith(env.PKG_TARGET, 'win')
+        shell: pwsh
+        working-directory: deepseek-harness
+        run: |
+          @"
+          DSH_DESKTOP_APP_ID=com.fominfo.fomworker
+          DSH_DESKTOP_AUTO_UPDATE_ENV=test
+          DOWNLOAD_TEST_ORIGIN=https://download.example.com
+          DOWNLOAD_TEST_RELEASE_ID=00000000000000000000000000000000
+          DSH_DESKTOP_MANDATORY_UPDATE_TEST_ORIGIN=https://update.example.com
+          DSH_DESKTOP_MANDATORY_UPDATE_PROD_ORIGIN=https://update.example.com
+          DSH_DESKTOP_MANDATORY_UPDATE_CONFIG='{"allowedAuthOrigins":["https://login.example.com"]}'
+          "@ | Set-Content -Encoding utf8 apps/desktop/.env.windows
+
+      - name: 写 .env.macos（无签名占位）
+        if: ${{ !startsWith(env.PKG_TARGET, 'win') }}
+        shell: bash
+        working-directory: deepseek-harness
+        run: |
+          cat > apps/desktop/.env.macos <<'EOF'
+          DSH_DESKTOP_APP_ID=com.fominfo.fomworker
+          DSH_DESKTOP_AUTO_UPDATE_ENV=test
+          DOWNLOAD_TEST_ORIGIN=https://download.example.com
+          DOWNLOAD_TEST_RELEASE_ID=00000000000000000000000000000000
+          DSH_DESKTOP_MANDATORY_UPDATE_TEST_ORIGIN=https://update.example.com
+          DSH_DESKTOP_MANDATORY_UPDATE_PROD_ORIGIN=https://update.example.com
+          DSH_DESKTOP_MANDATORY_UPDATE_CONFIG='{"allowedAuthOrigins":["https://login.example.com"]}'
+          EOF
+
+      - name: 桌面打包（无签名；Windows 用 `:unsigned` 脚本跳过证书校验）
+        run: pnpm --filter @deepseek-ai/dsh-desktop run package:${{ env.PKG_TARGET }}:unsigned
+        working-directory: deepseek-harness
+
+      # 产物验收：把刚构建好的安装器解开，断言「插件全在 + 双半齐备 + 数据隔离生效 + 登录线在位」。
+      # 拦的是「打包正确、加载为空」这类只有装完才会发现的问题（2026-10-20 真实事故）。
+      - name: 产物验收（解包断言插件与数据隔离）
+        if: startsWith(env.PKG_TARGET, 'win')
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem "deepseek-harness/apps/desktop/.desktop-build/targets" -Recurse -Filter "*.exe" -ErrorAction SilentlyContinue |
+            Where-Object { $_.FullName -match 'unsigned-artifacts|artifacts' } | Select-Object -First 1
+          if (-not $installer) { throw "产物验收：找不到构建出的 .exe" }
+          Write-Host "验收产物：$($installer.FullName)（$([math]::Round($installer.Length/1MB,1)) MB）"
+          node scripts/verify-installer.mjs $installer.FullName --expect-l1-l6
+
+      - name: 上传制品（只传安装器，**不含** win-unpacked 的 exe）
+        uses: actions/upload-artifact@v4
+        with:
+          name: fomworker-win-x64
+          path: |
+            deepseek-harness/apps/desktop/.desktop-build/targets/**/unsigned-artifacts/*.exe
+            deepseek-harness/apps/desktop/.desktop-build/targets/**/artifacts/*.exe
+            deepseek-harness/apps/desktop/.desktop-build/targets/**/artifacts/*.dmg
+            deepseek-harness/apps/desktop/.desktop-build/targets/**/artifacts/*.zip
+          if-no-files-found: warn

@@ -1,0 +1,11 @@
+baseline: green（0 红）
+a-drop-request-file-names: 抓住（断言式） —— 3 条红 —— 基线不记 `requests/` 的文件名清单 —— ③ 那两枪必须红：消费端退回计数差，「别的实例删一条＋夜间多两条」会被算成只多 1 张，ME8 的归属判定（靠集合差、还要点名是哪两条）就废了
+b-drop-run-file-names: 抓住（断言式） —— 2 条红 —— 基线不记 `office_memory_run` 的文件名清单 —— ④ 必须红：起手态里已有的那行对账账目会被当成夜间新增，「有对账行」变成假绿，DM8 跟着错判
+c-daily-keeps-md-suffix: 抓住（断言式） —— 1 条红 —— 日级清单留着 `.md` 后缀 —— ① 的 DM7 那枪必须红：消费端 `listDailyDays()` 给的是 `YYYY-MM-DD`，集合差会把整份清单读成夜间新增，成员一枪还没打就已经绿
+d-hash-trims-the-file: 抓住（断言式） —— 7 条红 —— 算 sha 前先 `trim()`（归一化口径漂移的典型形态）—— ① 与 ② 必须一起红：`MEMORY.md` 与手改靶都以换行收尾，于是起手态就被判成「索引已整段重建」＋「手改正文被动过」，这一夜开局两个假红
+e-hand-edited-path-hardcoded: 抓住（断言式） —— 1 条红 —— 手改靶路径写死回 `reference/hand-edited-guard.md`（＝抽出生产者之前启动器的真实形态）—— ⑤ 必须红：种子换靶后基线哈希的是另一个文件，V2 那条「手改正文一字节没动」比的根本不是同一个东西
+f-watermark-shape-unvalidated: 抓住（断言式） —— 2 条红 —— 水位线不做形状校验、原样透出 —— ⑥ 必须红：坏形状（缺 `lastDistilledAt`）会进基线，消费端把「读不出水位线」当成「有水位线」，DM8 的倒退判定失去依据
+g-watermark-throws-when-absent: 抓住（断言式） —— 1 条红 —— 水位线文件缺失时直接抛（＝抽出生产者之前 `checkSeed` 的真实形态）—— ⑥ 必须红：启动器会在两个各约 100s 的冷启动**之后**崩在 ENOENT 上，白等的正是这一夜
+h-armed-marker-always-true: 抓住（断言式） —— 1 条红 —— `armedMarkerAtStart` 写死 true —— ① 的武装那枪必须红：判据机会把「标记还没写出来」当成「起手态就有标记、这次看不到武装事件」，第 6 步要观测的那个事件凭空消失
+i-ledger-bodies-copied-into-baseline: 抓住（断言式） —— 1 条红 —— 把台账正文一起抄进基线（「方便早上对账」的写法）—— ⑦ 必须红：真观测时那两个目录在 `.dsh` 下、装的是别人的 `argsSnapshot`，正文进基线就违反「只记名字与哈希」这条铁律
+结论：9/9 个变异被抓住

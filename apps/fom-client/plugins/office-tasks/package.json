@@ -1,0 +1,17 @@
+{
+  "name": "@office/tasks",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "office-tasks：任务面（D-5 task=会话）——会话 turn 状态上报；收到 task.create 在 PC 建会话（执行端恒在 PC）。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.ts",
+    "tasks.ts",
+    "lib/index.js"
+  ]
+}

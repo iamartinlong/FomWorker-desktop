@@ -1,0 +1,91 @@
+# FomWorker bundle patch —— 作为一层挂进 dsh profile（在 web-app 层之后、profile 自身 patch 之前）。
+#
+# 行 id 与原先手工写在 `~/.dsh/profiles/web/cordis.patch.yml` 的一致。
+# `name` 说明：
+#   - 品牌 occupant 与登录走**包名**（junction 进 profile node_modules 的 @fominfo/*）；
+#   - 办公插件走**包名** `@office/*`（junction 进 profile node_modules 的 @office/*，指向 apps/fom-client/plugins/office-*）。
+
+- insert:
+    - id: ui-brand-fomworker
+      name: '@fominfo/dsh-client-ui-brand-fomworker'
+    - id: ui-login
+      name: '@fominfo/dsh-client-ui-login'
+      config:
+        providerId: fom-platform
+        provider:
+          api: openai-completions
+          baseURL: 'http://127.0.0.1:5199/v1'
+          apiKeyEnv: FOM_PLATFORM_TOKEN
+          models:
+            - id: deepseek-v4.1-flash
+              name: DeepSeek V4.1 Flash
+              contextWindow: 128000
+              maxTokens: 8192
+              input: [text]
+              reasoningEfforts: false
+    - id: office-catalog
+      name: '@office/catalog'
+    - id: office-authz
+      name: '@office/authz'
+    - id: office-console
+      name: '@office/console'
+    - id: office-experts
+      name: '@office/experts'
+    - id: office-skills
+      name: '@office/skills'
+    - id: office-approval
+      name: '@office/approval'
+      config:
+        # 桌面形态：**只装闸**（不装卡片渠道/responder/回调/催办）⇒ 审批落**内核原生面板**（G13 桌面为主）。
+        # `gatedTools` 只列我们自己的产品写工具：内置工具（web_search/web_fetch 等）交回内核自己的闸，
+        # 避免「搜一次问一次」（§9 U11）。我们自己的台账因此停在 pending（决策只在内核会话日志里）。
+        approvalMode: native
+        # tenantId 留空 ⇒ 从平台令牌 JWT 的 tenant_id 解（登录后才有；解不出闸就交棒，不拿假租户记账）
+        gatedTools:
+          - feishu_doc_create
+          - feishu_bitable_create_record
+          - feishu_calendar_create_event
+    - id: office-feishu
+      name: '@office/feishu'
+      config:
+        # 产品默认：未配企业飞书应用 ⇒ **休眠**（不注册任何工具、不抛）。
+        # 写工具（L2）靠 `officeRiskGate` 结构互锁：上面那层没装出来 ⇒ 写工具不注册（fail-closed）。
+        feishuAppId: ''
+        feishuAppSecretEnv: FEISHU_APP_SECRET
+        readOnly: false
+    - id: office-billing
+      name: '@office/billing'
+      config:
+        platformUrl: 'http://localhost:5028'
+    - id: office-reporter
+      name: '@office/reporter'
+      config:
+        platformUrl: 'http://localhost:5028'
+        # 内核 assistant/message 的 data 不带 model ⇒ 这里给缺省（平台 /report/usage 要求非空）
+        defaultModel: 'deepseek-v4.1-flash'
+    - id: office-channel
+      name: '@office/channel'
+      config:
+        # IM 中继的接收端：常连平台 /api/ws，收 im.relay ⇒ 建/续本地会话并投正文。
+        platformUrl: 'http://localhost:5028'
+    - id: office-delegate
+      name: '@office/delegate'
+      config:
+        # 审批托管：本地面板 20s 无应答或离开电脑（idle≥5min/锁屏）⇒ 推该员工 IM；回 1/2 回填（先答先赢）。
+        forwardAfterMs: 20000
+        idleForwardMs: 300000
+    - id: office-tasks
+      name: '@office/tasks'
+      config:
+        # 任务面（D-5 task=会话）：turn 状态上报；收到 task.create 在 PC 建会话（执行端恒在 PC）。
+        enabled: true
+    - id: office-assistant
+      name: '@office/assistant'
+      config:
+        # 「智能助理」面板：我的任务 + 派活 + 我的待办 + 日终简报。
+        # 派活走宿主代理平台 /api/tasks（执行端恒在 PC）；待办与简报落本机域，正文不出本机。
+        platformUrl: 'http://localhost:5028'
+        # 日终收拢时刻（本地小时，0–23；负数关掉定时，仍可面板手动出）。
+        digestHour: 18
+        # 出完顺手推到该员工的 IM（经平台 `digest.notify` 上行帧；没绑 IM 安静跳过）。
+        digestPush: true

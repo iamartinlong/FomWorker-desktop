@@ -1,0 +1,113 @@
+/* 设置页「用量与配额」。颜色只用 --dsw-alias-* 令牌，零颜色字面量。 */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 4px 2px 8px;
+  line-height: 1.6;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hint {
+  font-size: 11.5px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.empty {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.verdictRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rowHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.label {
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.value {
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--dsw-alias-label-primary);
+}
+
+.valueExceeded {
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--dsw-alias-state-error-primary);
+  font-weight: 600;
+}
+
+.bar,
+.barEmpty {
+  display: block;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--dsw-alias-bg-layer-2);
+  overflow: hidden;
+}
+
+.barFill,
+.barFillExceeded {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--dsw-alias-brand-primary);
+}
+
+.barFillExceeded {
+  background: var(--dsw-alias-state-error-primary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid var(--dsw-alias-border-l2);
+  padding-top: 12px;
+}
+
+.error {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--dsw-alias-state-error-primary);
+}

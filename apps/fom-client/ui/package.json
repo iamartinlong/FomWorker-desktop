@@ -1,0 +1,11 @@
+{
+  "name": "@fominfo/dsh-ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "FomWorker 客户端共享 UI 组合层：组合内核 @deepseek-ai/dsh-client-ui-primitives 原子 + --dsw-alias-* 令牌，补齐内核没有的原子（Textarea / Card）。不引组件库、不写颜色字面量。",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  }
+}

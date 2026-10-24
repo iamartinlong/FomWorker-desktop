@@ -1,0 +1,25 @@
+baseline: green（0 红）
+a-orphan-task-read-as-pending: 抓住（断言式） —— 1 条红 —— 「调度层挂着夜间任务而标记不在场」从 fail 放宽成 pending —— ⑬ 必须红：残留的那条会在 03:30 叫醒一个没人观测的蒸馏会话，而早上那张表把它读成「还没武装」
+    · ⑬ 反向：任务残留而标记不在场 — 判定不符：nightly-job-single=pending（应为 fail）
+b-file-absent-branch-off: 抓住（断言式） —— 1 条红 —— 拆掉「标记在场而调度层文档不在场」这一支 —— ⑪ 与 ⑪b 必须红：拿错 `--schedule-file` 会被说成「任务已被取消」，人就去重装任务而不是改路径
+    · ⑪b 红例指向「路径拿错」这个动作（而不是让人去重装任务） — 详情里缺 --schedule-file：标记 jobId=job-x，但调度层里没有任何夜间蒸馏任务行（共 0 行任务）⇒ 任务已被取消，nightly 永不点火
+c-parse-error-branch-off: 抓住（断言式） —— 1 条红 —— 拆掉「文档读不成」这一支 —— ⑭ 与 ⑭b 必须红：半截 JSON 会被读成「调度层里真没有夜间任务」，而实情是观测拿错了文件
+    · ⑭b 红例说出「读不成」这一因（不会被当成「调度层里真没有夜间任务」） — 详情里缺 JSON：标记 jobId=job-x，但调度层里没有任何夜间蒸馏任务行（共 0 行任务）⇒ 任务已被取消，nightly 永不点火
+d-marker-row-divergence-relaxed: 抓住（断言式） —— 1 条红 —— 「标记指向的行不在夜间任务行里」那一支从 fail 放宽成 pass（取消任务后「别让早上那张表卡住」的诱人写法）—— ⑩ 与 ⑩b 必须红：内核取消是真删行、没有墓碑，标记还在而 nightly 永不点火，`armed-marker` 那一侧照样绿，这条判定存在的唯一理由就是把这个形状拦住
+    · ⑩ 反向：标记在场而任务行没了 — 判定不符：nightly-job-single=pass（应为 fail）
+e-stack-threshold-raised: 抓住（断言式） —— 2 条红 —— 堆叠阈值从 >1 抬到 >2 —— ⑨ 必须红：MF4 没有幂等键，重启堆出两条 recurring 就只报绿，03:30 被叫醒两次、侧栏挂着两条自动化
+    · ⑨ 反向：调度层堆了两条夜间任务 — 判定不符：nightly-job-single=pass（应为 fail）
+    · ⑨b 堆叠的那两条都被逐行列名 — 详情里缺 job-new：job-old（会话 sess-distiller-top，daily 03:30:00.000 Asia/Shanghai，status=active，已点火 0 次，下次 2026-11-02T03:30:00.000Z）；调度层共 2 行任务，其中夜间蒸馏只有这一条
+f-kind-column-check-off: 抓住（断言式） —— 1 条红 —— 去掉 `kind` 必须是 daily 的比较 —— ⑫ 的 kind 例必须红：`at`／`cron` 形的行会被当成每日夜间任务，而它要么只点火一次、要么按另一套表达式走
+    · ⑫ 反向：调度层那一行 kind 不是 daily — 判定不符：nightly-job-single=pass（应为 fail）
+g-time-column-check-off: 抓住（断言式） —— 1 条红 —— 去掉 `time` 与 `arm.ts` 常量的比较 —— ⑫ 的 time 例必须红：任务确实挂着但叫醒的时刻不是 03:30，第 5 枪「幂等」的结论来自一条被改过时刻的任务
+    · ⑫ 反向：调度层那一行 time 走偏 — 判定不符：nightly-job-single=pass（应为 fail）
+h-timezone-column-check-off: 抓住（断言式） —— 1 条红 —— 去掉 `timeZone` 与 `arm.ts` 常量的比较 —— ⑫ 的 timeZone 例必须红：UTC 的 03:30 是上海的 11:30，蒸馏会在白天叫醒、还会往成员的语料里插话
+    · ⑫ 反向：调度层那一行 timeZone 走偏 — 判定不符：nightly-job-single=pass（应为 fail）
+i-status-column-check-off: 抓住（断言式） —— 1 条红 —— 去掉 `status` 必须是 active 的比较 —— ⑫ 的 status 例必须红：真文档 39 行里就有 inactive 的，inactive 的行到点不再投递，标记却照样绿
+    · ⑫ 反向：调度层那一行 status 不是 active — 判定不符：nightly-job-single=pass（应为 fail）
+j-missing-status-column-flipped: 抓住（断言式） —— 1 条红 —— 行没写 `status` 列时按 inactive 处理（内核 schema 里那是带 default 的列）—— ⑧b 必须红：一条本来会点火的被说成永不点火，第 5 枪出现假红就等于这一夜作废
+    · ⑧b 正向：那一行没写 status 列 — 判定不符：nightly-job-single=fail（应为 pass）
+k-attribution-filter-off: 抓住（断言式） —— 1 条红 —— 去掉「只认标题/正文与 `arm.ts` 常量逐字相等的那几行」的归属过滤 —— ⑧c 必须红：那份 `schedule.json` 是跨实例共享的（本机 39 行全是审批催办那一形），把别人的任务算进来就会凭空造出「堆叠」假红、或把我这条挤进别人的行
+    · ⑧c 正向：调度层混着别人的任务 — 判定不符：nightly-job-single=fail（应为 pass）
+结论：11/11 个变异被断言式抓住

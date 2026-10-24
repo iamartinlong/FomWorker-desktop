@@ -1,0 +1,55 @@
+m1_recall_anything: 抓住 —— 3 例红
+    · 窗口到期 → cancelled（不是 rejected）、记录迁 expired、卡片就地转后台且**不撤回**
+    · 门已经关上（`expiresAt` 早于窗口结束）时才真的撤卡
+    · E7 调用方取消（session.cancel 的等价信号）→ recalled + 卡片转后台 + cancelled
+m2_always_defer: 抓住 —— 1 例红
+    · 门已经关上（`expiresAt` 早于窗口结束）时才真的撤卡
+m3_deferred_is_settled: 抓住 —— 2 例红
+    · 终态：按钮置灰、确认框消失、页脚写明发生了什么
+    · F-E：`defer` 是就地 PATCH，绝不 DELETE —— 转后台那张卡还得能点
+m4_defer_deletes: 抓住 —— 4 例红
+    · 第二次 ask 消费授权直接放行，一张卡片都不发，记录迁 consumed
+    · 回调在窗口还开着时到达 ⇒ 交给窗口，不注入消息、不起第二个 turn
+    · 批准落在卡片还没送达时 ⇒ 窗口仍然接得住，不另起一个 turn
+    · F-E：`defer` 是就地 PATCH，绝不 DELETE —— 转后台那张卡还得能点
+m5_defer_wrong_state: 抓住 —— 3 例红
+    · 窗口内点「同意」→ allowed-once、记录迁 approved、卡片就地更新、不落 grant
+    · F-E：`defer` 是就地 PATCH，绝不 DELETE —— 转后台那张卡还得能点
+    · 已撤回/已删除的三个码按「目的已达到」处理；超窗 230009 是真失败，照常抛
+m6_no_short_circuit: 抓住 —— 3 例红
+    · 窗口内已批准的调用，工具体第二次问 → 直接兑现那次决定，一张卡都不多发
+    · 已拒绝的调用，工具体第二次问 → rejected：第二次问绝不把一次拒绝变成放行
+    · 凭 grant 放行的重放，工具体第二次问 → 同样直接放行（批件已经消费掉了，不能再问人）
+m7_decided_yes_becomes_no: 抓住 —— 2 例红
+    · 窗口内已批准的调用，工具体第二次问 → 直接兑现那次决定，一张卡都不多发
+    · 凭 grant 放行的重放，工具体第二次问 → 同样直接放行（批件已经消费掉了，不能再问人）
+m8_rejected_becomes_yes: 抓住 —— 2 例红
+    · 第二次 ask 消费授权直接放行，一张卡片都不发，记录迁 consumed
+    · 已拒绝的调用，工具体第二次问 → rejected：第二次问绝不把一次拒绝变成放行
+m9_pending_counts_as_decided: 抓住 —— 28 例红
+    · 窗口内点「同意」→ allowed-once、记录迁 approved、卡片就地更新、不落 grant
+    · 窗口内点「拒绝」→ rejected，模型看到的是"用户拒绝"而不是"没人答"
+    · 窗口到期 → cancelled（不是 rejected）、记录迁 expired、卡片就地转后台且**不撤回**
+    · 门已经关上（`expiresAt` 早于窗口结束）时才真的撤卡
+    · E7 调用方取消（session.cancel 的等价信号）→ recalled + 卡片转后台 + cancelled
+    · 卡片上的点击推翻不了已经落账的更早决定（E4 在 responder 这一层）
+m10_strip_justification: 抓住 —— 1 例红
+    · E2：窗口到期后的批准起一个新 turn，模型原样重放，工具恰好执行一次
+m11_replay_without_args: 抓住 —— 1 例红
+    · E2：窗口到期后的批准起一个新 turn，模型原样重放，工具恰好执行一次
+m12_summary_becomes_bare_name: 抓住 —— 1 例红
+    · 卡片正文不许是裸工具名（§4）：登记过的带要点，没登记的直说没登记
+m13_ask_user_question_is_L4: 抓住 —— 2 例红
+    · 问人与只读类工具不打扰：L0 交棒，不落台账
+    · 每一条可能问人的登记项都必须自带动作描述 —— 漏写就红，不许靠兜底文案上线
+m14_unknown_default_fail_open: 抓住 —— 3 例红
+    · 未登记的工具按 L4 询问，而不是默认放行
+    · 分级字典按参数二次判定，且原型链上的名字不算命中
+    · 没登记的名字仍然是 L4，包括 MCP 的动态名与原型链上的名字
+m15_web_fetch_demoted: 抓住 —— 2 例红
+    · 出网、驱动别的 agent、留下会自己触发的排程 ⇒ L2；不可逆或换沙箱 ⇒ L3
+    · 批准落在卡片还没送达时 ⇒ 窗口仍然接得住，不另起一个 turn
+m16_escalation_not_L3: 抓住 —— 2 例红
+    · 出网、驱动别的 agent、留下会自己触发的排程 ⇒ L2；不可逆或换沙箱 ⇒ L3
+    · 产品字典装进真闸：同一条提权写照旧被问，只读照旧不问也不留痕
+还原后基线：全绿

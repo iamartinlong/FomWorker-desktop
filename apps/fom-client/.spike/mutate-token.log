@@ -1,0 +1,12 @@
+baseline: green
+k-token-guard-removed: 抓住 —— 2 例红（exit=1）— 去掉「空 token ⇒ 一律 401」这道守卫 —— 回到修复前那个用空串就能现算出合法签名的形态，两条新用例必红
+    · Verification Token 没配 ⇒ 用空串现算的「合法」签名一律 401，台账一行不动
+    · Verification Token 没配 ⇒ url_verification 不回显 challenge（body 里的 token 同为空串）
+l-token-guard-inverted: 抓住 —— 29 例红（exit=1）— 反转这道守卫（配了 token 反而全拒、没配才放行）—— 验签整段废掉，既有那二十八条必红
+    · 签名不对 → 401，台账、审计、授权一行都不动
+    · Verification Token 没配 ⇒ 用空串现算的「合法」签名一律 401，台账一行不动
+    · Verification Token 没配 ⇒ url_verification 不回显 challenge（body 里的 token 同为空串）
+    · 决策请求不带签名头 → 401（只有配置地址时的 url_verification 允许）
+    · 时间戳过期、来自未来、或根本不是数字 → 都是 bad-timestamp
+    · 偷到一个合法回调再改编号：正文参与签名，改一个字节就失效
+结论：2/2 个变异被抓住

@@ -1,0 +1,10 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="FomWorker">
+  <rect rx="192" width="1024" height="1024" fill="#FFFFFF"/>
+  <g id="tray-glyph">
+    <g transform="translate(224 264) scale(8)">
+      <path d="M20 20 L36 8 L56 19 L56 33 L38 22 L30 27 L30 52 L16 44 L16 22 Z" fill="#038AC6"/>
+      <path d="M30 16 L40 10 L50 16 L46 19 L40 15.5 L34 19 Z" fill="#FCB513"/>
+      <path d="M42 22 L55 30 L55 50 L48.5 54 L42 50 Z" fill="#FCB513"/>
+    </g>
+  </g>
+</svg>

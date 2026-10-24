@@ -1,0 +1,14 @@
+baseline（无 ⑨、无变异）: green
+j-watermark-file-renamed: 无 ⑨ 时 ★ 静默（0 条红、退出码 0）
+k-armed-marker-file-renamed: 无 ⑨ 时 ★ 静默（0 条红、退出码 0）
+l-index-file-renamed: 无 ⑨ 时 抓住 6 条红
+    · ① 起手态：index-rebuilt 停在 pending（字节 sha == readIndex sha） — 实得 fail
+    · ① 起手态：一条 fail 都没有 — index-rebuilt,planted-ghost-gone,must-survive-in-index,no-secret-in-memory
+    · ① 起手态：汇总退出码 = 3（待观测，不是通过也不是违反） — 实得 1
+    · ② CLI 端到端：接受生产者的基线文件并以 3（待观测）退出 — 实得 exit=1，输出尾行 pass=4 fail=4 pending=6 info=0 ⇒ exit=1
+m-daily-dir-renamed: 无 ⑨ 时 抓住 5 条红
+    · ① 起手态：一条 fail 都没有 — daily-readers-agree
+    · ① 起手态：汇总退出码 = 3（待观测，不是通过也不是违反） — 实得 1
+    · ② CLI 端到端：接受生产者的基线文件并以 3（待观测）退出 — 实得 exit=1，输出尾行 pass=3 fail=1 pending=10 info=0 ⇒ exit=1
+    · ② CLI 端到端：输出里没有一个 ×（把「还没发生」读成违反就是这条） — × [daily-readers-agree] 基线读法与产品读法看到同一份日级清单（②r） — 只有基线读法看到：(无
+结论：2/4 个改名在 ②s 之前完全静默（其余那几个只被 ①/⑥ 那组**间接**撞到，红例点名的是「有一条 fail」而不是「文件名错了」）；⑨ 之后四个都由 mutate-step6-baseline.mjs 逐个钉死

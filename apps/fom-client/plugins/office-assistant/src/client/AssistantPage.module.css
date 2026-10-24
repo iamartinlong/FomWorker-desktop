@@ -1,0 +1,123 @@
+.page {
+  width: 100%;
+  max-width: 720px;
+  box-sizing: border-box;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  line-height: 1.6;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.section {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.sectionHint {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.lead {
+  margin: 0 0 2px;
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.muted {
+  font-size: 11.5px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.rowMain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.taskTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.error {
+  font-size: 12.5px;
+  color: var(--dsw-alias-state-error-primary);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.digestHead {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.digestLine {
+  font-size: 12.5px;
+  color: var(--dsw-alias-label-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* 本地模式提示条：保留平台入口，但说明哪些要登录（D-6：不灰掉，只解释）。 */
+.localNotice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px dashed var(--dsw-alias-border-l3);
+  border-radius: 10px;
+  background: var(--dsw-alias-bg-layer-2);
+}
+
+.localNoticeText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: 12.5px;
+}

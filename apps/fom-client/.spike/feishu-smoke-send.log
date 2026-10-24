@@ -1,0 +1,17 @@
+approver open_id = ou_e66ad5f9e6604d4184d17215b1c2adc7
+1) 发卡 A（L3，带二次确认区块）
+   card A -> {"cardId":"smoke-A-040355"}
+2) 发卡 B（L2，留在会话里等你点）
+   card B -> {"cardId":"smoke-B-040355"}
+3) 就地改卡 A（写"已由冒烟脚本批准"并把按钮置灰）
+   ok
+4) 撤回 A 并另发一句文本
+   ok
+5) 催办重推 B 一次（换 uuid 的新卡 + 旧卡置灰）
+   ok
+
+A 的 message_id 句柄：["om_x100b63afdc0fb0b8de7909df331720d"]
+失败上报（应为空）：[]
+
+uuid 复查：A 首推 office-approval-push-smoke-A-040355 / B 首推 office-approval-push-smoke-B-040355 / B 催办 office-approval-remind-smoke-B-040355
+现在到飞书里点 B 那张「批准」，然后看 .spike/feishu-ws/bridge.log

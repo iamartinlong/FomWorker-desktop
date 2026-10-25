@@ -1,0 +1,47 @@
+/**
+ * 左下角入口的样式：与官方 `settings.launcher` 的外观对齐（同样高度、同样缩进）。
+ *
+ * 不写死颜色——全部走主题 token（见 `docs/web-styling.md`）。
+ */
+.launcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  justify-content: flex-start;
+  padding: 6px 8px;
+  text-align: left;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--dsw-color-fill-strong);
+  color: var(--dsw-color-text-on-fill);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.dots {
+  flex: none;
+  width: 20px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--dsw-color-text-secondary);
+}
+
+.label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}

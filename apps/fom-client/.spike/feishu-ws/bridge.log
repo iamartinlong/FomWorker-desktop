@@ -1,0 +1,929 @@
+[info]: [ 'event-dispatch is ready' ]
+appId=cli_aa431ed31eb8dcce
+events -> F:\deepseek\deepseek harness\office-platform\.spike\feishu-ws\events.jsonl
+callback -> http://127.0.0.1:3081/office/approval/callback
+waiting for events ... Ctrl-C to stop
+[info]: [
+  '[ws]',
+  'receive events or callbacks through persistent connection only available in self-build & Feishu app, Configured in:\n' +
+    '        Developer Console(开发者后台)\n' +
+    '          ->\n' +
+    '        Events and Callbacks(事件与回调)\n' +
+    '          ->\n' +
+    '        Mode of event/callback subscription(订阅方式)\n' +
+    '          ->\n' +
+    '        Receive events/callbacks through persistent connection(使用 长连接 接收事件/回调)'
+]
+[ws] connected
+[info]: [ '[ws]', 'ws client ready' ]
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"905fce1f-5c36-4000-a07e-cddb94564490"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"1f0d6e02-10e7-48b5-af81-ec813cfffade"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"dc4d3a66-7ef5-4cce-bc3a-151cb8cd0e1e"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"f99d21de-b037-4b26-9da5-1f4847f40ff4"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"3d79d715-fea9-4315-9855-da993a98948f"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"5ce5c750-fac2-430e-847a-01d98b0a8197"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"7159026b-566c-4d69-9ddc-900455b62d49"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"77af55de-c6eb-4bc7-bdfe-cc52dacbb35d"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"d9ef2a9d-cb36-46fb-9d65-14a1b0240e72"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"8c49985a-87ed-4f8d-8887-31101b40171d"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"bff5cc76-9358-4299-9df4-e7e2be5654cc"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"bd6af907-d193-413f-8db9-b8cdc1e516b6"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"59c97831-1932-4f03-9ea3-de5b0e5a8e3f"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"cfb5ceff-49a4-4383-9a15-52ecedd2f2bb"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"551e058d-f1f1-4f03-86f0-fe0e89d9941d"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"7c90c559-ff29-4f68-8463-2f1e94e50eb5"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"27e6fce3-70fe-4cff-87ba-65f67dcadbb9"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"573fa127-7d14-4b0a-9945-93f492b9ee6d"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791608272007,"reconnectAttempts":0}
+[info]: [ '[ws]', 'reconnect' ]
+[ws] reconnecting
+[ws] reconnected
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"c6478ecd-2c5e-47c5-b69d-2d21e7ed7040"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[card] operator=ou_e66ad5f9e6604d4184d17215b1c2adc7 action.value={"decision":"approve","requestId":"5d6662b2-2556-4849-a198-e40acaf50777"}
+[forward] 200 {"toast":{"type":"success","content":"已批准，这个动作会在下一个回合自动执行一次。"}}
+[card] -> {"toast":{"type":"success","content":"已记录"}}
+
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}
+[ws] status={"state":"connected","lastConnectTime":1791631126384,"nextConnectTime":1791631126368.7395,"reconnectAttempts":0}

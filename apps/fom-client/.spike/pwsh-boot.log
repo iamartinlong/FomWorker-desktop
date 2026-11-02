@@ -1,0 +1,4 @@
+booting UI-acceptance instance (profile B) on port 3097 ... cold start ~40-100s
+dsh web: http://127.0.0.1:3097/?token=5hB-isiZpYR0LAhwWAIHPK_pCdKEn6cf2nfUv9hmZIU
+dsh web: opening the default browser; pass --no-open to disable
+[ELIFECYCLE] Command failed with exit code 4294967295.

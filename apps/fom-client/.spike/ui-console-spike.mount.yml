@@ -1,0 +1,13 @@
+# M2.0 验证挂载件：把外挂 UI bundle 用 --patch 插进 web profile。
+# name 写「路径」——内核 client-modules 对路径型 name 会解析模块 URL 后
+# 向上找最近的 package.json（packages/client/modules/src/index.ts:871-884），
+# 从而发现 dsh.client + exports["./client"]。锚定到本 patch 文件同目录（.spike/）。
+#
+# 用法（在 deepseek-harness/ 仓库根）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "F:/deepseek/deepseek harness/apps/fom-client/.spike/ui-console-spike.mount.yml" \
+#     --no-open --port 3095
+
+- insert:
+    - id: office-console-spike
+      name: './ui-console-spike/index.js'

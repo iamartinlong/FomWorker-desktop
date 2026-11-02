@@ -1,0 +1,42 @@
+baseline: green
+a-doc-read-unregistered: 抓住 —— 1 例红（exit=1）— 把 feishu_doc_read 从产品风险字典删掉 —— 落回默认 L4，每次读都要 owner 批卡（F-6B 同病），L0 断言必须红
+    · 飞书工具层：只读是 L0、写是 L2（设计小样：定名登记，不用 MCP 的动态名） 11ms
+b-parse-token-no-url: 抓住 —— 3 例红（exit=1）— parseDocToken 不再从链接里取 id（原样返回整串）⇒ 链接形态的用例必须红
+    · 从 docx 链接里取 document_id，容忍首尾空白 20ms
+    · docs / wiki 段也认 3ms
+    · 走 GET raw_content、带鉴权 token、返回纯文本正文 35ms
+c-method-not-get: 抓住 —— 1 例红（exit=1）— 读文档的 method 从 'GET' 改成 'POST' ⇒ 方法/路径断言必须红
+    · 走 GET raw_content、带鉴权 token、返回纯文本正文 46ms
+d-no-token-retry: 抓住 —— 1 例红（exit=1）— 去掉 token 失效重试 ⇒ 「99991663 清缓存重试一次」的用例必须红
+    · token 失效码（99991663）清缓存重试一次，成功返回 10ms
+e-doc-create-unregistered: 抓住 —— 1 例红（exit=1）— 把 feishu_doc_create 从产品风险字典删掉 —— 落回 L4，L2 断言必须红
+    · 飞书工具层：只读是 L0、写是 L2（设计小样：定名登记，不用 MCP 的动态名） 10ms
+f-doc-create-downgraded: 抓住 —— 1 例红（exit=1）— 把 feishu_doc_create 悄悄降成 L0（对外可见的写不问人 = fail-open）⇒ L2 断言必须红
+    · 飞书工具层：只读是 L0、写是 L2（设计小样：定名登记，不用 MCP 的动态名） 11ms
+g-wrong-block-type: 抓住 —— 1 例红（exit=1）— 写正文的 block_type 从 2（文本）改成 1（页面块）⇒ 块形状断言必须红
+    · 先建文档（title）再写正文块（block_type 2），正文按换行拆段 20ms
+h-content-not-split: 抓住 —— 1 例红（exit=1）— 正文不按换行拆段（整段塞一个块）⇒ 段落数/块形状断言必须红
+    · 先建文档（title）再写正文块（block_type 2），正文按换行拆段 27ms
+i-bitable-unregistered: 抓住 —— 1 例红（exit=1）— 把 feishu_bitable_list_records 从产品风险字典删掉 —— 落回 L4，L0 断言必须红
+    · 飞书工具层：只读是 L0、写是 L2（设计小样：定名登记，不用 MCP 的动态名） 14ms
+j-page-size-not-clamped: 抓住 —— 1 例红（exit=1）— page_size 不夹到 500（>500 原样传）⇒ 夹取断言必须红
+    · 显式传 table 与 page_token / page_size（>500 夹到 500） 20ms
+k-bitable-table-not-parsed: 抓住 —— 2 例红（exit=1）— parseBitableTable 不再从链接取 table_id（原样返回整串）⇒ 链接形态的用例必须红
+    · 从链接取 app_token 与 table_id，走 GET records 带 page_size，返回记录/hasMore/pageToken 45ms
+    · POST records 带 {fields}，返回 recordId 13ms
+l-calendar-unregistered: 抓住 —— 1 例红（exit=1）— 把 feishu_calendar_list_events 从产品风险字典删掉 —— 落回 L4，L0 断言必须红
+    · 飞书工具层：只读是 L0、写是 L2（设计小样：定名登记，不用 MCP 的动态名） 14ms
+m-calendar-method-not-get: 抓住 —— 2 例红（exit=1）— 列日程的 method 从 'GET' 改成 'POST' ⇒ 方法/路径断言必须红
+    · 显式 calendar id：GET events 带 start/end，返回 count/itemsJson 29ms
+    · 省略 calendar 时先 POST primary 再列日程 4ms
+n-calendar-id-not-parsed: 抓住 —— 1 例红（exit=1）— parseCalendarId 不再从链接取 calendarId（原样返回整串）⇒ 链接形态的用例必须红
+    · 从 app_link 里取 calendarId 13ms
+o-bitable-create-unregistered: 抓住 —— 1 例红（exit=1）— 把 feishu_bitable_create_record 从字典删掉 —— 落回 L4，L2 断言必须红
+    · 飞书工具层：只读是 L0、写是 L2（设计小样：定名登记，不用 MCP 的动态名） 13ms
+p-calendar-create-unregistered: 抓住 —— 1 例红（exit=1）— 把 feishu_calendar_create_event 从字典删掉 —— 落回 L4，L2 断言必须红
+    · 飞书工具层：只读是 L0、写是 L2（设计小样：定名登记，不用 MCP 的动态名） 14ms
+q-bitable-create-method-get: 抓住 —— 1 例红（exit=1）— 写多维表格记录的 method 从 'POST' 改成 'GET' ⇒ 方法断言必须红
+    · POST records 带 {fields}，返回 recordId 31ms
+r-calendar-create-weakens-summary: 抓住 —— 1 例红（exit=1）— 去掉「summary 不能为空」守卫 ⇒ 缺标题用例必须红
+    · 缺 summary 或 start/end ⇒ 报错（不建一个没标题/没时间的日程） 18ms
+结论：18/18 个变异被抓住

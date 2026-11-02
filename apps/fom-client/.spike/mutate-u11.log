@@ -1,0 +1,39 @@
+baseline: green（0 红）
+a-search-substring-match: 抓住（断言式） —— 4 条红 —— 检索类改回子串匹配（`includes`）—— 「名字里含着 `web_search` 的 `internal_web_search` 不进分子」那条必须红：分子从 4 涨到 5，占比虚高，U11 会把不该改的档位读成「检索卡很烦」
+    · 检索类 4 条 ⇒ 占比 4/6 —— searchCount=5 share=0.8333333333333334
+    · 按天拆开：10-11 = 4 条里 3 条检索，10-12 = 2 条里 1 条检索 —— [{"day":"2026-10-11","total":4,"search":3},{"day":"2026-10-12","total":2,"search":2}]
+    · 分子只认全名：`internal_web_search` 不是检索类（按子串匹配会是 5/6，占比虚高） —— searchCount=5
+    · 真盘 `reportRun()` ⇒ 窗口内有数据 ⇒ 退出码 0，报告里是那六个数 —— code=0
+b-digest-keeps-justification: 抓住（断言式） —— 2 条红 —— 重复询问的指纹退回比参数原文（不剔 `justification`）—— 「只差理由的两次算同一组」必须红：组散了，尺子看不见 U9 已经在卡片上标出来的那次重复
+    · 重复询问：只差 `justification` 的两次算同一组（这就是卡片会说「第 2 次」的那一次） —— []
+    · 跨会话不并组：`r5` 与 `r1/r2` 参数一字不差，但属于另一个会话 ⇒ 组里只有 s1 —— []
+c-repeat-key-drops-session: 抓住（断言式） —— 3 条红 —— 重复归组跨会话并组（键里去掉 `sessionId`）—— 「跨会话不并组」必须红：`maxRepeat` 从 2 变 3，卡片语义（本会话第 N 次）被统计件改写
+    · 重复询问：只差 `justification` 的两次算同一组（这就是卡片会说「第 2 次」的那一次） —— [{"sessionId":"s1","toolName":"web_search","digest":"9c5b56d88ccb5537e812fb3416ad2d082ea62bf619b34be41548677d670cadce","count":3}]
+    · 跨会话不并组：`r5` 与 `r1/r2` 参数一字不差，但属于另一个会话 ⇒ 组里只有 s1 —— [{"sessionId":"s1","toolName":"web_search","digest":"9c5b56d88ccb5537e812fb3416ad2d082ea62bf619b34be41548677d670cadce","count":3}]
+    · 少了第二次询问 ⇒ 无重复组（若 digest 恒等或按 toolName 归组，这里仍会报出「重复」） —— [{"sessionId":"s1","toolName":"web_search","digest":"9c5b56d88ccb5537e812fb3416ad2d082ea62bf619b34be41548677d670cadce","count":2}]
+d-share-denominator-all-records: 抓住（断言式） —— 3 条红 —— 占比的分母用全部记录（含窗口外）—— 「窗口外那条不进分母」必须红：窗口过滤成了装饰，验收周会被读成「今天卡少」
+    · 检索类 4 条 ⇒ 占比 4/6 —— searchCount=4 share=0.5714285714285714
+    · 把 `internal_web_search` 显式写进名单 ⇒ 占比确实跳到 5/6（证明上一条在测的是名单，不是碰巧） —— share=0.7142857142857143
+    · 真盘 `reportRun()` ⇒ 窗口内有数据 ⇒ 退出码 0，报告里是那六个数 —— code=0
+e-empty-window-nan-share: 抓住（断言式） —— 1 条红 —— 去掉空窗口的 0 兜底（`0/0`）—— 「空账本占比是 0 不是 NaN」必须红：NaN 一旦进了报告，「没数据」和「占比很低」肉眼分不开
+    · 空账本 ⇒ counted 0、占比 0（不是 NaN）、`maxRepeat` 0 —— share=NaN
+f-no-shape-guard: 抓住（断言式） —— 1 条红 —— 不做形状判定（`isReadable` 恒假）—— 「读不懂的行被点名、且不进分母」必须红：坏行会被静默算进窗口外，等于丢行不报
+    · 读不懂的行 ⇒ 点名两条且分母不变（不拿半条记录凑数，也不静默跳过） —— {"anomalous":[],"counted":7}
+g-decision-bucket-flip: 抓住（断言式） —— 1 条红 —— 裁决分桶比错对象（拿 `askedAt` 当窗口末）—— 「窗口内 1 / 超窗 2 / 还在等 3」必须红：这是 U11 判断「等人批 vs 秒批」的唯一依据
+    · 裁决分桶按 `decidedAt` 与 `windowEndsAt` 判：窗口内 1、超窗才裁决 2、还在等 3（三桶相加＝分母） —— [0,3,3]
+h-toolname-becomes-body: 抓住（断言式） —— 5 条红 —— 工具名换成动作摘要（正文进聚合）—— 三条「正文零泄漏」必须一起红：统计件把 `actionSummary` 带到终端与 `--out`，§4 最小暴露就破了
+    · 工具表按计数降序、同数按名字升序（web_search 3 → internal_web_search/web_fetch/write_file 各 1） —— 动作摘要 NEEDLE-3f9c1b-不该出现在任何输出里:6
+    · 分子只认全名：`internal_web_search` 不是检索类（按子串匹配会是 5/6，占比虚高） —— searchCount=4
+    · 人读报告不含 `actionSummary` / `displayReason` / `toolArgs` 正文（种针）
+    · 写进 `--out` 的那份同样不含正文针，且退出码从同一扇门出来
+    · `--json` 那份也不含正文（JSON 里没有 `toolArgs` 字段可漏）
+i-dropped-rows-not-reported: 抓住（断言式） —— 1 条红 —— 丢行不再进警告（也不决定退出码）—— 「有行没读回来 ⇒ 退出码 1 且点名」必须红：这是「分母少了就是假绿」唯一的那道闸
+    · 有行没被读回来 ⇒ 退出码 1 且点名 `ghost-row`（这条守住的是「分母少了就是假绿」） —— code=0
+j-empty-window-exits-zero: 抓住（断言式） —— 1 条红 —— 窗口内 0 条时报 0（成功）—— 「窗口里一条都没有 ⇒ 退出码 1 + 报告自陈窗口外几条」必须红：验收周脚本会把「没采到数」当成「没人被卡」
+    · 窗口里一条都没有 ⇒ 退出码 1 且报告自己说清「窗口外 7 条」（0 条绝不等于「没人被卡过」） —— code=0
+k-missing-ledger-exits-zero: 抓住（断言式） —— 1 条红 —— 台账目录不存在时不报警 —— 「没这本账」与「账是空的」必须红：路径写错的那一周会交出一份 0 张卡的报告
+    · 台账目录不存在 ⇒ 退出码 1 + 点名那个目录（区分「没这本账」与「账是空的」） —— code=1
+l-json-flag-eats-a-value: 抓住（断言式） —— 2 条红 —— `--json` 当成要吃值的键 —— 「`--json` 不吃下一个值」与「缺 `--storage-root` 时说的是这一句」必须红：开关顺序一变就报一句假错，真错被埋
+    · 缺 `--storage-root` ⇒ 用法错，并且说的是这一句（绝不默认到 `~/.dsh` 那棵带凭据的树） —— "--storage-root 必填（storages 目录，不默认）" / "不认识开关 --json"
+    · 开关解析：`--json` 不吃下一个值、日期按 UTC 零点、逗号名单去空格 —— "不认识开关 --json"
+结论：12/12 个变异被抓住

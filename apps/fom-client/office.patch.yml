@@ -1,0 +1,30 @@
+# 挂载 skill-office 到 dsh web profile
+#
+# 用法（在仓库根目录执行）：
+#   pnpm dsh web --patch ./office.patch.yml
+#   # 或全局 CLI： dsh web --patch ./office.patch.yml
+#   # 启动后访问终端打印的带 token URL
+#
+# 背景：
+#   0.2.1-alpha.1 的 web profile 默认不含 @deepseek-ai/dsh-skill-office
+#   （实测 --dump-config 中出现 0 次），但 apps/cli 已把它列为依赖。
+#   skill-office 依赖 assets/scripts/check_office.py 与 @deepseek-ai/libreoffice-kit，
+#   二者在本仓库均已就绪。详见 docs/03-验证/dsh实测验证报告.md
+#
+# 注意语法：新增插件行必须用 `- insert:` 包裹。
+#   裸列表项会被当成「对已有 id 的 patch」，报：
+#   "patch: id is required for non-insert patches"
+#   ——这是本文件最初的写法，实测确认无法生效，已修正。
+#
+# 挂载后 agent 获得三个技能：
+#   office-docx / office-pptx / office-xlsx
+# 含 LibreOffice Kit 渲染、PDF 导出、公式重算、OOXML 结构检查。
+
+- insert:
+    - id: skill-office
+      name: '@deepseek-ai/dsh-skill-office'
+      # 默认配置即可：
+      #   assetRoot —— 走包内 assets/
+      #   node      —— 用当前进程（Electron / SEA 打包时才必须显式传）
+      #   cli       —— 自动解析 @deepseek-ai/libreoffice-kit/lib/cli.js
+      # 源码运行时无需任何额外配置。

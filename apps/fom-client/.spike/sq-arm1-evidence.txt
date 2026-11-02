@@ -1,0 +1,25 @@
+臂 1（同 cwd 跨会话检索）· 2026-10-10 20:50 · 实例 :3090（PID 见 sq-boot.log）
+prompt：请用 session_search 工具搜索关键词 step8d，把命中的会话数量、每条的标题与最佳片段列出来。
+      如果这个名字的工具不存在，请只回答「没有这个工具」这四个字，不要用别的工具代替。
+回合：已完成，用时 17 秒 · 1 轮 2 步 · 21.4K tok（缓存命中 50%）
+
+页面正文逐字转储：
+---
+命中 4 个会话：
+
+#	会话标题	最佳片段
+1	请把一句话"第8步闭环"写入 (session-7f0904e4)	seq 183 · assistant/message · current：…写入请求已作废，平台通知编号 c1902a96-…（写入 C:\Users\EDY\reports\step8d.txt）因未获批准已作废，并明确要求不要重复发起…C:\Users\EDY\reports\step8d.txt —— 不存在，第8步闭环 未写入该路径
+2	请把一句话"第8步闭环-FI"写 (session-d3cf0a21)	seq 33 · tool/call · log-only：write {"file_path":"C:\\Users\\EDY\\reports\\step8d.txt","content":"第8步闭环-FI", … "sandbox_permissions":"danger-full-access"}
+3	把一句话"F-H 正向对照"写入 (session-188ebbda)	seq 18 · tool/result · current：C:\Users\EDY\reports\step8d.txt
+4	请把一句话"第8步全环"写入 (session-3f04484e)	seq 52 · tool/result · current：C:\Users\EDY\reports\step8d.txt
+
+说明：session_search 工具存在且已实际调用；命中均为 persisted 会话，最佳片段已按工具返回原样列出（第 1 条为较长摘要，此处节选）。
+---
+
+判读：
+- 工具存在且被真调用（回合 2 步、有 tool/call 轨迹）⇒ 判定 ① 过。
+- 四条命中全部来自**另一个进程（:3081）今天落盘的持久化会话** ⇒ `persisted_docs` 的语料确实来自
+  `dshHomePath('sessions')` 的 jsonl 日志，不是本进程自己新写的会话 ⇒ 判定 ② 过，且 MU7 的兜底不启用。
+- 命中标题与本工作区今天的实测一一对应（第 8 步各次真点击与 F-H 双向对照）⇒ 结果不是幻觉。
+- 命中里含 `log-only` 标记的条目（第 2 条）说明工具会区分「不进模型上下文的审计事件」，
+  这是 §3.4 读侧路径 ③ 的真实形状：能查到参数快照级的原文，比摘要层细。

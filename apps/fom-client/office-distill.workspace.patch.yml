@@ -1,0 +1,63 @@
+# M1 记忆层 · 蒸馏进程挂载（§7 第 6 步 A2，设计 §3.5 DM7 双进程）
+#
+# 这份 patch 造的是「蒸馏进程」这一侧的拓扑，与成员进程那份（`office-distill.member.patch.yml`）分开挂：
+#   - 只挂 `office-memory`，走**蒸馏描述符** `distiller.ts`（默认导出 `OfficeMemoryDistiller`，
+#     inject 比成员份多三个必需服务 `storageDomain` / `schedule` / `sessions`），并带 `distiller: true`；
+#   - **不挂 `office-approval`** —— 于是这个进程里没有 IM 审批层、没有我们的风险闸；
+#   - 覆盖 `sandbox-policy` 的 `workspaceRoot` 到 `memoryRoot`，让蒸馏会话写记忆目录 = **写工作区内**，
+#     内核沙箱不越界 ⇒ 不升级 ⇒ 原生 `approval`（policy=ask）永不触发 ⇒ **整夜零卡（ME8）**。
+#     这是 DM7「蒸馏进程的 workspaceRoot 就是记忆目录」这条结构性规避的现场落地：
+#     记忆目录若在工作区外，夜里没人点卡就永远蒸不出东西。
+#
+# ⚠️ 三个坑（都在这份文件里处理掉了，别改回简化版）：
+#   1. `sandbox-policy` 是**非 insert 覆盖行，整段替换 config、不是深合并**
+#      （实测见 `docs/03-验证/M1真实组合spike记录.md` §1.2）。所以必须把 `mode` 与 `workspaceRoot`
+#      **两个键一起重抄**，漏 `mode` 会回落到插件默认（`process.env.DSH_PERMISSION_MODE ?? 'workspace-write'`
+#      本身也是 workspace-write，但为「读表时一眼看全这条臂的真实 config」而显式写死）。
+#   2. `office-memory` 是 **insert 新增行**，必须用 `- insert:` 包裹，且 `distiller: true` 与
+#      `distiller.ts` 描述符**必须成对**——错配会在 `apply` 开头对「成员拓扑却 distiller:true」响亮抛，
+#      不会静默装出半个蒸馏进程。
+#   3. 蒸馏进程不挂 approval ⇒ 审批层那条就绪探针 `GET /office/approval/callback → 405` **在此进程失效**
+#      （那条路由压根没注册）。就绪信号见下面「就绪判据」段。
+#
+# 用法（在 `deepseek-harness/` 仓库根目录执行；--patch 必须排在 --port 这类应用旗标之前）：
+#   # 先静态核挂载（不起监听、不跑回合，几秒返回）：
+#   node --import tsx/esm apps/cli/src/bin.ts web --dump-config \
+#     --patch "../apps/fom-client/office-distill.workspace.patch.yml"
+#   # 期望：出现 `id: office-memory`（name 指到 distiller.ts、config.distiller: true、config.memoryRoot=工作区）
+#   #       + `id: sandbox-policy`（config.workspaceRoot 与上面 memoryRoot 同一路径、mode: workspace-write）
+#   #       + **没有** `id: office-approval` 这一行。
+#   #
+#   # ⚠️ 上面是最小列表，**不是启动器真起的列表**：`.spike/run-step6.mjs` 的蒸馏臂在这条 patch 之后
+#   # 还叠内核侧 `./office.patch.yml` 与 `apps/web/tests/pin-browse-picker.overlay.yml`，而 `override`
+#   # 类 patch 能改写的恰好是下面 `sandbox-policy` 这段与 session-query 的 path。照逐字真实列表 dump 过的
+#   # 证据在 `.spike/dump-step6-distill-compose.log`（EXIT=0：`distiller.ts` + `distiller: true`、
+#   # `memoryRoot`↔成员那份同路径且＝`workspaceRoot`、session-query 是 `:memory:`、全表无 `office-approval`）；
+#   # 成员臂同理见 `.spike/dump-step6-member-compose.log`。命令在 `docs/03-验证/M1记忆层第6步验证记录.md` §9。
+#   # 真起进程时别手抄下面这条示例端口 —— 端口与 patch 顺序以 `node .spike/run-step6.mjs --dry-run` 打印的那两行为准。
+#   # 再起进程（就绪判据见下）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "../apps/fom-client/office-distill.workspace.patch.yml" \
+#     --patch ./office.patch.yml --no-open --port 3085
+#
+# 就绪判据（第 6 步 A2 现定，替代失效的 approval 探针）：
+#   - 挂载正确性用上面的 `--dump-config` **静态**确认（不依赖进程、不依赖端口、无凭据）。
+#   - 进程活体就绪：蒸馏进程的唯一外部可见副作用是「顶层会话创建后 `installDistillArming` 武装 nightly、
+#     在 `memoryRoot/daily/.distill-armed` 落标记」。所以起进程后开一个顶层会话，轮询该标记文件出现即视为
+#     「装配生效、schedule 已接、蒸馏角色已通电」；`/` 那条 404→401 在本进程同样不稳定，不作就绪判据。
+
+- insert:
+    - id: office-memory
+      name: ./plugins/office-memory/distiller.ts
+      config:
+        # 绝对路径是刻意的：启动器 cwd 在内核仓库里，相对路径会把记忆目录写进内核工作树，违反「内核零改动」。
+        # 这个目录同时就是下面的 workspaceRoot —— 蒸馏会话写它 = 写工作区内 = 零卡。
+        memoryRoot: 'F:/deepseek/deepseek harness/apps/fom-client/.spike/distill-workspace'
+        # 与 distiller.ts 描述符成对：开 run 域 + 注册 memory_distill + 武装 nightly 都靠这个角色位。
+        distiller: true
+
+# 覆盖内核 base 的 sandbox-policy 行（非 insert ⇒ 整段替换 config，故两个键一起重抄）。
+- id: sandbox-policy
+  config:
+    mode: workspace-write
+    workspaceRoot: 'F:/deepseek/deepseek harness/apps/fom-client/.spike/distill-workspace'

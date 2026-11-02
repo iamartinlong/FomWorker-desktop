@@ -1,0 +1,29 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.8 [39m[90mF:/deepseek/deepseek harness/office-platform[39m
+
+ [32m✓[39m plugins/office-approval/risk-gate.spec.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 1490[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/risk-gate.spec.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 623[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/sweeper.spec.ts [2m([22m[2m25 tests[22m[2m)[22m[33m 5339[2mms[22m[39m
+     [33m[2m✓[22m[39m 武装的 job 由内核生成 id，到期后靠 catalog() 的回执被认领一次 [33m 471[2mms[22m[39m
+     [33m[2m✓[22m[39m 对账只认投递回执：还在武装而未投递的 job 不动，别人家的 job 更不认领 [33m 477[2mms[22m[39m
+     [33m[2m✓[22m[39m installApprovalSweeper：台账走到哪一步，告警就武装或撤销到哪一步 [33m 469[2mms[22m[39m
+     [33m[2m✓[22m[39m installApprovalSweeper：同步窗口超期转后台不动告警，催办到点真的投递进会话（F-A） [33m 767[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/recovery.spec.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 4634[2mms[22m[39m
+     [33m[2m✓[22m[39m E2：窗口到期后的批准起一个新 turn，模型原样重放，工具恰好执行一次 [33m 445[2mms[22m[39m
+     [33m[2m✓[22m[39m E9：重放时参数已经变了 ⇒ 批件不消费，重新问人，未获批准就不执行 [33m 327[2mms[22m[39m
+     [33m[2m✓[22m[39m E10：批件在等待重放期间过期 ⇒ 不消费，回落到标准询问 [33m 2229[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/feishu-channel.spec.ts [2m([22m[2m43 tests[22m[2m)[22m[33m 2877[2mms[22m[39m
+     [33m[2m✓[22m[39m 已撤回/已删除的三个码按「目的已达到」处理；超窗 230009 是真失败，照常抛 [33m 323[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/responder.spec.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 1852[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/callback-route.spec.ts [2m([22m[2m24 tests[22m[2m)[22m[33m 1778[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/ledger.spec.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 595[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/store.spec.ts [2m([22m[2m20 tests[22m[2m)[22m[33m 415[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/feishu-transport-http.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 220[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/tools.spec.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 234[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/archive-order.spec.ts [2m([22m[2m1 test[22m[2m)[22m[32m 112[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m12 passed[39m[22m[90m (12)[39m
+[2m      Tests [22m [1m[32m202 passed[39m[22m[90m (202)[39m
+[2m   Start at [22m 22:42:52
+[2m   Duration [22m 40.76s[2m (transform 2.88s, setup 0ms, import 9.76s, tests 20.17s, environment 5ms)[22m
+

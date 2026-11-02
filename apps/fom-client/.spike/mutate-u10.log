@@ -1,0 +1,12 @@
+baseline: green
+a-approve-drops-window-handoff: 抓住 —— 2 例红（exit=1）— 批准不再先交给活窗口（退回「总是落批件 + 通知」）—— 窗口内批准那条「不落批件、记录留 pending」必须红（§3.4.2 存在期重新打开）
+    · 活窗口接住批准 → 不发放批件、不通知恢复路径、记录仍待 responder 迁、toast 说当前回合
+    · 端到端：一次经回调进来的窗口内批准 —— 卡片置灰、只执行一次、台账零批件
+b-approve-window-path-still-notifies: 抓住 —— 1 例红（exit=1）— 窗口路径交到了还去 notify 恢复路径 —— 「活窗口接住批准 ⇒ settled 为空」那条必须红（起第二个 turn 重复唤醒）
+    · 活窗口接住批准 → 不发放批件、不通知恢复路径、记录仍待 responder 迁、toast 说当前回合
+c-reject-drops-window-handoff: 抓住 —— 1 例红（exit=1）— 拒绝不再先交给活窗口（路由抢先迁 rejected）—— 「活窗口接住拒绝 ⇒ 记录留 pending 且 handoff 被调」那条必须红（responder 输 CAS、卡片不置灰）
+    · 活窗口接住拒绝 → 交回 responder 落状态并置灰，路由不抢先迁（同一把仲裁，拒绝也走窗口优先）
+d-approve-window-toast-wrong-tense: 抓住 —— 2 例红（exit=1）— 窗口路径的 toast 退回「下一个回合」措辞 —— 「当前回合已经执行」那条断言必须红（U10 的时态谎言）
+    · 活窗口接住批准 → 不发放批件、不通知恢复路径、记录仍待 responder 迁、toast 说当前回合
+    · 端到端：一次经回调进来的窗口内批准 —— 卡片置灰、只执行一次、台账零批件
+结论：4/4 个变异被抓住

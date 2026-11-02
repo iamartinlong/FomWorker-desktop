@@ -1,0 +1,10 @@
+{
+  "name": "office-agent-platform",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "办公 Agent 平台自研代码。dsh 内核零改动，经 cordis patch 挂载。",
+  "scripts": {
+    "test": "node ./node_modules/vitest/vitest.mjs run"
+  }
+}

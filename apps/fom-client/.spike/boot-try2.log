@@ -1,0 +1,15 @@
+F:\deepseek\deepseek harness\deepseek-harness\packages\boot\app-boot\src\index.ts:341
+    throw new Error(`${binName}: failed to read overlay ${file}: ${String(error)}`)
+          ^
+
+
+Error: dsh: failed to read overlay F:\deepseek\deepseek harness\office-platform\office.patch.yml: Error: ENOENT: no such file or directory, open 'F:\deepseek\deepseek harness\office-platform\office.patch.yml'
+    at loadOverlayPatches (F:\deepseek\deepseek harness\deepseek-harness\packages\boot\app-boot\src\index.ts:341:11)
+    at <anonymous> (F:\deepseek\deepseek harness\deepseek-harness\apps\cli\src\profile-boot.ts:207:47)
+    at Array.flatMap (<anonymous>)
+    at composeProfile (F:\deepseek\deepseek harness\deepseek-harness\apps\cli\src\profile-boot.ts:207:31)
+    at async runProfile (F:\deepseek\deepseek harness\deepseek-harness\apps\cli\src\profile-boot.ts:265:22)
+    at async runCli (F:\deepseek\deepseek harness\deepseek-harness\apps\cli\src\bin.ts:35:9)
+    at async <anonymous> (F:\deepseek\deepseek harness\deepseek-harness\apps\cli\src\bin.ts:77:3)
+
+Node.js v22.19.0

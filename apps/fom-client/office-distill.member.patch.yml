@@ -1,0 +1,44 @@
+# 记忆层 §7 第 6 步 · 成员进程挂载件（真组合的一半，临时观察件，不是部署件）
+#
+# 第 6 步是**双进程**（DM7）：成员进程 + 蒸馏进程共用**同一个记忆目录**——成员只往 `daily/`
+# 追加流水、绝不写 `MEMORY.md`（ME10 单写者），蒸馏进程读同一个目录、按分值整段重建索引。
+# 这份是**成员进程**那一半；蒸馏进程那半已由 `office-distill.workspace.patch.yml` 造好并静态核过。
+#
+# 与 `office-memory.spike3.patch.yml` 只差一件事：`memoryRoot` 从第 3 步的观察目录
+# （`.spike/memory-step3`）**改指蒸馏进程共用的那个目录**（`.spike/distill-workspace`）——
+# 两个进程指向同一个 memoryRoot 是这一整步成立的前提，否则成员追的 daily 蒸馏看不见、
+# 蒸馏重建的索引成员读不到，「双进程协作」就退化成两个互不相干的单机。
+#
+# ⚠️ 成员角色 = 挂 `index.ts`（默认导出 `OfficeMemory`，`distiller` 缺省 false）：
+#   - 成员**不注册 `memory_distill`**（`createMemoryTools(store)` 不带台账 ⇒ 编译期就构造不出这把工具，
+#     见 `plugins/office-memory/tools.ts`）⇒ 成员会话无从触发「整段重写索引」= ME10 第二写者从入口层被堵死。
+#   - 成员 `workspaceRoot` 保持**用户真实工作区**（不设为 memoryRoot）⇒ 工作区外的普通 `write` 照旧撞沙箱、
+#     提权、发卡（双侧验收的「该问的还问」半侧）；而 `memory_write`/`memory_archive` 走 L1 交棒、写在记忆目录内
+#     不撞闸。蒸馏进程才把 `workspaceRoot` 收成 memoryRoot（见那份 patch 与 DM7）。
+#
+# 用法（在 `deepseek-harness/` 仓库根目录执行；`--patch` 必须排在 `--port`/`--no-open` 之前）：
+#   # 静态核挂载（不起监听、不跑回合——本步只做到这一步，真进程观测需本人在场）：
+#   node --import tsx/esm apps/cli/src/bin.ts web --dump-config \
+#     --patch "F:/deepseek/deepseek harness/apps/fom-client/office-approval.patch.yml" \
+#     --patch "F:/deepseek/deepseek harness/apps/fom-client/office-distill.member.patch.yml"
+#   # 期望：出现 `id: office-approval`（成员进程要发卡）+ `id: office-memory`（name 指 index.ts、
+#   # config 里**没有** distiller 键 ⇒ 成员角色 ⇒ 没有 memory_distill）；且 office-memory 的
+#   # memoryRoot 与蒸馏那份 `office-distill.workspace.patch.yml` 的 memoryRoot/workspaceRoot 同一路径。
+#   #
+#   # ⚠️ 上面是最小列表，**不是启动器真起的列表**：`.spike/run-step6.mjs` 的成员臂是三件
+#   # （本件 + `office-approval.patch.yml` + `session-query.spike.patch.yml`）再叠内核侧
+#   # `./office.patch.yml` 与 `apps/web/tests/pin-browse-picker.overlay.yml`，而 `override` 类 patch
+#   # 能改写的恰好是 `sandbox-policy.workspaceRoot` 与 session-query 的 path。照逐字真实列表 dump 过的
+#   # 证据：`.spike/dump-step6-member-compose.log`（EXIT=0，全表无 `distiller` 键、`workspaceRoot` 仍是
+#   # `process.cwd()`）；蒸馏臂 `.spike/dump-step6-distill-compose.log`（EXIT=0，全表无 `office-approval`、
+#   # session-query 是 `:memory:`）。命令见 `../docs/03-验证/M1记忆层第6步验证记录.md` §9。
+#   #
+#   # 真起进程（观测臂，需本人在场）：在上面两条 patch 后再叠 ./office.patch.yml 与 overlay，--no-open --port <成员端口>；
+#   # 若要验 V6（成员用 session_search 引记忆出处），再叠 `session-query.spike.patch.yml`（成员侧 durable 索引 path；
+#   # 蒸馏侧 session-query 是惰 `:memory:`，两进程天然不撞，ME4 已成立）。
+
+- insert:
+    - id: office-memory
+      name: ./plugins/office-memory/index.ts
+      config:
+        memoryRoot: 'F:/deepseek/deepseek harness/apps/fom-client/.spike/distill-workspace'

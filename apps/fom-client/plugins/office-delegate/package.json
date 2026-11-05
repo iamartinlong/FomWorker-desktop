@@ -1,0 +1,17 @@
+{
+  "name": "@office/delegate",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "office-delegate：审批托管（本地面板无应答/离开电脑 ⇒ 推 IM，用户回 1/2 回填；本地与远程先答先赢）。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.ts",
+    "approval-race.ts",
+    "lib/index.js"
+  ]
+}

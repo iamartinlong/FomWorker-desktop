@@ -1,0 +1,13 @@
+baseline: green
+a-isolated-name-broken: 抓住 —— 4 例红（exit=1）— 把必须独立的 `storages` 名字改掉 ⇒ 源 storages 也被 junction 进来，自证「storages 是真目录 / 独立且空 / 源文件没被带进来」必须红
+    · storages 是真目录，不是 junction
+    · storages 独立且为空（源里那份 schedule.json 没被带进来）
+    · 源的 storages/schedule.json 未出现在新 home
+    · 重复调用重建：上一轮 storages 残留被清掉
+b-file-copied-not-linked: 抓住 —— 3 例红（exit=1）— 文件改成 copy 而不是 hardlink（凭据被复制一份）⇒ 自证「nlink≥2（hardlink）」必须红
+    · 文件以 hardlink 引用（nlink≥2）
+    · 跨卷（C:→F:）建硬链接抛错而不是静默
+    · 抛的是链接/跨卷类错误（不是别的意外）
+c-isolated-not-reported: 抓住 —— 1 例红（exit=1）— 不再把「storages 独立」写进返回清单 ⇒ 自证「返回值里点名了 storage 的独立」必须红（观测当天靠这条清单判断隔离发生过）
+    · 返回值里点名了 storage 的独立
+结论：3/3 个变异被抓住

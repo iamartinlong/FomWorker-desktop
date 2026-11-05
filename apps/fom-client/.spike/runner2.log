@@ -1,0 +1,3 @@
+ready: http://127.0.0.1:3081/office/approval/callback -> 405；pid=14888（写在 F:\deepseek\deepseek harness\office-platform\.spike\feishu-loop.pid）
+Web UI URL 已写入 F:\deepseek\deepseek harness\office-platform\.spike\feishu-loop.url（含 token，未回显）
+dsh 退出 code=1（端口被占时真退出码是 1；日志 F:\deepseek\deepseek harness\office-platform\.spike\feishu-loop.log）

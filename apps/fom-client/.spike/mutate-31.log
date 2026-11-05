@@ -1,0 +1,10 @@
+baseline: green
+a-digest-drops-recipient: 抓住 —— 3 例红（exit=1）— uuidDigest 不再把收件人并进摘要（回到「只按编号哈希」）—— 不同收件人撞同一 uuid，长度钉死用例的「ou-alice≠ou-bob」必须红
+    · uuid 长度钉死 + 逐收件人各异：真 randomUUID 编号也落在飞书收得下的窗口内
+    · 每个收件人各一条消息，句柄全记下：改卡逐条 PATCH
+    · 撤回是删除 + 另发一条文本：删掉的那条消息留不下这句话
+b-sendcard-one-uuid-for-all: 抓住 —— 1 例红（exit=1）— sendCard 给所有收件人复用第一个人的 uuid（#31 原始形态）—— 多收件人发卡上真传输的两条 uuid 必须相等，那条断言必须红
+    · 每个收件人各一条消息，句柄全记下：改卡逐条 PATCH
+c-notice-one-uuid-for-all: 抓住 —— 1 例红（exit=1）— 撤回通知给所有收件人复用同一个 uuid —— 第二条「已撤回」会被去重吃掉，撤回多收件人通知的两条 uuid 必须各异，那条断言必须红
+    · 撤回是删除 + 另发一条文本：删掉的那条消息留不下这句话
+结论：3/3 个变异被抓住

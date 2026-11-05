@@ -1,0 +1,22 @@
+applied: m2 批准时连作废一起撤（keepExpire 丢掉）
+
+ RUN  v4.1.8 F:/deepseek/deepseek harness/office-platform
+
+stdout | plugins/office-approval/sweeper.spec.ts > 真 ctx.schedule 集成 > installApprovalSweeper：台账走到哪一步，告警就武装或撤销到哪一步
+DUMP ["remind:cancelled","expire:armed"] list=["schedule-0398d1"]
+
+ ✓ plugins/office-approval/sweeper.spec.ts (25 tests) 6241ms
+     ✓ 决策即撤销：rejected 撤两个，approved 只撤催办、留下作废  326ms
+     ✓ 武装的 job 由内核生成 id，到期后靠 catalog() 的回执被认领一次  641ms
+     ✓ 对账只认投递回执：还在武装而未投递的 job 不动，别人家的 job 更不认领  723ms
+     ✓ installApprovalSweeper：台账走到哪一步，告警就武装或撤销到哪一步  368ms
+     ✓ installApprovalSweeper：同步窗口超期转后台不动告警，催办到点真的投递进会话（F-A）  466ms
+
+ Test Files  1 passed (1)
+      Tests  25 passed (25)
+   Start at  11:46:04
+   Duration  12.29s (transform 3.21s, setup 0ms, import 4.61s, tests 6.24s, environment 1ms)
+
+
+exit=0
+restored

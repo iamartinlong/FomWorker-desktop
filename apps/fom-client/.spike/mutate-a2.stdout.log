@@ -1,0 +1,9 @@
+baseline: green
+a-unregistered-distill-tool: 抓住 —— 4 例红（exit=1）— 把 memory_distill 从产品风险字典删掉 —— 落回默认 L4，夜里发卡、蒸馏停摆，零卡断言必须红
+b-distill-downgraded-to-l0: 抓住 —— 2 例红（exit=1）— 把 memory_distill 悄悄降成 L0（§3.6④ 禁止的另一面：L0 连闸上留痕都没有）
+c-distill-escalated-to-l2: 抓住 —— 4 例红（exit=1）— 把 memory_distill 升成 L2 —— 蒸馏进程夜里没人点卡，ME8 的零卡断言必须红
+d-top-level-filter-off: 抓住 —— 4 例红（exit=1）— 中和 isTopLevelSession（恒 true）—— 子代理会话也被拿去武装，MF5 过滤断言必须红
+e-role-gate-off: 抓住 —— 2 例红（exit=1）— 拆掉 index.ts 的角色门（成员也接蒸馏半边线）—— 成员注册 memory_distill / 要求蒸馏服务的断言必须红
+f-marker-write-skipped: 抓住 —— 4 例红（exit=1）— ensureDistillArmed 装成功后不写标记 —— 幂等失效、重启堆叠 recurring 任务，arm/index 的幂等断言必须红
+g-empty-memory-root-accepted: 抓住 —— 2 例红（exit=1）— 去掉 `memoryRoot === ''` 的空值守卫 —— `Config` 的默认值就是空串，于是记忆目录按进程 cwd 解析成相对路径（启动器的 cwd 在内核仓库根 ⇒ 直接写进内核工作树），index.spec 的两条空值守卫断言必须红
+结论：7/7 个变异被抓住

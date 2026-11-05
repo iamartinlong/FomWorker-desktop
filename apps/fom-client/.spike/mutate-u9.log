@@ -1,0 +1,12 @@
+baseline: green
+a-card-drops-repeat-line: 抓住 —— 1 例红（exit=1）— 卡片不再渲染重复提示（`repeat > 1` 改成 `false`）—— install 默认策略那条「第二张卡标出第 2 次」必须红（U9 的可见性没了）
+    · install 的默认策略接上这本账：超窗后重试同一动作的第二张卡自己标出「第 2 次」
+b-repeat-ignores-args-digest: 抓住 —— 1 例红（exit=1）— 计数只按工具名、不比参数指纹（把 digest 比较删掉）—— 纯函数那条「换了另一个文件的 approved 仍只算 1 次」必须红（不同动作被并进同一计数）
+    · 按（同工具 + 同参数指纹）数所有状态，`justification` 改写仍算同一个动作，跨工具/跨会话分开数
+c-repeat-counts-only-approved: 抓住 —— 2 例红（exit=1）— 计数退回只认已批准/已消费（跟 relaxationCount 一样）—— 纯函数那条「pending + expired 两条 = 2」与 install 那条「超窗未批的第二张卡 = 第 2 次」都必须红（U9 现场里两张都没批 ⇒ 又变回隐形）
+    · 按（同工具 + 同参数指纹）数所有状态，`justification` 改写仍算同一个动作，跨工具/跨会话分开数
+    · install 的默认策略接上这本账：超窗后重试同一动作的第二张卡自己标出「第 2 次」
+d-repeat-digest-not-strip-justification: 抓住 —— 2 例红（exit=1）— 指纹退回比原文（不剔 justification，改用 JSON.stringify）—— 纯函数那条「只改 justification 仍算同一个动作 = 2」与 install 那条「重试时重写说明仍 = 第 2 次」都必须红（§3.4.1① 的口径漂移）
+    · 按（同工具 + 同参数指纹）数所有状态，`justification` 改写仍算同一个动作，跨工具/跨会话分开数
+    · install 的默认策略接上这本账：超窗后重试同一动作的第二张卡自己标出「第 2 次」
+结论：4/4 个变异被抓住

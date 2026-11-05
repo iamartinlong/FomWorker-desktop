@@ -1,0 +1,73 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.8 [39m[90mF:/deepseek/deepseek harness/office-platform[39m
+
+ [32m✓[39m plugins/office-approval/sweeper.spec.ts [2m([22m[2m27 tests[22m[2m)[22m[33m 9135[2mms[22m[39m
+     [33m[2m✓[22m[39m 一条 pending 审批登记两个时刻：催办在 askedAt+30min，作废在 expiresAt [33m 306[2mms[22m[39m
+     [33m[2m✓[22m[39m 告警层挂了：登记行删掉而不是留一行 armed 的空壳，下一次扫描还能重试 [33m 302[2mms[22m[39m
+     [33m[2m✓[22m[39m 超窗转后台的记录：催办照催、到点作废照做（§8 第 7 步真进程实测到的失效） [33m 316[2mms[22m[39m
+     [33m[2m✓[22m[39m 有效期已经过了的记录：不催一条批不动的审批，作废仍然执行 [33m 367[2mms[22m[39m
+     [33m[2m✓[22m[39m 过期作废：落账 + 通知发起人，pending 与「批了但批件还在」的 approved 都作废 [33m 342[2mms[22m[39m
+     [33m[2m✓[22m[39m E14：两条 L3 询问各自两个告警，批掉一条不影响另一条 [33m 312[2mms[22m[39m
+     [33m[2m✓[22m[39m 武装的 job 由内核生成 id，到期后靠 catalog() 的回执被认领一次 [33m 553[2mms[22m[39m
+     [33m[2m✓[22m[39m 对账只认投递回执：还在武装而未投递的 job 不动，别人家的 job 更不认领 [33m 929[2mms[22m[39m
+     [33m[2m✓[22m[39m installApprovalSweeper：台账走到哪一步，告警就武装或撤销到哪一步 [33m 1112[2mms[22m[39m
+     [33m[2m✓[22m[39m #38 挂载：窗口内批准（无批件）当场撤掉作废，侧栏不留幽灵自动化 [33m 831[2mms[22m[39m
+     [33m[2m✓[22m[39m installApprovalSweeper：同步窗口超期转后台不动告警，催办到点真的投递进会话（F-A） [33m 811[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/callback-route.spec.ts [2m([22m[2m30 tests[22m[2m)[22m[33m 4968[2mms[22m[39m
+     [33m[2m✓[22m[39m 签名不对 → 401，台账、审计、授权一行都不动 [33m 369[2mms[22m[39m
+     [33m[2m✓[22m[39m Verification Token 没配 ⇒ url_verification 不回显 challenge（body 里的 token 同为空串） [33m 446[2mms[22m[39m
+     [33m[2m✓[22m[39m 决策请求不带签名头 → 401（只有配置地址时的 url_verification 允许） [33m 316[2mms[22m[39m
+     [33m[2m✓[22m[39m 时间戳过期、来自未来、或根本不是数字 → 都是 bad-timestamp [33m 313[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/feishu-channel.spec.ts [2m([22m[2m46 tests[22m[2m)[22m[33m 3871[2mms[22m[39m
+     [33m[2m✓[22m[39m 已撤回/已删除的三个码按「目的已达到」处理；超窗 230009 是真失败，照常抛 [33m 405[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/recovery.spec.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 7731[2mms[22m[39m
+     [33m[2m✓[22m[39m E2：窗口到期后的批准起一个新 turn，模型原样重放，工具恰好执行一次 [33m 478[2mms[22m[39m
+     [33m[2m✓[22m[39m E10：批件在等待重放期间过期 ⇒ 不消费，回落到标准询问 [33m 2906[2mms[22m[39m
+     [33m[2m✓[22m[39m 拒绝也要送到模型面前：模型不再尝试，也没有任何执行 [33m 1149[2mms[22m[39m
+     [33m[2m✓[22m[39m 回调在窗口还开着时到达 ⇒ 交给窗口，不注入消息、不起第二个 turn [33m 460[2mms[22m[39m
+     [33m[2m✓[22m[39m E11：会话正忙时批准 ⇒ 决策排进 inbox，不并发第二个 turn [33m 564[2mms[22m[39m
+     [33m[2m✓[22m[39m 会话唤不起来 ⇒ 报告，并把批准补偿回可批准状态（重新点一次仍能成） [33m 430[2mms[22m[39m
+     [33m[2m✓[22m[39m 持久化没确认时不谎报成功：报告缺确认，但已投递的决策不回滚 [33m 403[2mms[22m[39m
+     [33m[2m✓[22m[39m E3：进程重启后批准仍然能裁决，并把动作在第二个进程里跑完 [33m 403[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/distill.spec.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 4847[2mms[22m[39m
+     [33m[2m✓[22m[39m 首夜：没有水位线且有当天流水 ⇒ 重排索引、前移水位线、台账记 distilled [33m 1361[2mms[22m[39m
+     [33m[2m✓[22m[39m DM8 幂等：紧接着再蒸一次没有新日级 ⇒ no-op，索引字节一个都不动 [33m 321[2mms[22m[39m
+     [33m[2m✓[22m[39m ME3：删掉水位线后重蒸 ⇒ 不新增条目、索引行集不变（加法协议而非靠水位线存活） [33m 1162[2mms[22m[39m
+     [33m[2m✓[22m[39m 淘汰：超预算的低分条目被归档，索引不留指向已归档文件的悬空行（ME10 无悬空） [33m 1139[2mms[22m[39m
+     [33m[2m✓[22m[39m ME2 端到端：超线但手改的条目不被归档，guardedSkips 计一次 [33m 442[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/responder.spec.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 3147[2mms[22m[39m
+     [33m[2m✓[22m[39m 窗口内点「同意」→ allowed-once、记录迁 approved、卡片就地更新、不落 grant [33m 303[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/ledger.spec.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 2107[2mms[22m[39m
+     [33m[2m✓[22m[39m 域关闭后重开，pending 仍在并可被裁决；授权同样活过重启 [33m 533[2mms[22m[39m
+     [33m[2m✓[22m[39m 授权写不进台账时批准整体失败，状态退回 expired 而不是留下批准了的死账 [33m 491[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/risk-gate.spec.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 3534[2mms[22m[39m
+     [33m[2m✓[22m[39m L2 动作经 ask 走通，事件带 callId 与同一个 signal 对象，工具照常收到未改写的参数 [33m 1003[2mms[22m[39m
+     [33m[2m✓[22m[39m 提权类写调用落到 L3 被问；工作区内的幂等写不问（§5 的 D1：分级不用 never） [33m 341[2mms[22m[39m
+     [33m[2m✓[22m[39m 低风险调用交棒给后续监听器，高风险调用拦住不让后续监听器代答 [33m 567[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/index.spec.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 2908[2mms[22m[39m
+     [33m[2m✓[22m[39m 三把工具注册齐全，顶层会话出生经真 schedule 装出每日蒸馏任务 [33m 1511[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/tools.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1302[2mms[22m[39m
+     [33m[2m✓[22m[39m kind=entry 写成功，返回路径与索引线索，并把会话号存进溯源 [33m 450[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/arm.spec.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 1053[2mms[22m[39m
+     [33m[2m✓[22m[39m 子代理/带父会话不武装；顶层武装一次；标记令第二个顶层会话幂等；release 后监听器消失 [33m 641[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/risk-gate.spec.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 2060[2mms[22m[39m
+     [33m[2m✓[22m[39m memory_write 不打扰、不落台账，文件真落进记忆目录 [33m 1018[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/inject.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 257[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/store.spec.ts [2m([22m[2m20 tests[22m[2m)[22m[33m 4378[2mms[22m[39m
+     [33m[2m✓[22m[39m 新条目落在 {type}/{slug}.md，frontmatter 带溯源与正文哈希 [33m 885[2mms[22m[39m
+     [33m[2m✓[22m[39m 符号链接被拒：条目自身是链接、以及中间目录是链接两种都算 [33m 376[2mms[22m[39m
+     [33m[2m✓[22m[39m 归档理由命中 → 条目原地不动，索引行也不撤 [33m 475[2mms[22m[39m
+     [33m[2m✓[22m[39m 索引文件还不存在（蒸馏没跑过）也照样归档，indexRemoved 报假而不硬失败 [33m 529[2mms[22m[39m
+     [33m[2m✓[22m[39m 同一年重复归档同名条目被拒，不覆盖已冻结的归档件 [33m 674[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/feishu-transport-http.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 430[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/index.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 341[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/archive-order.spec.ts [2m([22m[2m1 test[22m[2m)[22m[33m 431[2mms[22m[39m
+     [33m[2m✓[22m[39m rename 失败 ⇒ 报出此刻的不一致，并且不留悬空索引；放开后重试成功 [33m 424[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/recall.spec.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 28[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m18 passed[39m[22m[90m (18)[39m
+[2m      Tests [22m [1m[32m277 passed[39m[22m[90m (277)[39m
+[2m   Start at [22m 15:57:21
+[2m   Duration [22m 112.55s[2m (transform 9.34s, setup 0ms, import 28.52s, tests 52.53s, environment 15ms)[22m
+
+VITEST_EXIT=0

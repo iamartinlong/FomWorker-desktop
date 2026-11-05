@@ -1,0 +1,24 @@
+baseline: green（0 红）
+a-vanished-days-not-computed: 抓住（断言式） —— 2 条红 —— 「基线有而现在没有」不再计算（恒报只增不减成立）—— ⑮ 必须红：DM8 的幂等前提是水已推过的日级还在，那天被重种冲掉后判据仍绿，内容永久失踪也没人知道
+    · ⑮ 反向：日级流水少了一天 — 判定不符：daily-append-only=pass（应为 fail）
+    · ⑮b 红例点名少的是哪一天（只报「少了」＝观测当天不知道去核哪个文件） — 详情里缺 2026-10-09：基线里 3 天全部在场（现 2 天）
+b-producer-side-list-ignored: 抓住（断言式） —— 2 条红 —— 对账只看「产品 store 多出来的」，不看「只有基线读法看到的」—— ⑯ 必须红：目录／链接形状的日子会被基线算成一天、被蒸馏当成没写过，成员那一枪的观测面与执行面就此分家
+    · ⑯ 反向：daily/ 里有一个目录形状的日子 — 判定不符：daily-readers-agree=pass（应为 fail）
+    · ⑯b 红例点名是哪一边看到的（两边不点名就没法判断是残留还是漏读） — 详情里缺 只有基线读法看到：2026-12-31 / 只有产品 store 看到：(无)：两边都是 4 天
+c-index-hash-from-wrong-file: 抓住（断言式） —— 3 条红 —— 当前盘的索引哈希换成另一个文件（`daily/.watermark`）—— ①②③⑰ 那一族必须红：差值的一端根本不是 `MEMORY.md`，「sha 变了」与蒸馏没关系，整条 ME10 判据变成随机数
+    · ① 起手态（观测未跑） — 判定不符：index-rebuilt=fail（应为 pending）, planted-ghost-gone=fail（应为 pending）, must-survive-in-index=fail（应为 pending）, no-secret-in-memory=fail（应为 pending）
+    · ①b 起手态一条 fail 都没有 — 出现 fail：index-rebuilt（重建后仍指向不在场的文件：project/ghost-entry.md, project/internal-note.md）; planted-ghost-gone（重建之后索引里还挂着它＝整段重写没发生或写回了旧内容）; must-survive-in-index（重建后索引里少了：reference/hand-edited-guard.md）; no-secret-in-memory（MEMORY.md 命中：MEMORY.md:6（模式：密钥赋值形态）） ⇒ 判定把「还没发生」读成了「被违反」
+    · ⑰ 反向：索引含非法 UTF-8 但没被动过 ⇒ 不许报「sha 变了」 — 判定不符：index-rebuilt=fail（应为 pending）
+d-target-drift-guard-removed: 抓住（断言式） —— 1 条红 —— 拆掉「晚上记的靶 ≠ 早上解析的靶」那条守卫 —— ⑱ 必须红：旁证在两时点之间被改过时，这条判定比的两个 sha 分属两个文件，无论红绿都不说明蒸馏动了什么，却照样出一个绿
+    · ⑱b 红例把「晚上记的」与「现在解析的」两个路径都点名 — 详情里缺 reference/hand-edited-guard.md / .seed-expect.json：user/role.md sha 已变（fdaa1d470fb8… → 64f7bbb8b86d…）＝蒸馏改了人手改的正文
+e-target-hardcoded-again: 抓住（断言式） —— 2 条红 —— 判据改回自己写死手改靶路径（不用生产端的解析器）—— ⑱ 必须红：这正是 ②k 抓过的那个原缺陷的镜像面，换靶之后「一字节没动」比的根本不是同一个文件 ⇒ V2 假绿
+    · ⑱ 反向：两时点之间手改靶换了文件 — 判定不符：hand-edited-untouched=pass（应为 fail）
+    · ⑱b 红例把「晚上记的」与「现在解析的」两个路径都点名 — 详情里缺 user/role.md / .seed-expect.json：reference/hand-edited-guard.md sha 与基线一致
+f-both-readers-fed-the-same-list: 抓住（断言式） —— 2 条红 —— 产品 store 那份日级清单换成生产者的那份（两边不再各自读一次）—— ⑯ 必须红：对账自己跟自己对账，永远成立，「两种读法看到不同清单」这件事从此不可能被观测到
+    · ⑯ 反向：daily/ 里有一个目录形状的日子 — 判定不符：daily-readers-agree=pass（应为 fail）
+    · ⑯b 红例点名是哪一边看到的（两边不点名就没法判断是残留还是漏读） — 详情里缺 只有基线读法看到：2026-12-31 / 只有产品 store 看到：(无)：两边都是 4 天
+g-vanished-day-not-named: 抓住（断言式） —— 1 条红 —— 红例不再点名少了哪一天 —— ⑮b 必须红：只报「少了若干天」时观测当天不知道该去核 `daily/` 里的哪个文件，动作会做错（去重种 vs 找蒸馏）
+    · ⑮b 红例点名少的是哪一天（只报「少了」＝观测当天不知道去核哪个文件） — 详情里缺 2026-10-09：少了若干天 —— 去核 `daily/` 是不是被重种／被移走；水位线若已推过这几天，它们不会再生成
+h-parity-detail-not-named: 抓住（断言式） —— 1 条红 —— 对账红例不报两边各自看到的名单 —— ⑯b 必须红：不说是哪一边看到的，就没法判断是残留目录还是产品漏读，去核的动作同样做错
+    · ⑯b 红例点名是哪一边看到的（两边不点名就没法判断是残留还是漏读） — 详情里缺 只有基线读法看到：2026-12-31 / 只有产品 store 看到：(无)：两边读到的日级清单不一致 —— 前者按名字算、后者还要求是普通文件，去核 `daily/` 里这些日子是不是目录或链接
+结论：8/8 个变异被断言式抓住

@@ -1,0 +1,5 @@
+{
+  "esbuild": "0.25.12",
+  "_why": "committed 的 apps/fom-client/plugins/*/lib/index.js 是用这个版本产出的。CI 的产物新鲜度门禁（.github/workflows/package.yml 里那步）按这个版本装 esbuild 再重放比对——版本不一致会字节对不上、造成假红。本地用别的版本重建并提交产物时，必须有意识地改这里（并知会：那之后 CI 也用新版本）。",
+  "_how_to_check_locally": "node -p \"require('./apps/fom-client/node_modules/esbuild/package.json').version\""
+}

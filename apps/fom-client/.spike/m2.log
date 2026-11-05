@@ -1,0 +1,18 @@
+applied: m2 批准时连作废一起撤（keepExpire 丢掉）
+
+ RUN  v4.1.8 F:/deepseek/deepseek harness/office-platform
+
+ ✓ plugins/office-approval/sweeper.spec.ts (25 tests) 4921ms
+     ✓ 武装的 job 由内核生成 id，到期后靠 catalog() 的回执被认领一次  453ms
+     ✓ 对账只认投递回执：还在武装而未投递的 job 不动，别人家的 job 更不认领  519ms
+     ✓ installApprovalSweeper：台账走到哪一步，告警就武装或撤销到哪一步  300ms
+     ✓ installApprovalSweeper：同步窗口超期转后台不动告警，催办到点真的投递进会话（F-A）  482ms
+
+ Test Files  1 passed (1)
+      Tests  25 passed (25)
+   Start at  11:44:18
+   Duration  10.34s (transform 3.10s, setup 0ms, import 4.30s, tests 4.92s, environment 0ms)
+
+
+exit=0
+restored

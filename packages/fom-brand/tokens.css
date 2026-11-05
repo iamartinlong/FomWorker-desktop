@@ -1,0 +1,55 @@
+/*
+ * FomWorker 品牌 tokens（公司 logo 采样：蓝 #038AC6 / 琥珀 #FCB513 / 墨灰 #4E4B47）。
+ * shadcn / Tailwind 4 变量映射（亮/暗）。详见 docs/02-设计/品牌视觉与设计Tokensv0.1.md。
+ */
+
+:root {
+  /* 品牌色 */
+  --brand-blue: #038AC6;
+  --brand-amber: #FCB513;
+  --brand-ink: #4E4B47;
+
+  /* shadcn tokens（亮） */
+  --background: #FFFFFF;            --foreground: #2B2927;      /* ink-800 */
+  --card: #FFFFFF;                  --card-foreground: #2B2927;
+  --popover: #FFFFFF;               --popover-foreground: #2B2927;
+  --primary: #038AC6;               --primary-foreground: #FFFFFF;   /* 品牌蓝 */
+  --secondary: #F1F1F0;             --secondary-foreground: #2B2927; /* ink-50 */
+  --muted: #F1F1F0;                 --muted-foreground: #4E4B47;     /* ink-500 */
+  --accent: #EBF6FA;                --accent-foreground: #02618B;    /* blue-50/700 悬停 */
+  --destructive: #DC2626;           --destructive-foreground: #FFFFFF;
+  --border: #E3E2E2;                --input: #E3E2E2;           /* ink-100 */
+  --ring: #038AC6;
+  --chart-1: #038AC6;  --chart-2: #FCB513;  --chart-3: #024C6D;  --chart-4: #FDCF66;  --chart-5: #4E4B47;
+  --sidebar: #F1F1F0;  --sidebar-foreground: #2B2927;  --sidebar-primary: #038AC6;
+  --sidebar-primary-foreground: #FFFFFF;  --sidebar-accent: #EBF6FA;  --sidebar-accent-foreground: #02618B;
+  --sidebar-border: #E3E2E2;  --sidebar-ring: #038AC6;
+
+  /* 语义色 */
+  --success: #16A34A;
+  --warning: #FCB513;
+  --danger: #DC2626;
+  --info: #038AC6;
+}
+
+.dark {
+  --background: #1F1E1C;            --foreground: #F1F1F0;      /* ink-900/50 */
+  --card: #2B2927;                  --card-foreground: #F1F1F0;
+  --popover: #2B2927;               --popover-foreground: #F1F1F0;
+  --primary: #2AA0D4;               --primary-foreground: #0B1220;   /* 亮化品牌蓝 */
+  --secondary: #373432;             --secondary-foreground: #F1F1F0;
+  --muted: #373432;                 --muted-foreground: #AFAEAC;
+  --accent: #024C6D;                --accent-foreground: #D7ECF6;
+  --destructive: #EF4444;           --destructive-foreground: #0B1220;
+  --border: #373432;                --input: #373432;
+  --ring: #5BB3DA;
+  --chart-1: #5BB3DA;  --chart-2: #FDCF66;  --chart-3: #8ECAE5;  --chart-4: #D69A10;  --chart-5: #AFAEAC;
+  --sidebar: #2B2927;  --sidebar-foreground: #F1F1F0;  --sidebar-primary: #2AA0D4;
+  --sidebar-primary-foreground: #0B1220;  --sidebar-accent: #373432;  --sidebar-accent-foreground: #F1F1F0;
+  --sidebar-border: #373432;  --sidebar-ring: #5BB3DA;
+
+  --success: #22C55E;
+  --warning: #FDCF66;
+  --danger: #EF4444;
+  --info: #5BB3DA;
+}

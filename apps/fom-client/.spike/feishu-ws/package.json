@@ -1,0 +1,9 @@
+{
+  "name": "feishu-ws-bridge",
+  "private": true,
+  "type": "module",
+  "description": "飞书长连接桥接（路线 1）：收 im.message.receive_v1 拿 open_id，收 card.action.trigger 落原始 payload。独立 node_modules，绝不与 office-platform 的 junction 混用。",
+  "dependencies": {
+    "@larksuiteoapi/node-sdk": "^1.74.0"
+  }
+}

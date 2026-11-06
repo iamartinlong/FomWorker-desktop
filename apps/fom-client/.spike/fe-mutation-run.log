@@ -1,0 +1,17 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.8 [39m[90mF:/deepseek/deepseek harness/office-platform[39m
+
+ [32m✓[39m plugins/office-approval/risk-gate.spec.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 1827[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/responder.spec.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 3087[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/feishu-channel.spec.ts [2m([22m[2m43 tests[22m[2m)[22m[33m 3965[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/recovery.spec.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 4896[2mms[22m[39m
+     [33m[2m✓[22m[39m E2：窗口到期后的批准起一个新 turn，模型原样重放，工具恰好执行一次 [33m 574[2mms[22m[39m
+     [33m[2m✓[22m[39m E9：重放时参数已经变了 ⇒ 批件不消费，重新问人，未获批准就不执行 [33m 401[2mms[22m[39m
+     [33m[2m✓[22m[39m E10：批件在等待重放期间过期 ⇒ 不消费，回落到标准询问 [33m 2250[2mms[22m[39m
+     [33m[2m✓[22m[39m E3：进程重启后批准仍然能裁决，并把动作在第二个进程里跑完 [33m 337[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[32m96 passed[39m[22m[90m (96)[39m
+[2m   Start at [22m 19:31:19
+[2m   Duration [22m 8.78s[2m (transform 5.44s, setup 0ms, import 10.75s, tests 13.77s, environment 2ms)[22m
+

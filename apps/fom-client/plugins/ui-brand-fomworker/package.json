@@ -1,0 +1,30 @@
+{
+  "name": "@fominfo/dsh-client-ui-brand-fomworker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "FomWorker 品牌 occupant：占 sidebar.brand.mark/name + conversation.hero.brand.mark 槽位（阶段1，零内核改动）。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown"
+  },
+  "devDependencies": {
+    "tsdown": "^0.22.2",
+    "react": "^18.3.1"
+  }
+}

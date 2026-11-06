@@ -1,0 +1,151 @@
+openapi: 3.1.0
+info:
+  title: FomWorker GATEWAY API
+  version: 0.1.0
+  description: |
+    大模型网关（独立服务）API：
+    - 对外：OpenAI 兼容（`/v1/chat/completions`，SSE）+ `/v1/models`。
+    - 内部：平台 → 网关的配置下发端点。
+    网关 → 平台的用量上报走 PLATFORM API（`/report/usage`）。契约唯一真相源。
+servers:
+  - url: https://gateway.example.com
+paths:
+  /v1/chat/completions:
+    post:
+      summary: OpenAI 兼容对话（SSE 流式）
+      description: |
+        客户端 dsh 指向本端点。请求头可选：
+        `X-Office-Session` / `X-Office-Turn` / `X-Office-Step` / `X-Office-Attempt`
+        （用于服务端计量的幂等键；缺则网关生成 request id）。
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model: { type: string }
+                messages:
+                  type: array
+                  items: { type: object, additionalProperties: true }
+                stream: { type: boolean, default: true }
+              required: [model, messages]
+      responses:
+        '200':
+          description: SSE 流（`text/event-stream`，`data: [DONE]` 结束）或 JSON（非流式）
+        '402': { description: 配额不足 }
+  /v1/models:
+    get:
+      summary: 可用模型（按令牌的 plan 准入）
+      security:
+        - bearerAuth: []
+      responses:
+        '200': { description: ok }
+  /v1/messages:
+    post:
+      summary: Anthropic 兼容对话（SSE 事件流）
+      description: |
+        客户端 Claude Code / Anthropic SDK 指向本端点（base url 由客户端追加 `/v1/messages`）。
+        鉴权同 `/v1/chat/completions`（`Authorization: Bearer` 或 `x-api-key`）。
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200': { description: Anthropic 事件流（`text/event-stream`）或 JSON（非流式） }
+        '402': { description: 配额不足 }
+  /v1/responses:
+    post:
+      summary: OpenAI Responses API 兼容（SSE 事件流）
+      description: 客户端使用 Responses 协议时指向本端点；鉴权同 `/v1/chat/completions`。
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200': { description: Responses 事件流（`text/event-stream`）或 JSON（非流式） }
+        '402': { description: 配额不足 }
+  /internal/config:
+    post:
+      summary: 平台 → 网关 配置下发（供应商 / 模型 / 租户 API key / 余额）
+      description: |
+        内部端点（平台调用），服务间鉴权（请求头 `X-Gateway-Key`：值只从环境变量
+        `FOM_GATEWAY_REPORT_KEY`（或同名配置）注入网关侧，不进仓库；未配置回 503，密钥不符回 401）。
+        与上行（网关 → 平台上报）同一把头名、同一把密钥。
+        幂等式 upsert：载荷里带到的供应商 / 模型 / 租户 key 建或更，**没带的不删除**。
+        `tenants[].apiKeys` 是 api key 的 **SHA-256 哈希**：网关对入站 Bearer 取哈希后比对，明文密钥不出平台。
+        `tenants[].quota.balance` 是平台账本的**当前净额**（`balance_transaction` 的 `SUM(delta)`，每次下发现算）：
+        **权威余额只在平台，网关侧只是执行用缓存**，收到快照即覆盖，不要自己累加流水。
+        **拦不拦欠费是网关的执行决定**——平台侧上报通道一律照收（幂等 + 记账），不做「余额≤0 就拒」的拦截；
+        这条口径是产品决定，改动前先对齐。
+      security: []
+      parameters:
+        - { $ref: '#/components/parameters/gatewayKey' }
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ConfigDownlink' }
+      responses:
+        '200': { description: ok }
+        '401': { description: 服务间密钥无效 }
+        '503': { description: 服务间密钥未配置 }
+components:
+  securitySchemes:
+    bearerAuth: { type: http, scheme: bearer, bearerFormat: JWT }
+  parameters:
+    gatewayKey:
+      name: X-Gateway-Key
+      in: header
+      required: true
+      description: 服务间共享密钥（值只走环境变量 `FOM_GATEWAY_REPORT_KEY`，不进仓库；与上行上报同一把）。
+      schema: { type: string }
+  schemas:
+    ConfigDownlink:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              baseUrl: { type: string }
+              anthropicBaseUrl: { type: string, nullable: true }
+              apiType: { type: string }
+              keyRef: { type: string, description: 上游密钥的环境变量名（不落明文） }
+              customHeaders: { type: string, nullable: true, description: 自定义请求头：**原始 JSON 文本**（形如 `{"X-Api-Version":"2024-02-01"}` 的字符串，网关侧解析成对象注入；两端 DTO 均为 string，勿按 JSON 对象传） }
+              customQuery: { type: string, nullable: true, description: 自定义查询参数：原始 JSON 文本（字符串），如 Azure `api-version` }
+              status: { type: string }
+        models:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              provider: { type: string, description: 供应商名 }
+              apiType: { type: string }
+              displayName: { type: string }
+              contextWindow: { type: integer }
+              maxTokens: { type: integer }
+              priceInputPerMTok: { type: number }
+              priceOutputPerMTok: { type: number }
+              priceCacheReadPerMTok: { type: number }
+              priceCacheWritePerMTok: { type: number }
+              status: { type: string }
+        tenants:
+          type: array
+          items:
+            type: object
+            properties:
+              tenantId: { type: string }
+              apiKeys: { type: array, items: { type: string }, description: 网关 API key 的 SHA-256 hex（明文密钥不出平台） }
+              models: { type: array, items: { type: string }, description: 准入模型名；空 ⇒ 全部 }
+              quota:
+                type: object
+                properties:
+                  balance: { type: number, description: 平台账本当前净额（权威在平台；网关侧只是执行用缓存，收到即覆盖） }

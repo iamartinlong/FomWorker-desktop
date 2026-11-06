@@ -1,0 +1,14 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.8 [39m[90mF:/deepseek/deepseek harness/office-platform[39m
+
+[90mstdout[2m | plugins/office-approval/sweeper.spec.ts[2m > [22m[2m真 ctx.schedule 集成[2m > [22m[2minstallApprovalSweeper：台账走到哪一步，告警就武装或撤销到哪一步
+[22m[39mDUMP ["remind:cancelled","expire:armed"] list=["schedule-926973"]
+
+ [32m✓[39m plugins/office-approval/sweeper.spec.ts [2m([22m[2m25 tests[22m[2m | [22m[33m24 skipped[39m[2m)[22m[33m 690[2mms[22m[39m
+     [33m[2m✓[22m[39m installApprovalSweeper：台账走到哪一步，告警就武装或撤销到哪一步 [33m 683[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[2m | [22m[33m24 skipped[39m[90m (25)[39m
+[2m   Start at [22m 11:45:39
+[2m   Duration [22m 7.22s[2m (transform 3.63s, setup 0ms, import 5.17s, tests 690ms, environment 2ms)[22m
+

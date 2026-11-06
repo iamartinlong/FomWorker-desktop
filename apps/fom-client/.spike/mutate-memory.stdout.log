@@ -1,0 +1,25 @@
+baseline: green
+m1-symbolic-link: 抓住 —— 1 例红（exit=1）— 去掉「记忆路径逐级拒链接」——越权第三形
+m2-secret-entry: 抓住 —— 1 例红（exit=1）— 去掉条目正文的凭据黑名单（ME7 写侧一半）
+m3-secret-daily: 抓住 —— 1 例红（exit=1）— 去掉流水那一支的凭据黑名单（ME7 写侧另一半）
+m4-overwrite-allowed: 抓住 —— 1 例红（exit=1）— 把 exclusive 创建改成覆盖写 —— 拆掉「只许加法」的执行手段
+m5-archive-overwrites: 抓住 —— 1 例红（exit=1）— 去掉「归档位置已有同名文件即拒」——冻结的归档件被覆盖
+m6-no-index-removal: 抓住 —— 2 例红（exit=1）— 归档不撤索引行 —— 注入段永久带着打不开的链接
+m7-poisoning-allowed: 抓住 —— 1 例红（exit=1）— 放开 feedback 的外部来源 —— 记忆投毒（ME6）
+m8-crlf-is-hand-edit: 抓住 —— 1 例红（exit=1）— frontmatter 解析不折 CRLF —— 编辑器被当成用户（ME2 误报）
+m9-hash-not-checked: 抓住 —— 2 例红（exit=1）— 读条目时不比正文哈希 —— 手改检测整体失效
+m10-absolute-allowed: 抓住 —— 2 例红（exit=1）— 去掉绝对路径那一判（越权第一形）
+m11-traversal-allowed: 抓住 —— 2 例红（exit=1）— 去掉 `..` 段那一判（越权第二形）
+m12-daily-pairing: 抓住 —— 1 例红（exit=1）— 放开 kind 配对 —— 半条流水被当成条目
+m13-unregistered-tool: 抓住 —— 5 例红（exit=1）— 把两把记忆工具从产品风险字典里删掉 —— 它们会落回默认 L4，天天发卡（F-H 的那一课）
+m14-downgraded-to-l0: 抓住 —— 2 例红（exit=1）— 把 memory_write 悄悄降成 L0（§3.6④ 禁止的「豁免分支」的另一副面孔）
+m15-inject-secret-guard-off: 抓住 —— 2 例红（exit=1）— 注入侧不跑黑名单 —— 命中凭据的索引行进得了 system prompt（ME7 注入半）
+m16-inject-budget-ignored: 抓住 —— 3 例红（exit=1）— 超预算不裁 —— 常驻段无界膨胀（ME1）
+m17-inject-trim-ignores-weight: 抓住 —— 1 例红（exit=1）— 裁剪只看位置不看类型权重 —— 老 feedback 被新鲜 reference 挤掉（ME5）
+m18-inject-drops-guidance: 抓住 —— 1 例红（exit=1）— 注入段不带读侧引导 —— 来源隔离/不虚构/单写者那几句产品承诺消失了（ME10 / ME11）
+m19-recall-no-recency: 抓住 —— 4 例红（exit=1）— 打分不乘时间衰减 —— τ 语义失效（DM6）
+m20-recall-empty-query-zero: 抓住 —— 5 例红（exit=1）— 无查询词时密度记 0 —— 常驻这一路本该恒为 1
+m21-recall-density-case-sensitive: 抓住 —— 1 例红（exit=1）— 命中密度大小写敏感 —— 换个大小写就召回不到（词法腿的脆弱处）
+m22-recall-type-not-validated: 抓住 —— 1 例红（exit=1）— 索引行类型不做名录校验 —— 未知类型被当成可打分条目
+m23-fl-archive-copy-drops-mechanism: 抓住 —— 1 例红（exit=1）— 归档返回句去掉「索引由夜间蒸馏整段重写、缺行不是故障」—— 模型会以为索引坏了去手写 MEMORY.md，撞 ME10 单一写者
+结论：23/23 个变异被抓住

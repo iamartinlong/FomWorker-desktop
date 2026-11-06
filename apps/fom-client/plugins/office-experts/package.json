@@ -1,0 +1,19 @@
+{
+  "name": "@office/experts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "office-experts（C4）：办公助理基座组合 + 专家 delta（人设/能力勾选）→ 合成注册进内核 agentPresets。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.ts",
+    "base.ts",
+    "compose.ts",
+    "delta.ts",
+    "lib/index.js"
+  ]
+}

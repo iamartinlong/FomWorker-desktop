@@ -1,0 +1,13 @@
+✓ 水位线读得回来且停在 2026-10-07 — {"lastDistilledAt":1791430200000,"lastDay":"2026-10-07"}
+✓ 日级枚举只收到 YYYY-MM-DD.md（.watermark 不算日子） — 2026-10-07,2026-10-09,2026-10-10
+✓ 水位线之后的 newDays 非空 ⇒ 蒸馏不会 no-op 收工 — 2026-10-09,2026-10-10
+✓ 只有手改靶被判定为 handEdited（其余条目哈希自洽） — 共 5 条，handEdited=reference/hand-edited-guard.md
+✓ 正文首字符没被排版吃掉（parseEntry 的换行偏移自检） — "角色：办公 Agent "
+✓ 索引行形状与 indexLineFor 一致（重建后可逐行比对） — - [用户画像](user/role.md) — 办公平台的开发接手者，中文沟通，产出要带可复跑证据
+✓ 起始态没有武装标记（.distill-armed 是要被观测写出来的，不是种出来的） — undefined
+✓ 种进去的坏索引带着悬空行（观测后它必须消失）
+✓ 注入侧剔掉那一行凭据（ME7），且只记计数不记原文 — deniedCount=1, trimmed=0
+✓ 小种子：预算内 ⇒ 零淘汰零跳过（淘汰与手改保护要靠 --over-budget 才发生） — kept=5 evictions=0 guardedSkips=0
+✓ 整段重建的索引以标题行开头并按分值降序 — 8 行
+
+PASS ../office-platform/.spike/distill-workspace

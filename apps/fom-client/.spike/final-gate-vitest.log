@@ -1,0 +1,47 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.8 [39m[90mF:/deepseek/deepseek harness/office-platform[39m
+
+ [32m✓[39m plugins/office-approval/sweeper.spec.ts [2m([22m[2m27 tests[22m[2m)[22m[33m 7040[2mms[22m[39m
+     [33m[2m✓[22m[39m 超窗转后台的记录：催办照催、到点作废照做（§8 第 7 步真进程实测到的失效） [33m 349[2mms[22m[39m
+     [33m[2m✓[22m[39m 决策即撤销：rejected 撤两个，approved 只撤催办、留下作废 [33m 306[2mms[22m[39m
+     [33m[2m✓[22m[39m E14：两条 L3 询问各自两个告警，批掉一条不影响另一条 [33m 560[2mms[22m[39m
+     [33m[2m✓[22m[39m 武装的 job 由内核生成 id，到期后靠 catalog() 的回执被认领一次 [33m 516[2mms[22m[39m
+     [33m[2m✓[22m[39m 对账只认投递回执：还在武装而未投递的 job 不动，别人家的 job 更不认领 [33m 487[2mms[22m[39m
+     [33m[2m✓[22m[39m installApprovalSweeper：台账走到哪一步，告警就武装或撤销到哪一步 [33m 520[2mms[22m[39m
+     [33m[2m✓[22m[39m #38 挂载：窗口内批准（无批件）当场撤掉作废，侧栏不留幽灵自动化 [33m 549[2mms[22m[39m
+     [33m[2m✓[22m[39m installApprovalSweeper：同步窗口超期转后台不动告警，催办到点真的投递进会话（F-A） [33m 877[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/recovery.spec.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 5205[2mms[22m[39m
+     [33m[2m✓[22m[39m E2：窗口到期后的批准起一个新 turn，模型原样重放，工具恰好执行一次 [33m 447[2mms[22m[39m
+     [33m[2m✓[22m[39m E9：重放时参数已经变了 ⇒ 批件不消费，重新问人，未获批准就不执行 [33m 367[2mms[22m[39m
+     [33m[2m✓[22m[39m E10：批件在等待重放期间过期 ⇒ 不消费，回落到标准询问 [33m 2198[2mms[22m[39m
+     [33m[2m✓[22m[39m 持久化没确认时不谎报成功：报告缺确认，但已投递的决策不回滚 [33m 609[2mms[22m[39m
+     [33m[2m✓[22m[39m E3：进程重启后批准仍然能裁决，并把动作在第二个进程里跑完 [33m 331[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/feishu-channel.spec.ts [2m([22m[2m46 tests[22m[2m)[22m[33m 3362[2mms[22m[39m
+     [33m[2m✓[22m[39m 已撤回/已删除的三个码按「目的已达到」处理；超窗 230009 是真失败，照常抛 [33m 543[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/callback-route.spec.ts [2m([22m[2m30 tests[22m[2m)[22m[33m 2836[2mms[22m[39m
+     [33m[2m✓[22m[39m 活窗口接住批准 → 不发放批件、不通知恢复路径、记录仍待 responder 迁、toast 说当前回合 [33m 332[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/responder.spec.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 2250[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/risk-gate.spec.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 906[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/distill.spec.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 3305[2mms[22m[39m
+     [33m[2m✓[22m[39m DM8 幂等：紧接着再蒸一次没有新日级 ⇒ no-op，索引字节一个都不动 [33m 391[2mms[22m[39m
+     [33m[2m✓[22m[39m ME3：删掉水位线后重蒸 ⇒ 不新增条目、索引行集不变（加法协议而非靠水位线存活） [33m 1851[2mms[22m[39m
+     [33m[2m✓[22m[39m 淘汰：超预算的低分条目被归档，索引不留指向已归档文件的悬空行（ME10 无悬空） [33m 399[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/tools.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 260[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/risk-gate.spec.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 1461[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/index.spec.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1157[2mms[22m[39m
+     [33m[2m✓[22m[39m 三把工具注册齐全，顶层会话出生经真 schedule 装出每日蒸馏任务 [33m 407[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/store.spec.ts [2m([22m[2m20 tests[22m[2m)[22m[33m 672[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/ledger.spec.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 702[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/arm.spec.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 505[2mms[22m[39m
+     [33m[2m✓[22m[39m 子代理/带父会话不武装；顶层武装一次；标记令第二个顶层会话幂等；release 后监听器消失 [33m 426[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/archive-order.spec.ts [2m([22m[2m1 test[22m[2m)[22m[32m 73[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/feishu-transport-http.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 160[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/inject.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 156[2mms[22m[39m
+ [32m✓[39m plugins/office-approval/index.spec.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 95[2mms[22m[39m
+ [32m✓[39m plugins/office-memory/recall.spec.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m18 passed[39m[22m[90m (18)[39m
+[2m      Tests [22m [1m[32m277 passed[39m[22m[90m (277)[39m
+[2m   Start at [22m 14:11:13
+[2m   Duration [22m 62.82s[2m (transform 3.61s, setup 0ms, import 15.30s, tests 30.17s, environment 8ms)[22m
+

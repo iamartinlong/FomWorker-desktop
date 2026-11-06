@@ -1,0 +1,24 @@
+{
+  "name": "@office/approval",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "office-approval：审批层（风险闸 + 台账 + 卡片渠道/responder/回调/催办）。桌面形态用 approvalMode: native 只装闸，审批落内核原生面板。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.ts",
+    "ledger.ts",
+    "risk-gate.ts",
+    "responder.ts",
+    "callback-route.ts",
+    "recovery.ts",
+    "sweeper.ts",
+    "feishu-channel.ts",
+    "feishu-transport-http.ts",
+    "lib/index.js"
+  ]
+}

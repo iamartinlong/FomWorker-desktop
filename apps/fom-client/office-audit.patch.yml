@@ -1,0 +1,20 @@
+# E 阶段 · E-P1 审计索引挂载件（M2/E-P1 · 平台层 §4.1 审计）
+#
+# 把 `office-audit` 挂进 web profile：它把逐 `$DSH_HOME` 的审计采集/索引以只读服务（`officeAudit`）
+# 暴露出去——`collect(homeDir, tenant)` 读该 home 的 `sessions/`（复用 office-meter 的读取器），
+# 折叠 `tool/*`、`approval/*`、`hook/*`、`permission/preset`、`sandbox/mode`、`model/selection`、
+# `turn/end` 为归一化条目（并从 `tool/call` 的 arguments 尽力抽取文件路径）。
+# 依据：`docs/02-设计/平台层设计v0.1.md` §4.1、§8-P1。
+#
+# 用法（在 `deepseek-harness/` 仓库根；`--patch` 必须排在 `--port`/`--no-open` 之前）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "F:/deepseek/deepseek harness/apps/fom-client/office-audit.patch.yml" \
+#     --no-open --port 3093
+# 静态核（`--dump-config` 是 launcher flag，须用 `--profile web` 形式）：
+#   node --import tsx/esm apps/cli/src/bin.ts --profile web --dump-config \
+#     --patch "F:/deepseek/deepseek harness/apps/fom-client/office-audit.patch.yml"
+#   ⇒ EXIT=0，表里出现 `id: office-audit`。
+
+- insert:
+    - id: office-audit
+      name: ./plugins/office-audit/index.ts

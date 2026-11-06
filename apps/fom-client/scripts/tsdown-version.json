@@ -1,0 +1,6 @@
+{
+  "tsdown": "0.22.14",
+  "_why": "双半插件（office-console / office-login / office-assistant / ui-brand-fomworker）的 lib/client.js 用这个版本的 tsdown 产出。**小版本差会改输出格式**——0.22.2 不给模块加 //#region 注释、0.22.14 加，两者字节对不上（2026-11-06 实测：office-console 曾因 junction 指向内核的 0.22.2 而匹配，另两个用 0.22.14 构建就不匹配）。各插件 package.json 声明的是 ^0.22.2，npm 会解析到最新小版本 ⇒ 这里钉住「当前 committed 产物实际用的那一版」，换版本要有意识地改它并重建全部四个。",
+  "_how_to_check_locally": "node -p \"require('./apps/fom-client/plugins/office-console/node_modules/tsdown/package.json').version\"",
+  "_ci_note": "CI 的桌面仓 checkout 里没有插件的 node_modules（开发机上是 junction/本地真目录，导不出去）⇒ package.yml 的 client 半门禁那一步按本文件装 tsdown 再跑。"
+}

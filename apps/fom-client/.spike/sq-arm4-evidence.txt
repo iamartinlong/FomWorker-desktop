@@ -1,0 +1,42 @@
+# 记忆层 spike 臂④（ME4：两个进程指向同一个 durable 索引 path）
+
+时间：2026-10-10 21:04
+被验进程：:3090（PID 24320，`.spike/sq-boot.log`）与 :3091（PID 27028，`.spike/sq-boot2.log`）
+两者 `session-query-sqlite` 配置逐字相同：`path: dshHomePath('session-query/office-spike.db')`、`openAt: first-search`
+
+## 观测
+
+在 :3091 已启动并已完成一次检索之后，回到 :3090 的同一个 workspace-cwd 会话（session 来自臂①），
+再问一次 `session_search("step8d")`：
+
+- 工具调用面板：「搜索会话 · 4 条匹配」
+- 助手答复原文（页面 innerText 抓取）：
+  > 复查结果：再次调用 session_search 搜 step8d，命中数量仍为 4，内容与上一次完全一致
+  > （同样 4 个 persisted 会话：session-7f0904e4、session-d3cf0a21、session-188ebbda、session-3f04484e）。
+  > 也就是说，即便有第二个进程打开了同一索引库，我这次读到的结果没有变化——没有出现重复条目、缺失条目或新的命中。
+  > 我的工作目录：C:\Users\EDY\workspace
+
+- 助手还主动报了一条口径边界：`session_search` 返回的是各会话的「最强匹配」，不是每会话全部命中；
+  要看单个会话内每一处需换 `session_event_search`（与臂①②的观察一致，不是本轮新事实）。
+
+## 落盘侧证据
+
+```
+$ ls -la /c/Users/EDY/.dsh/session-query/
+-rw-r--r-- 1 EDY 197121    4096 Oct 10 21:04 office-spike.db        # 主库只 4 KB
+-rw-r--r-- 1 EDY 197121   32768 Oct 10 20:50 office-spike.db-shm
+-rw-r--r-- 1 EDY 197121 1730432 Oct 10 21:04 office-spike.db-wal    # 内容全在 WAL 里
+```
+
+两份启动日志里 SQLite 只有一条 `ExperimentalWarning`，**没有** `SQLITE_BUSY` / `SQLITE_LOCKED` /
+`database is locked` 之类报错。
+
+## 结论（写进设计时要的口径）
+
+1. 「每个索引 path 只有一个进程所有者」在内核里是**约定 + README 文案**，不是运行时强制的锁：
+   两个真进程同时指向同一个 durable 文件，读写都正常，检索结果稳定可复现。
+2. 但这条**不能当成已验的并发能力来设计**：本轮只测了「B 起来之后 A 仍读到同样 4 条」，
+   没有测两个进程同时写入时的语义（WAL 模式 + 文件级字节锁在同一主机本地盘上通常安全，这是常识不是实测）。
+3. 因此记忆层的写法维持 §3.5 的决定：**日间成员进程与夜间蒸馏进程用各自的索引 path**，
+   不把「共用一个索引库」当作省事的方案 —— 蒸馏要读的历史是磁盘上的会话 jsonl，
+   它自己建一份索引即可（臂①②已证：索引语料来自 `dshHomePath('sessions')` 的落盘日志，跨进程可见）。

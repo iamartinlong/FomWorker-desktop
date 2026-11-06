@@ -1,0 +1,2 @@
+ready: http://127.0.0.1:3081/office/approval/callback -> 405；pid=1312（写在 F:\deepseek\deepseek harness\office-platform\.spike\feishu-loop.pid）
+Web UI URL 已写入 F:\deepseek\deepseek harness\office-platform\.spike\feishu-loop.url（含 token，未回显）

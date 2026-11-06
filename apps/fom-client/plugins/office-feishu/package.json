@@ -1,0 +1,17 @@
+{
+  "name": "@office/feishu",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "office-feishu：飞书工具层（自研定名工具：读 L0 × 3 / 写 L2 × 3）；未配应用时休眠，readOnly 只注册读工具。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.ts",
+    "tools.ts",
+    "lib/index.js"
+  ]
+}

@@ -1,0 +1,21 @@
+# M1 审批层 · E13 交棒覆盖（§8 第 7 步的一条臂）
+#
+# 把 `cardSink` 指到一个**目录**上：`appendFile` 在目录上必然 EISDIR，
+# 于是 `channel.send` 真的 reject —— 这是「渠道故障」在真进程里的唯一诚实造法
+# （E13 要求渠道失败时既不变成放行，也不变成我们替用户拒绝，而是交棒给链条更内侧的应答者）。
+#
+# 用法（叠在主 patch **之后**，非 insert 项按 id 覆盖已有行）：
+#   node --import tsx/esm apps/cli/src/bin.ts web \
+#     --patch "F:/deepseek/deepseek harness/apps/fom-client/office-approval.patch.yml" \
+#     --patch "F:/deepseek/deepseek harness/apps/fom-client/office-approval.e13.patch.yml" \
+#     --no-open
+#
+# ⚠️ **覆盖行整段替换 `config`，不是深合并**（实测两份 `--dump-config` 的差：
+# `apps/fom-client/.spike/dump-main.log` vs `dump-e13.log`）。所以这一条臂实际跑的是插件**默认值**：
+# `windowMs` 90 秒、`remindAfterMs` 30 分钟、`approvers` **空名单**（回调谁都批不动，只能靠面板）。
+# 对本臂无影响（它验的正是「渠道坏了 ⇒ 面板接管」），但台账里的时刻会带默认值的形状，读表前要先确认是哪条臂。
+# 要保留其余字段，就在这里把整段 config 重抄一遍。
+
+- id: office-approval
+  config:
+    cardSink: 'F:/deepseek/deepseek harness/apps/fom-client/.spike'

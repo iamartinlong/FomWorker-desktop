@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fominfo.example/contracts/ws/client-platform.schema.json",
+  "title": "FomWorker client↔platform WS protocol",
+  "version": "0.2.0",
+  "description": "客户端 agent 与运营平台之间的 WebSocket 消息（单条连接多路复用；按 `type` 分流）。方向：client→platform = usage.report/audit.report/heartbeat/im.reply；platform→client = ack/config.downlink/subscription.downlink/quota.downlink/catalog.downlink/im.relay。字段与 `openapi/platform.yaml` 的 HTTP 上报保持一致。端点＝`GET /api/ws`（鉴权同其它端点；WS 握手带不了 `Authorization` 头 ⇒ 令牌走 `?token=`，服务端只对这条路径放行查询串取令牌）。上行的三条**复用 HTTP 那几个用例**（同一套校验与幂等键），处理成功回 `ack`；**没回 ack 就是不认**，客户端据此重发。",
+  "oneOf": [
+    { "$ref": "#/$defs/UsageReport" },
+    { "$ref": "#/$defs/AuditReport" },
+    { "$ref": "#/$defs/Heartbeat" },
+    { "$ref": "#/$defs/Ack" },
+    { "$ref": "#/$defs/ConfigDownlink" },
+    { "$ref": "#/$defs/SubscriptionDownlink" },
+    { "$ref": "#/$defs/QuotaDownlink" },
+    { "$ref": "#/$defs/CatalogDownlink" },
+    { "$ref": "#/$defs/ImRelay" },
+    { "$ref": "#/$defs/ImReply" },
+    { "$ref": "#/$defs/ApprovalRequest" },
+    { "$ref": "#/$defs/ApprovalAnswered" },
+    { "$ref": "#/$defs/ApprovalAction" },
+    { "$ref": "#/$defs/TaskReport" },
+    { "$ref": "#/$defs/TaskCreate" }
+  ],
+  "$defs": {
+    "UsageReport": {
+      "$comment": "client → platform；幂等键 {tenant,user,session,turn,step,attempt}。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "usage.report" },
+        "tenantId": { "type": "string" },
+        "userId": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "turn": { "type": "integer" },
+        "step": { "type": "integer" },
+        "attempt": { "type": "integer" },
+        "model": { "type": "string" },
+        "source": { "enum": ["platform", "byo"] },
+        "inputTokens": { "type": "integer" },
+        "outputTokens": { "type": "integer" },
+        "cacheReadTokens": { "type": "integer" },
+        "cacheWriteTokens": { "type": "integer" },
+        "at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "tenantId", "userId", "sessionId", "model", "source"],
+      "additionalProperties": false
+    },
+    "AuditReport": {
+      "$comment": "client → platform；幂等键 {tenant,user,session,seq}；路径/参数已脱敏。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "audit.report" },
+        "tenantId": { "type": "string" },
+        "userId": { "type": "string" },
+        "sessionId": { "type": "string" },
+        "seq": { "type": "integer" },
+        "time": { "type": "integer" },
+        "eventType": { "type": "string" },
+        "detail": { "type": "object", "additionalProperties": true }
+      },
+      "required": ["type", "tenantId", "userId", "sessionId", "seq", "eventType"],
+      "additionalProperties": false
+    },
+    "Heartbeat": {
+      "$comment": "client → platform。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "heartbeat" },
+        "deviceId": { "type": "string" },
+        "clientVersion": { "type": "string" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "Ack": {
+      "$comment": "platform → client；确认收到某类上报（可选，用于可靠投递）。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "ack" },
+        "ref": { "enum": ["usage.report", "audit.report", "heartbeat"] },
+        "count": { "type": "integer" }
+      },
+      "required": ["type", "ref"],
+      "additionalProperties": false
+    },
+    "ConfigDownlink": {
+      "$comment": "platform → client；模型清单下发（plan 准入）。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "config.downlink" },
+        "models": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "SubscriptionDownlink": {
+      "$comment": "platform → client；订阅下发。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "subscription.downlink" },
+        "planId": { "type": "string" },
+        "status": { "enum": ["active", "past_due", "canceled"] },
+        "periodStart": { "type": "string", "format": "date-time" },
+        "periodEnd": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "QuotaDownlink": {
+      "$comment": "platform → client；配额下发（本周期限额 + 已用），供本地执行。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "quota.downlink" },
+        "maxTokens": { "type": "integer" },
+        "maxCost": { "type": "number" },
+        "maxCalls": { "type": "integer" },
+        "usedTokens": { "type": "integer" },
+        "usedCost": { "type": "number" },
+        "usedCalls": { "type": "integer" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "CatalogDownlink": {
+      "$comment": "platform → client；平台目录（技能/专家/连接器）下发。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "catalog.downlink" },
+        "entries": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "TaskReport": {
+      "$comment": "client → platform；桌面把会话的 turn 状态报成任务状态（D-5：task = 会话）。",
+      "type": "object",
+      "required": ["type", "taskId", "status"],
+      "properties": {
+        "type": { "const": "task.report" },
+        "taskId": { "type": "string" },
+        "title": { "type": "string" },
+        "status": { "enum": ["running", "idle", "failed"] }
+      }
+    },
+    "TaskCreate": {
+      "$comment": "platform → client；派活：在 PC 建会话并投正文（执行端恒在 PC）。",
+      "type": "object",
+      "required": ["type", "taskId", "text"],
+      "properties": {
+        "type": { "const": "task.create" },
+        "taskId": { "type": "string" },
+        "text": { "type": "string", "maxLength": 4000 }
+      }
+    },
+    "ApprovalRequest": {
+      "$comment": "client → platform；桌面要托管一条审批 ⇒ 平台推到该员工的 IM（按绑定里的 open_id）。平台记一条待批（10 分钟），用户回 1/2 时转成 ApprovalAction 下行。",
+      "type": "object",
+      "required": ["type", "approvalId", "toolName"],
+      "properties": {
+        "type": { "const": "approval.request" },
+        "approvalId": { "type": "string", "description": "客户端生成的审批 id（回填时原样带回）" },
+        "toolName": { "type": "string" },
+        "summary": { "type": "string", "description": "给人看的摘要（已脱敏/截断；不含凭据与正文全文）" }
+      }
+    },
+    "ApprovalAnswered": {
+      "$comment": "client → platform；桌面先答 ⇒ 平台撤掉 IM 那条待批并回执「已在桌面处理」。",
+      "type": "object",
+      "required": ["type", "approvalId"],
+      "properties": {
+        "type": { "const": "approval.answered" },
+        "approvalId": { "type": "string" }
+      }
+    },
+    "ApprovalAction": {
+      "$comment": "platform → client；用户在 IM 回了 1/2 ⇒ 把结论下行回桌面（decision=allowed-once|rejected）。",
+      "type": "object",
+      "required": ["type", "approvalId", "decision"],
+      "properties": {
+        "type": { "const": "approval.action" },
+        "approvalId": { "type": "string" },
+        "decision": { "enum": ["allowed-once", "rejected"] },
+        "decidedBy": { "enum": ["im", "desktop"] }
+      }
+    },
+    "ImReply": {
+      "$comment": "client → platform；把 agent 的答复发回 IM 会话。平台只在「最近给该用户中继过该会话」（30 分钟）时放行，否则 ack.ok=false（reason=no-relay-context）。",
+      "type": "object",
+      "required": ["type", "chatId", "text"],
+      "properties": {
+        "type": { "const": "im.reply" },
+        "channel": { "enum": ["feishu", "dingtalk", "wecom"] },
+        "chatId": { "type": "string", "description": "IM 会话 id（飞书 messages 接口的 receive_id，receive_id_type=chat_id）" },
+        "messageId": { "type": "string", "description": "触发本轮的消息 id（原样回，便于对账；可空）" },
+        "text": { "type": "string", "maxLength": 4000 }
+      }
+    },
+    "ImRelay": {
+      "$comment": "platform → client；企业 IM 消息中继（渠道 → 员工桌面 agent）。",
+      "type": "object",
+      "properties": {
+        "type": { "const": "im.relay" },
+        "channel": { "enum": ["feishu", "dingtalk", "wecom"] },
+        "openId": { "type": "string" },
+        "payload": { "type": "object", "additionalProperties": true }
+      },
+      "required": ["type", "channel", "openId"],
+      "additionalProperties": false
+    }
+  }
+}

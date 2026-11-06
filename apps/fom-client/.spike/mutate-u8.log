@@ -1,0 +1,16 @@
+baseline: green
+a-escalated-l3-hands-off-as-allow: 抓住 —— 20 例红（exit=1）— 提权写（L3）不再 ask 而是像 L0/L1 一样交棒 —— never 会话里这次写会直接执行、且不再落 pending（U8 用例第一步的 `isError` 与 `req-gate-1` 双双红：fail-closed 的闸这一侧没了）
+    · 窗口内点「同意」→ allowed-once、记录迁 approved、卡片就地更新、不落 grant
+    · 窗口内点「拒绝」→ rejected，模型看到的是"用户拒绝"而不是"没人答"
+    · 窗口到期 → cancelled（不是 rejected）、记录迁 expired、卡片就地转后台且**不撤回**
+    · 门已经关上（`expiresAt` 早于窗口结束）时才真的撤卡
+    · E7 调用方取消（session.cancel 的等价信号）→ recalled + 卡片转后台 + cancelled
+    · 卡片上的点击推翻不了已经落账的更早决定（E4 在 responder 这一层）
+b-ask-without-pending-snapshot: 抓住 —— 19 例红（exit=1）— ask 之前不落台账快照（把 ledger.snapshot 换成空操作）—— 批件/审计记录凭空消失（U8 用例第一步的 get(req-gate-1).status 抛错即红：该档位仍要留痕这条没了）
+    · 窗口内点「同意」→ allowed-once、记录迁 approved、卡片就地更新、不落 grant
+    · 窗口内点「拒绝」→ rejected，模型看到的是"用户拒绝"而不是"没人答"
+    · 窗口到期 → cancelled（不是 rejected）、记录迁 expired、卡片就地转后台且**不撤回**
+    · 门已经关上（`expiresAt` 早于窗口结束）时才真的撤卡
+    · E7 调用方取消（session.cancel 的等价信号）→ recalled + 卡片转后台 + cancelled
+    · 卡片上的点击推翻不了已经落账的更早决定（E4 在 responder 这一层）
+结论：2/2 个变异被抓住
